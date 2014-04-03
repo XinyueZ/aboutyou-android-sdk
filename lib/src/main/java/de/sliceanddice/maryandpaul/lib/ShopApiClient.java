@@ -10,18 +10,24 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.communication.AuthenticationRequestInterceptor;
 import de.sliceanddice.maryandpaul.lib.communication.RestInterface;
+import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
+import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.requests.CategoryRequest;
 import de.sliceanddice.maryandpaul.lib.requests.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.requests.FacetRequest;
 import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
+import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
+import de.sliceanddice.maryandpaul.lib.typeadapter.DirectionTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.typeadapter.FacetGroupTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.typeadapter.SortbyTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.typeadapter.TypeTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.wrapper.RequestWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.ResponseWrapper;
@@ -30,6 +36,7 @@ import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoriesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetTypesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetsWrapper;
+import de.sliceanddice.maryandpaul.lib.wrapper.request.ProductSearchWrapper;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -49,6 +56,8 @@ public class ShopApiClient {
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter());
         gsonBuilder.registerTypeAdapter(Type.class, new TypeTypeAdapter());
+        gsonBuilder.registerTypeAdapter(Sortby.class, new SortbyTypeAdapter());
+        gsonBuilder.registerTypeAdapter(Direction.class, new DirectionTypeAdapter());
         Gson gson = gsonBuilder.create();
         GsonConverter gsonConverter = new GsonConverter(gson);
 
@@ -170,6 +179,25 @@ public class ShopApiClient {
             @Override
             public void success(ResponseWrapper<AutocompleteWrapper> autocompleteWrapper, Response response) {
                 callback.onCompleted(autocompleteWrapper.getWrappedObject().getAutocomplete());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    public void requestProductSearch(ProductSearchRequest productSearchRequest, final Callback<ProductSearch> callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("Callback must not be null");
+        }
+
+        RequestWrapper<ProductSearchRequest> wrappedRequest = RequestWrapper.wrap(productSearchRequest);
+        mAPI.requestProductSearch(wrappedRequest, new retrofit.Callback<ResponseWrapper<ProductSearchWrapper>>() {
+            @Override
+            public void success(ResponseWrapper<ProductSearchWrapper> productSearchWrapper, Response response) {
+                callback.onCompleted(productSearchWrapper.getWrappedObject().getProductSearch());
             }
 
             @Override

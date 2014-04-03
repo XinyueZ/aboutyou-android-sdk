@@ -10,12 +10,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
+import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
+import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
+import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
 
 public class MainActivity extends Activity {
 
@@ -108,6 +112,29 @@ public class MainActivity extends Activity {
                 shopApiClient.requestAutocompletion("Sho", 10, Arrays.asList(Type.PRODUCTS), new ShopApiClient.Callback<Autocomplete>() {
                     @Override
                     public void onCompleted(Autocomplete response) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+            }
+        });
+
+        Button productsearch = (Button) findViewById(R.id.productsearch);
+        productsearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProductSearchRequest request = new ProductSearchRequest.Builder("session4711")
+                        .sortBy(Sortby.RELEVANCE)
+                        .sortDirection(Direction.DESC)
+                        .build();
+
+                shopApiClient.requestProductSearch(request, new ShopApiClient.Callback<ProductSearch>() {
+                    @Override
+                    public void onCompleted(ProductSearch response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                     }
 
