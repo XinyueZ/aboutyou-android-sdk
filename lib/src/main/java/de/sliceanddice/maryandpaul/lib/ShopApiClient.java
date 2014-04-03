@@ -8,7 +8,12 @@ import com.squareup.okhttp.OkHttpClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.sliceanddice.maryandpaul.lib.enums.Type;
+import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
+import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
+import de.sliceanddice.maryandpaul.lib.typeadapter.TypeTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.wrapper.request.AutocompleteWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoriesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetTypesWrapper;
@@ -43,6 +48,7 @@ public class ShopApiClient {
 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter());
+        gsonBuilder.registerTypeAdapter(Type.class, new TypeTypeAdapter());
         Gson gson = gsonBuilder.create();
         GsonConverter gsonConverter = new GsonConverter(gson);
 
@@ -140,6 +146,30 @@ public class ShopApiClient {
                 }
 
                 callback.onCompleted(facetGroups);
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    public void requestAutocompletion(String searchString, Integer limit, List<Type> types, final Callback<Autocomplete> callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("Callback must not be null");
+        }
+
+        AutocompleteRequest autocompleteRequest = new AutocompleteRequest();
+        autocompleteRequest.setSearchword(searchString);
+        autocompleteRequest.setLimit(limit);
+        autocompleteRequest.setTypes(types);
+
+        RequestWrapper<AutocompleteRequest> wrappedRequest = RequestWrapper.wrap(autocompleteRequest);
+        mAPI.requestAutocomplete(wrappedRequest, new retrofit.Callback<ResponseWrapper<AutocompleteWrapper>>() {
+            @Override
+            public void success(ResponseWrapper<AutocompleteWrapper> autocompleteWrapper, Response response) {
+                callback.onCompleted(autocompleteWrapper.getWrappedObject().getAutocomplete());
             }
 
             @Override

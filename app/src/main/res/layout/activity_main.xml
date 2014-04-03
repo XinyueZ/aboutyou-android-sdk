@@ -40,4 +40,12 @@
         android:layout_centerHorizontal="true"
         android:text="Facettypess" />
 
+    <Button
+        android:id="@+id/autocomplete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/facettypes"
+        android:layout_centerHorizontal="true"
+        android:text="Autocomplete" />
+
 </RelativeLayout>

@@ -11,6 +11,8 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
+import de.sliceanddice.maryandpaul.lib.enums.Type;
+import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
@@ -88,6 +90,24 @@ public class MainActivity extends Activity {
                 shopApiClient.requestFacetTypes(new ShopApiClient.Callback<List<FacetGroup>>() {
                     @Override
                     public void onCompleted(List<FacetGroup> response) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+            }
+        });
+
+        Button autocomplete = (Button) findViewById(R.id.autocomplete);
+        autocomplete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopApiClient.requestAutocompletion("Sho", 10, Arrays.asList(Type.PRODUCTS), new ShopApiClient.Callback<Autocomplete>() {
+                    @Override
+                    public void onCompleted(Autocomplete response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                     }
 

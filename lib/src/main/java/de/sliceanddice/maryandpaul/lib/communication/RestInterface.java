@@ -1,6 +1,8 @@
 package de.sliceanddice.maryandpaul.lib.communication;
 
+import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
+import de.sliceanddice.maryandpaul.lib.wrapper.request.AutocompleteWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoriesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetTypesWrapper;
@@ -29,5 +31,8 @@ public interface RestInterface {
 
     @POST(BASEPATH)
     void requestFacetTypes(@Body RequestWrapper<FacetTypesRequest> request, Callback<ResponseWrapper<FacetTypesWrapper>> callback);
+
+    @POST(BASEPATH)
+    void requestAutocomplete(@Body RequestWrapper<AutocompleteRequest> request, Callback<ResponseWrapper<AutocompleteWrapper>> callback);
 
 }
