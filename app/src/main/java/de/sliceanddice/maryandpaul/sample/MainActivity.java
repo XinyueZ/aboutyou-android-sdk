@@ -12,6 +12,7 @@ import java.util.List;
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
+import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
@@ -128,8 +129,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View v) {
                 ProductSearchRequest request = new ProductSearchRequest.Builder("session4711")
+                        .filterByMinPrice(500)
+                        .filterByMaxPrice(5000)
+                        .filterByStatus(ProductFilter.NONSALEONLY)
                         .sortBy(Sortby.RELEVANCE)
                         .sortDirection(Direction.DESC)
+                        .limit(10)
                         .build();
 
                 shopApiClient.requestProductSearch(request, new ShopApiClient.Callback<ProductSearch>() {
