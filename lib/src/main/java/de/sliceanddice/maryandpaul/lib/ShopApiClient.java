@@ -5,10 +5,13 @@ import com.google.gson.GsonBuilder;
 
 import com.squareup.okhttp.OkHttpClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoriesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
+import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetTypesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetsWrapper;
 import de.sliceanddice.maryandpaul.lib.communication.AuthenticationRequestInterceptor;
 import de.sliceanddice.maryandpaul.lib.communication.RestInterface;
@@ -110,6 +113,33 @@ public class ShopApiClient {
             @Override
             public void success(ResponseWrapper<FacetsWrapper> facetsWrapper, Response response) {
                 callback.onCompleted(facetsWrapper.getWrappedObject().getFacets());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
+
+    public void requestFacetTypes(final Callback<List<FacetGroup>> callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("Callback must not be null");
+        }
+
+        RequestWrapper<FacetTypesRequest> wrappedRequest = RequestWrapper.forType(FacetTypesRequest.class);
+        mAPI.requestFacetTypes(wrappedRequest, new retrofit.Callback<ResponseWrapper<FacetTypesWrapper>> () {
+            @Override
+            public void success(ResponseWrapper<FacetTypesWrapper> facetTypesWrapper, Response response) {
+                ArrayList<FacetGroup> facetGroups = new ArrayList<>();
+                for (Integer facetGroupId : facetTypesWrapper.getWrappedObject().getFacetTypes()) {
+                    FacetGroup facetGroup = FacetGroup.fromInteger(facetGroupId);
+                    if (facetGroup != null) {
+                        facetGroups.add(FacetGroup.fromInteger(facetGroupId));
+                    }
+                }
+
+                callback.onCompleted(facetGroups);
             }
 
             @Override

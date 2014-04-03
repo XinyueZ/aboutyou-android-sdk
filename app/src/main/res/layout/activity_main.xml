@@ -32,4 +32,12 @@
         android:layout_centerHorizontal="true"
         android:text="Facets" />
 
+    <Button
+        android:id="@+id/facettypes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/facets"
+        android:layout_centerHorizontal="true"
+        android:text="Facettypess" />
+
 </RelativeLayout>

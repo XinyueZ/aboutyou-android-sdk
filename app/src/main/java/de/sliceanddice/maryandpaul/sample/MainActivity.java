@@ -80,6 +80,24 @@ public class MainActivity extends Activity {
                 });
             }
         });
+
+        Button facetTypes = (Button) findViewById(R.id.facettypes);
+        facetTypes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopApiClient.requestFacetTypes(new ShopApiClient.Callback<List<FacetGroup>>() {
+                    @Override
+                    public void onCompleted(List<FacetGroup> response) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+            }
+        });
     }
 
 }

@@ -26,10 +26,19 @@ public enum FacetGroup {
     CLOTHING_HATS_US(231),
     CARE_SYMBOL(247);
 
-    int id;
+    private int id;
 
     private FacetGroup(int id) {
         this.id = id;
+    }
+
+    public static FacetGroup fromInteger(int index) {
+        for (FacetGroup currentValue : FacetGroup.values()) {
+            if (currentValue.getId() == index) {
+                return currentValue;
+            }
+        }
+        return null;
     }
 
     public int getId() {

@@ -1,7 +1,9 @@
 package de.sliceanddice.maryandpaul.lib.communication;
 
+import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoriesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
+import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetTypesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetsWrapper;
 import de.sliceanddice.maryandpaul.lib.requests.CategoryRequest;
 import de.sliceanddice.maryandpaul.lib.requests.CategoryTreeRequest;
@@ -24,5 +26,8 @@ public interface RestInterface {
 
     @POST(BASEPATH)
     void requestFacets(@Body RequestWrapper<FacetRequest> request, Callback<ResponseWrapper<FacetsWrapper>> callback);
+
+    @POST(BASEPATH)
+    void requestFacetTypes(@Body RequestWrapper<FacetTypesRequest> request, Callback<ResponseWrapper<FacetTypesWrapper>> callback);
 
 }
