@@ -16,6 +16,7 @@ import de.sliceanddice.maryandpaul.lib.internal.communication.RestInterface;
 import de.sliceanddice.maryandpaul.lib.internal.response.AutocompleteResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoriesResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoryTreeResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.CollinsResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.FacetTypesResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.FacetsResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.ProductSearchResponse;
@@ -35,6 +36,7 @@ import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
+import de.sliceanddice.maryandpaul.lib.request.CollinsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetTypesRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
@@ -48,6 +50,11 @@ import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 public class ShopApiClient {
+
+    public interface Callback<T> {
+        public void onCompleted(T response);
+        public void onError(String message); // TODO
+    }
 
     private final RestInterface mAPI;
 
@@ -81,139 +88,81 @@ public class ShopApiClient {
     }
 
     public void requestCategories(CategoriesRequest categoriesRequest, final Callback<List<Category>> callback) {
-        if (callback == null) {
-            throw new IllegalArgumentException("Callback must not be null");
-        }
-
+        validateParams(categoriesRequest, callback);
         RequestEnvelope<CategoriesRequest> wrappedRequest = RequestEnvelope.wrap(categoriesRequest);
-        mAPI.requestCategories(wrappedRequest, new retrofit.Callback<ResponseEnvelope<CategoriesResponse>>() {
-            @Override
-            public void success(ResponseEnvelope<CategoriesResponse> categoriesResponse, Response response) {
-                callback.onCompleted(categoriesResponse.unwrap().get());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        mAPI.requestCategories(wrappedRequest, new RetrofitCallback<CategoriesResponse, List<Category>>(callback));
     }
 
     public void requestCategoryTree(final Callback<CategoryTree> callback) {
-        if (callback == null) {
-            throw new IllegalArgumentException("Callback must not be null");
-        }
-
+        validateParam(callback);
         RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(new CategoryTreeRequest());
-        mAPI.requestCategoryTree(wrappedRequest, new retrofit.Callback<ResponseEnvelope<CategoryTreeResponse>>() {
-            @Override
-            public void success(ResponseEnvelope<CategoryTreeResponse> categoryTreeWrapper, Response response) {
-                callback.onCompleted(new CategoryTree(categoryTreeWrapper.unwrap().get()));
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        mAPI.requestCategoryTree(wrappedRequest, new RetrofitCallback<CategoryTreeResponse, CategoryTree>(callback));
     }
 
     public void requestFacets(FacetsRequest facetsRequest, final Callback<List<Facet>> callback) {
-        if (callback == null) {
-            throw new IllegalArgumentException("Callback must not be null");
-        }
-
+        validateParams(facetsRequest, callback);
         RequestEnvelope<FacetsRequest> wrappedRequest = RequestEnvelope.wrap(facetsRequest);
-        mAPI.requestFacets(wrappedRequest, new retrofit.Callback<ResponseEnvelope<FacetsResponse>>() {
-            @Override
-            public void success(ResponseEnvelope<FacetsResponse> facetsWrapper, Response response) {
-                callback.onCompleted(facetsWrapper.unwrap().get());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        mAPI.requestFacets(wrappedRequest, new RetrofitCallback<FacetsResponse, List<Facet>>(callback));
     }
 
     public void requestFacetTypes(final Callback<List<FacetGroup>> callback) {
-        if (callback == null) {
-            throw new IllegalArgumentException("Callback must not be null");
-        }
-
+        validateParam(callback);
         RequestEnvelope<FacetTypesRequest> wrappedRequest = RequestEnvelope.wrap(new FacetTypesRequest());
-        mAPI.requestFacetTypes(wrappedRequest, new retrofit.Callback<ResponseEnvelope<FacetTypesResponse>> () {
-            @Override
-            public void success(ResponseEnvelope<FacetTypesResponse> facetTypesWrapper, Response response) {
-                callback.onCompleted(facetTypesWrapper.unwrap().get());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        mAPI.requestFacetTypes(wrappedRequest, new RetrofitCallback<FacetTypesResponse, List<FacetGroup>>(callback));
     }
 
     public void requestAutocompletion(AutocompleteRequest autocompleteRequest, final Callback<Autocomplete> callback) {
-        if (callback == null) {
-            throw new IllegalArgumentException("Callback must not be null");
-        }
-
+        validateParams(autocompleteRequest, callback);
         RequestEnvelope<AutocompleteRequest> wrappedRequest = RequestEnvelope.wrap(autocompleteRequest);
-        mAPI.requestAutocomplete(wrappedRequest, new retrofit.Callback<ResponseEnvelope<AutocompleteResponse>>() {
-            @Override
-            public void success(ResponseEnvelope<AutocompleteResponse> autocompleteResponse, Response response) {
-                callback.onCompleted(autocompleteResponse.unwrap().get());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        mAPI.requestAutocomplete(wrappedRequest, new RetrofitCallback<AutocompleteResponse, Autocomplete>(callback));
     }
 
     public void requestProductSearch(ProductSearchRequest productSearchRequest, final Callback<ProductSearch> callback) {
-        if (callback == null) {
-            throw new IllegalArgumentException("Callback must not be null");
-        }
-
+        validateParams(productSearchRequest, callback);
         RequestEnvelope<ProductSearchRequest> wrappedRequest = RequestEnvelope.wrap(productSearchRequest);
-        mAPI.requestProductSearch(wrappedRequest, new retrofit.Callback<ResponseEnvelope<ProductSearchResponse>>() {
-            @Override
-            public void success(ResponseEnvelope<ProductSearchResponse> productSearchWrapper, Response response) {
-                callback.onCompleted(productSearchWrapper.unwrap().get());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        mAPI.requestProductSearch(wrappedRequest, new RetrofitCallback<ProductSearchResponse, ProductSearch>(callback));
     }
 
     public void requestProducts(ProductsRequest productsRequest, final Callback<List<Product>> callback) {
+        validateParams(productsRequest, callback);
+        RequestEnvelope<ProductsRequest> wrappedRequest = RequestEnvelope.wrap(productsRequest);
+        mAPI.requestProducts(wrappedRequest, new RetrofitCallback<ProductsResponse, List<Product>>(callback));
+    }
+
+    private void validateParams(CollinsRequest request, Callback callback) {
+        validateParam(request);
+        validateParam(callback);
+    }
+
+    private void validateParam(CollinsRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Request must not be null");
+        }
+    }
+
+    private void validateParam(Callback callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
-
-        RequestEnvelope<ProductsRequest> wrappedRequest = RequestEnvelope.wrap(productsRequest);
-        mAPI.requestProducts(wrappedRequest, new retrofit.Callback<ResponseEnvelope<ProductsResponse>>() {
-            @Override
-            public void success(ResponseEnvelope<ProductsResponse> productsResponse, Response response) {
-                callback.onCompleted(productsResponse.unwrap().get());
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
     }
-    public interface Callback<T> {
-        public void onCompleted(T response);
-        public void onError(String message); // TODO
+
+    private class RetrofitCallback<K extends CollinsResponse<V>, V> implements retrofit.Callback<ResponseEnvelope<K>> {
+
+        private Callback<V> mCallback;
+
+        public RetrofitCallback(Callback<V> callback) {
+            mCallback = callback;
+        }
+
+        @Override
+        public void success(ResponseEnvelope<K> responseEnvelope, Response response) {
+            mCallback.onCompleted(responseEnvelope.unwrap().get());
+            mCallback = null;
+        }
+
+        @Override
+        public void failure(RetrofitError error) {
+            mCallback = null;
+        }
     }
 }

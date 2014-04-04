@@ -5,13 +5,14 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.models.Category;
+import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 
-public class CategoryTreeResponse implements CollinsResponse<List<Category>> {
+public class CategoryTreeResponse implements CollinsResponse<CategoryTree> {
 
     @SerializedName("category_tree")
     private List<Category> categoryTree;
 
-    public List<Category> get() {
-        return categoryTree;
+    public CategoryTree get() {
+        return new CategoryTree(categoryTree);
     }
 }
