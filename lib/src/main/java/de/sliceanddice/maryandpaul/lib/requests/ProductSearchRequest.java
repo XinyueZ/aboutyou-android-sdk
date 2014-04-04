@@ -3,6 +3,7 @@ package de.sliceanddice.maryandpaul.lib.requests;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
+import java.util.Map;
 
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
@@ -27,7 +28,7 @@ public class ProductSearchRequest extends BaseRequest {
             @SerializedName("prices")
             private Prices priceRange;
             private String searchword;
-            private List<FacetGroup> facets;
+            private Map<FacetGroup, List<Long>> facets;
 
             private static class Prices {
                 private Long from;
@@ -45,7 +46,7 @@ public class ProductSearchRequest extends BaseRequest {
             @SerializedName("price")
             private Boolean showPriceInformation;
             @SerializedName("sale")
-            private Boolean noIdeaWhatThisIsFor;
+            private Boolean showSaleInformation;
             private Integer limit;
             private Integer offset;
             @SerializedName("categories")
@@ -71,7 +72,8 @@ public class ProductSearchRequest extends BaseRequest {
         private Long priceFrom;
         private Long priceTo;
         private String searchString;
-        private List<FacetGroup> facets;
+        private Map<FacetGroup, List<Long>> facets;
+        private Boolean listSaleDetails;
         private Boolean listPriceDetails;
         private Boolean listCategories;
         private Integer limit;
@@ -111,8 +113,13 @@ public class ProductSearchRequest extends BaseRequest {
             return this;
         }
 
-        public Builder filterByFacets(List<FacetGroup> facets) {
+        public Builder filterByFacets(Map<FacetGroup, List<Long>> facets) {
             this.facets = facets;
+            return this;
+        }
+
+        public Builder listSaleDetails(boolean listSaleDetails) {
+            this.listSaleDetails = listSaleDetails;
             return this;
         }
 
@@ -163,7 +170,9 @@ public class ProductSearchRequest extends BaseRequest {
             result.limit = limit;
             result.offset = offset;
             result.showCategories = listCategories;
+            result.showSaleInformation = listSaleDetails;
             result.showPriceInformation = listPriceDetails;
+            productSearch.result = result;
 
             ProductSearchRequest productSearchRequest = new ProductSearchRequest();
             productSearchRequest.productSearch = productSearch;

@@ -7,7 +7,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
@@ -129,10 +131,14 @@ public class MainActivity extends Activity {
         productsearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Map<FacetGroup, List<Long>> facetFilter = new HashMap<>();
+                facetFilter.put(FacetGroup.CUPSIZE, Arrays.asList(93l, 94l, 95l, 96l));
+
                 ProductSearchRequest request = new ProductSearchRequest.Builder("session4711")
                         .filterByMinPrice(500)
                         .filterByMaxPrice(5000)
                         .filterByStatus(ProductFilter.NONSALEONLY)
+                        .filterByFacets(facetFilter)
                         .sortBy(Sortby.RELEVANCE)
                         .sortDirection(Direction.DESC)
                         .limit(10)

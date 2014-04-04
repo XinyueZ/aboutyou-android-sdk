@@ -57,6 +57,7 @@ public class ShopApiClient {
         Client client = new OkClient(new OkHttpClient());
 
         GsonBuilder gsonBuilder = new GsonBuilder();
+        gsonBuilder.enableComplexMapKeySerialization();
         gsonBuilder.registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter());
         gsonBuilder.registerTypeAdapter(Type.class, new TypeTypeAdapter());
         gsonBuilder.registerTypeAdapter(Sortby.class, new SortbyTypeAdapter());
