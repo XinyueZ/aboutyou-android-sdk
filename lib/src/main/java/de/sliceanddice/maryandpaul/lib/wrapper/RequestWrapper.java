@@ -1,9 +1,10 @@
 package de.sliceanddice.maryandpaul.lib.wrapper;
 
-import de.sliceanddice.maryandpaul.lib.requests.BaseRequest;
-import de.sliceanddice.maryandpaul.lib.util.ImmutableList;
+import java.util.ArrayList;
 
-public class RequestWrapper<T extends BaseRequest> extends ImmutableList<T> {
+import de.sliceanddice.maryandpaul.lib.requests.BaseRequest;
+
+public class RequestWrapper<T extends BaseRequest> extends ArrayList<T> {
 
     public static <T extends BaseRequest> RequestWrapper<T> wrap(T request) {
         return new RequestWrapper<>(request);
