@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.OkHttpClient;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
@@ -74,7 +75,10 @@ public class ShopApiClient {
     }
 
     private Client buildClient() {
-        return new OkClient(new OkHttpClient());
+        OkHttpClient okHttpClient = new OkHttpClient();
+        okHttpClient.setConnectTimeout(5, TimeUnit.SECONDS);
+        okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
+        return new OkClient(okHttpClient);
     }
 
     private GsonConverter buildGsonConverter() {
