@@ -1,10 +1,10 @@
-package de.sliceanddice.maryandpaul.lib.requests;
+package de.sliceanddice.maryandpaul.lib.request;
 
 import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 
-public class AutocompleteRequest extends BaseRequest {
+public class AutocompleteRequest implements CollinsRequest {
 
     private Autocompletion autocompletion;
 

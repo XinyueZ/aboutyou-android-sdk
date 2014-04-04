@@ -1,8 +1,8 @@
-package de.sliceanddice.maryandpaul.lib.requests;
+package de.sliceanddice.maryandpaul.lib.request;
 
 import java.util.List;
 
-public class ProductRequest extends BaseRequest {
+public class ProductsRequest implements CollinsRequest {
 
     private Products products;
 
@@ -21,8 +21,8 @@ public class ProductRequest extends BaseRequest {
             return this;
         }
 
-        public ProductRequest build() {
-            ProductRequest productRequest = new ProductRequest();
+        public ProductsRequest build() {
+            ProductsRequest productRequest = new ProductsRequest();
 
             Products products = new Products();
             products.ids = ids;

@@ -23,11 +23,11 @@ import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
-import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
-import de.sliceanddice.maryandpaul.lib.requests.CategoryRequest;
-import de.sliceanddice.maryandpaul.lib.requests.FacetRequest;
-import de.sliceanddice.maryandpaul.lib.requests.ProductRequest;
-import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
+import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
+import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
+import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
+import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
+import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
 
 public class MainActivity extends Activity {
 
@@ -61,13 +61,13 @@ public class MainActivity extends Activity {
 
         Button categories = (Button) findViewById(R.id.categories);
         categories.setOnClickListener(new View.OnClickListener() {
-            CategoryRequest categoryRequest = new CategoryRequest.Builder()
+            CategoriesRequest mCategoriesRequest = new CategoriesRequest.Builder()
                     .filterByCategoryIds(Arrays.asList(19534l))
                     .build();
 
             @Override
             public void onClick(View v) {
-                shopApiClient.requestCategories(categoryRequest, new ShopApiClient.Callback<List<Category>>() {
+                shopApiClient.requestCategories(mCategoriesRequest, new ShopApiClient.Callback<List<Category>>() {
                     @Override
                     public void onCompleted(List<Category> response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
@@ -85,7 +85,7 @@ public class MainActivity extends Activity {
         facets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FacetRequest facetRequest = new FacetRequest.Builder()
+                FacetsRequest facetRequest = new FacetsRequest.Builder()
                         .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
                         .build();
 
@@ -177,7 +177,7 @@ public class MainActivity extends Activity {
 
         Button products = (Button) findViewById(R.id.products);
         products.setOnClickListener(new View.OnClickListener() {
-            ProductRequest productRequest = new ProductRequest.Builder()
+            ProductsRequest productRequest = new ProductsRequest.Builder()
                     .filterByProductIds(Arrays.asList(329777l, 325136l))
                     .build();
 

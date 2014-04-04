@@ -1,4 +1,4 @@
-package de.sliceanddice.maryandpaul.lib.wrapper.request;
+package de.sliceanddice.maryandpaul.lib.internal.response;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,12 +8,12 @@ import java.util.Map;
 
 import de.sliceanddice.maryandpaul.lib.models.Category;
 
-public class CategoriesWrapper extends BaseWrapper {
+public class CategoriesResponse implements CollinsResponse<List<Category>> {
 
     @SerializedName("category")
     private Map<Long, Category> categories;
 
-    public List<Category> getCategories() {
+    public List<Category> get() {
         return new ArrayList<>(categories.values());
     }
 }

@@ -1,4 +1,4 @@
-package de.sliceanddice.maryandpaul.lib.communication;
+package de.sliceanddice.maryandpaul.lib.internal.communication;
 
 import com.squareup.okhttp.OkAuthenticator;
 

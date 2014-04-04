@@ -1,16 +1,16 @@
-package de.sliceanddice.maryandpaul.lib.wrapper.request;
+package de.sliceanddice.maryandpaul.lib.internal.response;
 
 import com.google.gson.annotations.SerializedName;
 
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 
 
-public class ProductSearchWrapper extends BaseWrapper {
+public class ProductSearchResponse implements CollinsResponse<ProductSearch> {
 
     @SerializedName("product_search")
     private ProductSearch productSearch;
 
-    public ProductSearch getProductSearch() {
+    public ProductSearch get() {
         return productSearch;
     }
 

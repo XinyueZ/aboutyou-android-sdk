@@ -1,4 +1,4 @@
-package de.sliceanddice.maryandpaul.lib.typeadapter;
+package de.sliceanddice.maryandpaul.lib.internal.typeadapter;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;

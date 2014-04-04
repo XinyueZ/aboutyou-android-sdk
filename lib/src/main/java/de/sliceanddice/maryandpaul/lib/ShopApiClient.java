@@ -5,41 +5,40 @@ import com.google.gson.GsonBuilder;
 
 import com.squareup.okhttp.OkHttpClient;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import de.sliceanddice.maryandpaul.lib.communication.AuthenticationRequestInterceptor;
-import de.sliceanddice.maryandpaul.lib.communication.RestInterface;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
+import de.sliceanddice.maryandpaul.lib.internal.communication.AuthenticationRequestInterceptor;
+import de.sliceanddice.maryandpaul.lib.internal.communication.RestInterface;
+import de.sliceanddice.maryandpaul.lib.internal.response.AutocompleteResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.CategoriesResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.CategoryTreeResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.FacetTypesResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.FacetsResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.ProductSearchResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.ProductsResponse;
+import de.sliceanddice.maryandpaul.lib.internal.typeadapter.DirectionTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.internal.typeadapter.FacetGroupTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.internal.typeadapter.SortbyTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.internal.typeadapter.TypeTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
+import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
-import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
-import de.sliceanddice.maryandpaul.lib.requests.CategoryRequest;
-import de.sliceanddice.maryandpaul.lib.requests.CategoryTreeRequest;
-import de.sliceanddice.maryandpaul.lib.requests.FacetRequest;
-import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
-import de.sliceanddice.maryandpaul.lib.requests.ProductRequest;
-import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
-import de.sliceanddice.maryandpaul.lib.typeadapter.DirectionTypeAdapter;
-import de.sliceanddice.maryandpaul.lib.typeadapter.FacetGroupTypeAdapter;
-import de.sliceanddice.maryandpaul.lib.typeadapter.SortbyTypeAdapter;
-import de.sliceanddice.maryandpaul.lib.typeadapter.TypeTypeAdapter;
-import de.sliceanddice.maryandpaul.lib.wrapper.RequestWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.ResponseWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.request.AutocompleteWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoriesWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetTypesWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetsWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.request.ProductSearchWrapper;
-import de.sliceanddice.maryandpaul.lib.wrapper.request.ProductsWrapper;
+import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
+import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
+import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
+import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
+import de.sliceanddice.maryandpaul.lib.request.FacetTypesRequest;
+import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
+import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -81,16 +80,16 @@ public class ShopApiClient {
         return new GsonConverter(gson);
     }
 
-    public void requestCategories(CategoryRequest categoryRequest, final Callback<List<Category>> callback) {
+    public void requestCategories(CategoriesRequest categoriesRequest, final Callback<List<Category>> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<CategoryRequest> wrappedRequest = RequestWrapper.wrap(categoryRequest);
-        mAPI.requestCategories(wrappedRequest, new retrofit.Callback<ResponseWrapper<CategoriesWrapper>>() {
+        RequestEnvelope<CategoriesRequest> wrappedRequest = RequestEnvelope.wrap(categoriesRequest);
+        mAPI.requestCategories(wrappedRequest, new retrofit.Callback<ResponseEnvelope<CategoriesResponse>>() {
             @Override
-            public void success(ResponseWrapper<CategoriesWrapper> categoriesWrapper, Response response) {
-                callback.onCompleted(categoriesWrapper.getWrappedObject().getCategories());
+            public void success(ResponseEnvelope<CategoriesResponse> categoriesResponse, Response response) {
+                callback.onCompleted(categoriesResponse.unwrap().get());
             }
 
             @Override
@@ -105,11 +104,11 @@ public class ShopApiClient {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<CategoryTreeRequest> wrappedRequest = RequestWrapper.wrap(new CategoryTreeRequest());
-        mAPI.requestCategoryTree(wrappedRequest, new retrofit.Callback<ResponseWrapper<CategoryTreeWrapper>>() {
+        RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(new CategoryTreeRequest());
+        mAPI.requestCategoryTree(wrappedRequest, new retrofit.Callback<ResponseEnvelope<CategoryTreeResponse>>() {
             @Override
-            public void success(ResponseWrapper<CategoryTreeWrapper> categoryTreeWrapper, Response response) {
-                callback.onCompleted(new CategoryTree(categoryTreeWrapper.getWrappedObject().getCategoryTree()));
+            public void success(ResponseEnvelope<CategoryTreeResponse> categoryTreeWrapper, Response response) {
+                callback.onCompleted(new CategoryTree(categoryTreeWrapper.unwrap().get()));
             }
 
             @Override
@@ -119,16 +118,16 @@ public class ShopApiClient {
         });
     }
 
-    public void requestFacets(FacetRequest facetRequest, final Callback<List<Facet>> callback) {
+    public void requestFacets(FacetsRequest facetsRequest, final Callback<List<Facet>> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<FacetRequest> wrappedRequest = RequestWrapper.wrap(facetRequest);
-        mAPI.requestFacets(wrappedRequest, new retrofit.Callback<ResponseWrapper<FacetsWrapper>>() {
+        RequestEnvelope<FacetsRequest> wrappedRequest = RequestEnvelope.wrap(facetsRequest);
+        mAPI.requestFacets(wrappedRequest, new retrofit.Callback<ResponseEnvelope<FacetsResponse>>() {
             @Override
-            public void success(ResponseWrapper<FacetsWrapper> facetsWrapper, Response response) {
-                callback.onCompleted(facetsWrapper.getWrappedObject().getFacets());
+            public void success(ResponseEnvelope<FacetsResponse> facetsWrapper, Response response) {
+                callback.onCompleted(facetsWrapper.unwrap().get());
             }
 
             @Override
@@ -143,19 +142,11 @@ public class ShopApiClient {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<FacetTypesRequest> wrappedRequest = RequestWrapper.wrap(new FacetTypesRequest());
-        mAPI.requestFacetTypes(wrappedRequest, new retrofit.Callback<ResponseWrapper<FacetTypesWrapper>> () {
+        RequestEnvelope<FacetTypesRequest> wrappedRequest = RequestEnvelope.wrap(new FacetTypesRequest());
+        mAPI.requestFacetTypes(wrappedRequest, new retrofit.Callback<ResponseEnvelope<FacetTypesResponse>> () {
             @Override
-            public void success(ResponseWrapper<FacetTypesWrapper> facetTypesWrapper, Response response) {
-                ArrayList<FacetGroup> facetGroups = new ArrayList<>();
-                for (Integer facetGroupId : facetTypesWrapper.getWrappedObject().getFacetTypes()) {
-                    FacetGroup facetGroup = FacetGroup.fromInteger(facetGroupId);
-                    if (facetGroup != null) {
-                        facetGroups.add(FacetGroup.fromInteger(facetGroupId));
-                    }
-                }
-
-                callback.onCompleted(facetGroups);
+            public void success(ResponseEnvelope<FacetTypesResponse> facetTypesWrapper, Response response) {
+                callback.onCompleted(facetTypesWrapper.unwrap().get());
             }
 
             @Override
@@ -170,11 +161,11 @@ public class ShopApiClient {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<AutocompleteRequest> wrappedRequest = RequestWrapper.wrap(autocompleteRequest);
-        mAPI.requestAutocomplete(wrappedRequest, new retrofit.Callback<ResponseWrapper<AutocompleteWrapper>>() {
+        RequestEnvelope<AutocompleteRequest> wrappedRequest = RequestEnvelope.wrap(autocompleteRequest);
+        mAPI.requestAutocomplete(wrappedRequest, new retrofit.Callback<ResponseEnvelope<AutocompleteResponse>>() {
             @Override
-            public void success(ResponseWrapper<AutocompleteWrapper> autocompleteWrapper, Response response) {
-                callback.onCompleted(autocompleteWrapper.getWrappedObject().getAutocomplete());
+            public void success(ResponseEnvelope<AutocompleteResponse> autocompleteResponse, Response response) {
+                callback.onCompleted(autocompleteResponse.unwrap().get());
             }
 
             @Override
@@ -189,11 +180,11 @@ public class ShopApiClient {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<ProductSearchRequest> wrappedRequest = RequestWrapper.wrap(productSearchRequest);
-        mAPI.requestProductSearch(wrappedRequest, new retrofit.Callback<ResponseWrapper<ProductSearchWrapper>>() {
+        RequestEnvelope<ProductSearchRequest> wrappedRequest = RequestEnvelope.wrap(productSearchRequest);
+        mAPI.requestProductSearch(wrappedRequest, new retrofit.Callback<ResponseEnvelope<ProductSearchResponse>>() {
             @Override
-            public void success(ResponseWrapper<ProductSearchWrapper> productSearchWrapper, Response response) {
-                callback.onCompleted(productSearchWrapper.getWrappedObject().getProductSearch());
+            public void success(ResponseEnvelope<ProductSearchResponse> productSearchWrapper, Response response) {
+                callback.onCompleted(productSearchWrapper.unwrap().get());
             }
 
             @Override
@@ -203,16 +194,16 @@ public class ShopApiClient {
         });
     }
 
-    public void requestProducts(ProductRequest productRequest, final Callback<List<Product>> callback) {
+    public void requestProducts(ProductsRequest productsRequest, final Callback<List<Product>> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<ProductRequest> wrappedRequest = RequestWrapper.wrap(productRequest);
-        mAPI.requestProducts(wrappedRequest, new retrofit.Callback<ResponseWrapper<ProductsWrapper>>() {
+        RequestEnvelope<ProductsRequest> wrappedRequest = RequestEnvelope.wrap(productsRequest);
+        mAPI.requestProducts(wrappedRequest, new retrofit.Callback<ResponseEnvelope<ProductsResponse>>() {
             @Override
-            public void success(ResponseWrapper<ProductsWrapper> productsWrapper, Response response) {
-                callback.onCompleted(productsWrapper.getWrappedObject().getProducts());
+            public void success(ResponseEnvelope<ProductsResponse> productsResponse, Response response) {
+                callback.onCompleted(productsResponse.unwrap().get());
             }
 
             @Override

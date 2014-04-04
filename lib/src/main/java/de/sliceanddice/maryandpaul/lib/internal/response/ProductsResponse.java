@@ -1,4 +1,4 @@
-package de.sliceanddice.maryandpaul.lib.wrapper.request;
+package de.sliceanddice.maryandpaul.lib.internal.response;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,7 +8,7 @@ import java.util.Map;
 
 import de.sliceanddice.maryandpaul.lib.models.Product;
 
-public class ProductsWrapper extends BaseWrapper {
+public class ProductsResponse implements CollinsResponse<List<Product>> {
 
     @SerializedName("products")
     private Products productsResult;
@@ -19,7 +19,7 @@ public class ProductsWrapper extends BaseWrapper {
         private Map<Long, Product> products;
     }
 
-    public List<Product> getProducts() {
+    public List<Product> get() {
         return new ArrayList<>(productsResult.products.values());
     }
 }

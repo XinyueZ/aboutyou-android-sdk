@@ -1,15 +1,15 @@
-package de.sliceanddice.maryandpaul.lib.wrapper.request;
+package de.sliceanddice.maryandpaul.lib.internal.response;
 
 import com.google.gson.annotations.SerializedName;
 
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 
-public class AutocompleteWrapper extends BaseWrapper {
+public class AutocompleteResponse implements CollinsResponse<Autocomplete> {
 
     @SerializedName("autocompletion")
     private Autocomplete autocomplete;
 
-    public Autocomplete getAutocomplete() {
+    public Autocomplete get() {
         return autocomplete;
     }
 }

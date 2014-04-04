@@ -2,7 +2,9 @@ package de.sliceanddice.maryandpaul.lib.enums;
 
 public enum ProductFilter {
 
-    SALEONLY(true), NONSALEONLY(false), ALL(null);
+    SALEONLY(true),
+    NONSALEONLY(false),
+    ALL(null);
 
     private Boolean value;
 

@@ -1,8 +1,8 @@
-package de.sliceanddice.maryandpaul.lib.requests;
+package de.sliceanddice.maryandpaul.lib.request;
 
 import java.util.List;
 
-public class CategoryRequest extends BaseRequest {
+public class CategoriesRequest implements CollinsRequest {
 
     private Category category;
 
@@ -20,14 +20,14 @@ public class CategoryRequest extends BaseRequest {
             return this;
         }
 
-        public CategoryRequest build() {
-            CategoryRequest categoryRequest = new CategoryRequest();
+        public CategoriesRequest build() {
+            CategoriesRequest categoriesRequest = new CategoriesRequest();
 
             Category category = new Category();
             category.ids = ids;
-            categoryRequest.category = category;
+            categoriesRequest.category = category;
 
-            return categoryRequest;
+            return categoriesRequest;
         }
     }
 

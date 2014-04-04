@@ -1,4 +1,4 @@
-package de.sliceanddice.maryandpaul.lib.requests;
+package de.sliceanddice.maryandpaul.lib.request;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,7 +6,7 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 
-public class FacetRequest extends BaseRequest {
+public class FacetsRequest implements CollinsRequest {
 
     private Facet facets = new Facet();
 
@@ -38,8 +38,8 @@ public class FacetRequest extends BaseRequest {
             return this;
         }
 
-        public FacetRequest build() {
-            FacetRequest facetRequest = new FacetRequest();
+        public FacetsRequest build() {
+            FacetsRequest facetRequest = new FacetsRequest();
 
             Facet facet = new Facet();
             facet.facetGroups = facetGroups;

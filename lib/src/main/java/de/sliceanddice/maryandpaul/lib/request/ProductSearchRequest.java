@@ -1,4 +1,4 @@
-package de.sliceanddice.maryandpaul.lib.requests;
+package de.sliceanddice.maryandpaul.lib.request;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -10,7 +10,7 @@ import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 
-public class ProductSearchRequest extends BaseRequest {
+public class ProductSearchRequest implements CollinsRequest {
 
     @SerializedName("product_search")
     private ProductSearch productSearch = new ProductSearch();
