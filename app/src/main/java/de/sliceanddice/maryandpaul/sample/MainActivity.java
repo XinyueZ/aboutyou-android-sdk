@@ -52,17 +52,7 @@ public class MainActivity extends Activity {
         categoryTree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shopApiClient.requestCategoryTree(new ShopApiClient.Callback<CategoryTree>() {
-                    @Override
-                    public void onCompleted(CategoryTree response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestCategoryTree(new ApiCallback<CategoryTree>());
             }
         });
 
@@ -74,17 +64,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                shopApiClient.requestCategories(mCategoriesRequest, new ShopApiClient.Callback<List<Category>>() {
-                    @Override
-                    public void onCompleted(List<Category> response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestCategories(mCategoriesRequest, new ApiCallback<List<Category>>());
             }
         });
 
@@ -96,17 +76,7 @@ public class MainActivity extends Activity {
                         .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
                         .build();
 
-                shopApiClient.requestFacets(facetRequest, new ShopApiClient.Callback<List<Facet>>() {
-                    @Override
-                    public void onCompleted(List<Facet> response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestFacets(facetRequest, new ApiCallback<List<Facet>>());
             }
         });
 
@@ -114,17 +84,7 @@ public class MainActivity extends Activity {
         facetTypes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shopApiClient.requestFacetTypes(new ShopApiClient.Callback<List<FacetGroup>>() {
-                    @Override
-                    public void onCompleted(List<FacetGroup> response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestFacetTypes(new ApiCallback<List<FacetGroup>>());
             }
         });
 
@@ -137,17 +97,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                shopApiClient.requestAutocompletion(autocompleteRequest, new ShopApiClient.Callback<Autocomplete>() {
-                    @Override
-                    public void onCompleted(Autocomplete response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestAutocompletion(autocompleteRequest, new ApiCallback<Autocomplete>());
             }
         });
 
@@ -168,17 +118,7 @@ public class MainActivity extends Activity {
                         .limit(10)
                         .build();
 
-                shopApiClient.requestProductSearch(request, new ShopApiClient.Callback<ProductSearch>() {
-                    @Override
-                    public void onCompleted(ProductSearch response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestProductSearch(request, new ApiCallback<ProductSearch>());
             }
         });
 
@@ -191,17 +131,7 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                shopApiClient.requestProducts(productRequest, new ShopApiClient.Callback<List<Product>>() {
-                    @Override
-                    public void onCompleted(List<Product> response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestProducts(productRequest, new ApiCallback<List<Product>>());
             }
         });
 
@@ -213,19 +143,22 @@ public class MainActivity extends Activity {
 
             @Override
             public void onClick(View v) {
-                shopApiClient.requestAddBasket(basketAddRequest, new ShopApiClient.Callback<Basket> () {
-                    @Override
-                    public void onCompleted(Basket response) {
-                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(String message) {
-
-                    }
-                });
+                shopApiClient.requestAddBasket(basketAddRequest, new ApiCallback<Basket>());
             }
         });
+    }
+    
+    private class ApiCallback<T> implements ShopApiClient.Callback<T> {
+
+        @Override
+        public void onCompleted(T response) {
+            Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onError(String message) {
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        }
     }
 
     private static class Logger implements CollinsLogger {

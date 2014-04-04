@@ -61,7 +61,7 @@ public class ShopApiClient {
 
     public interface Callback<T> {
         public void onCompleted(T response);
-        public void onError(String message); // TODO
+        public void onError(String message);
     }
 
     private final RestInterface mAPI;
@@ -183,6 +183,7 @@ public class ShopApiClient {
 
         @Override
         public void failure(RetrofitError error) {
+            mCallback.onError("failure");
             mCallback = null;
         }
     }
