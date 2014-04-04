@@ -2,7 +2,6 @@ package de.sliceanddice.maryandpaul.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -11,6 +10,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
@@ -22,12 +22,15 @@ import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.logger.CollinsLogger;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
+import de.sliceanddice.maryandpaul.lib.models.Basket;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.OrderLine;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
@@ -191,6 +194,28 @@ public class MainActivity extends Activity {
                 shopApiClient.requestProducts(productRequest, new ShopApiClient.Callback<List<Product>>() {
                     @Override
                     public void onCompleted(List<Product> response) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+            }
+        });
+
+        Button basketadd = (Button) findViewById(R.id.basketadd);
+        basketadd.setOnClickListener(new View.OnClickListener() {
+            BasketAddRequest basketAddRequest = new BasketAddRequest.Builder("session4711")
+                    .setOrderLines(Arrays.asList(new OrderLine(UUID.randomUUID().toString(), 5615651l)))
+                    .build();
+
+            @Override
+            public void onClick(View v) {
+                shopApiClient.requestAddBasket(basketAddRequest, new ShopApiClient.Callback<Basket> () {
+                    @Override
+                    public void onCompleted(Basket response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                     }
 

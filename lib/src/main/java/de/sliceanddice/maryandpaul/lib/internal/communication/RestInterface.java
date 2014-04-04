@@ -1,6 +1,7 @@
 package de.sliceanddice.maryandpaul.lib.internal.communication;
 
 import de.sliceanddice.maryandpaul.lib.internal.response.AutocompleteResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.BasketAddResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoriesResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoryTreeResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.FacetTypesResponse;
@@ -10,6 +11,7 @@ import de.sliceanddice.maryandpaul.lib.internal.response.ProductsResponse;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
@@ -44,5 +46,8 @@ public interface RestInterface {
 
     @POST(BASEPATH)
     void requestProducts(@Body RequestEnvelope<ProductsRequest> request, Callback<ResponseEnvelope<ProductsResponse>> callback);
+
+    @POST(BASEPATH)
+    void requestAddBasket(@Body RequestEnvelope<BasketAddRequest> request, Callback<ResponseEnvelope<BasketAddResponse>> callback);
 
 }

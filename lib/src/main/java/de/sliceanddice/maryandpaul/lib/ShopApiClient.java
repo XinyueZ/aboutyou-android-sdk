@@ -17,6 +17,7 @@ import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.internal.communication.AuthenticationRequestInterceptor;
 import de.sliceanddice.maryandpaul.lib.internal.communication.RestInterface;
 import de.sliceanddice.maryandpaul.lib.internal.response.AutocompleteResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.BasketAddResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoriesResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoryTreeResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CollinsResponse;
@@ -33,12 +34,14 @@ import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
 import de.sliceanddice.maryandpaul.lib.logger.CollinsLogger;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
+import de.sliceanddice.maryandpaul.lib.models.Basket;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.request.CollinsRequest;
@@ -139,6 +142,12 @@ public class ShopApiClient {
         validateParams(productsRequest, callback);
         RequestEnvelope<ProductsRequest> wrappedRequest = RequestEnvelope.wrap(productsRequest);
         mAPI.requestProducts(wrappedRequest, new RetrofitCallback<ProductsResponse, List<Product>>(callback));
+    }
+
+    public void requestAddBasket(BasketAddRequest basketAddRequest, final Callback<Basket> callback) {
+        validateParams(basketAddRequest, callback);
+        RequestEnvelope<BasketAddRequest> wrappedRequest = RequestEnvelope.wrap(basketAddRequest);
+        mAPI.requestAddBasket(wrappedRequest, new RetrofitCallback<BasketAddResponse, Basket>(callback));
     }
 
     private void validateParams(CollinsRequest request, Callback callback) {
