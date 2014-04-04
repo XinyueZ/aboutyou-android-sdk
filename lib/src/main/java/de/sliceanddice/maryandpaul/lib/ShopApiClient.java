@@ -18,12 +18,14 @@ import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.requests.CategoryRequest;
 import de.sliceanddice.maryandpaul.lib.requests.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.requests.FacetRequest;
 import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
+import de.sliceanddice.maryandpaul.lib.requests.ProductRequest;
 import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
 import de.sliceanddice.maryandpaul.lib.typeadapter.DirectionTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.typeadapter.FacetGroupTypeAdapter;
@@ -37,6 +39,7 @@ import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetTypesWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.FacetsWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.ProductSearchWrapper;
+import de.sliceanddice.maryandpaul.lib.wrapper.request.ProductsWrapper;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -207,6 +210,27 @@ public class ShopApiClient {
         });
     }
 
+    public void requestProducts(List<Long> ids, final Callback<List<Product>> callback) {
+        if (callback == null) {
+            throw new IllegalArgumentException("Callback must not be null");
+        }
+
+        ProductRequest productRequest = new ProductRequest();
+        productRequest.setIds(ids);
+
+        RequestWrapper<ProductRequest> wrappedRequest = RequestWrapper.wrap(productRequest);
+        mAPI.requestProducts(wrappedRequest, new retrofit.Callback<ResponseWrapper<ProductsWrapper>>() {
+            @Override
+            public void success(ResponseWrapper<ProductsWrapper> productsWrapper, Response response) {
+                callback.onCompleted(productsWrapper.getWrappedObject().getProducts());
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+
+            }
+        });
+    }
     public interface Callback<T> {
         public void onCompleted(T response);
         public void onError(String message); // TODO

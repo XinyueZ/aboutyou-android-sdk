@@ -19,6 +19,7 @@ import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
 
@@ -140,6 +141,24 @@ public class MainActivity extends Activity {
                 shopApiClient.requestProductSearch(request, new ShopApiClient.Callback<ProductSearch>() {
                     @Override
                     public void onCompleted(ProductSearch response) {
+                        Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(String message) {
+
+                    }
+                });
+            }
+        });
+
+        Button products = (Button) findViewById(R.id.products);
+        products.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shopApiClient.requestProducts(Arrays.asList(329777l, 325136l), new ShopApiClient.Callback<List<Product>>() {
+                    @Override
+                    public void onCompleted(List<Product> response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
                     }
 

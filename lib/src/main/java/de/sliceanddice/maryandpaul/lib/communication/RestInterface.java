@@ -2,6 +2,7 @@ package de.sliceanddice.maryandpaul.lib.communication;
 
 import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.requests.FacetTypesRequest;
+import de.sliceanddice.maryandpaul.lib.requests.ProductRequest;
 import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.AutocompleteWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoriesWrapper;
@@ -14,6 +15,7 @@ import de.sliceanddice.maryandpaul.lib.requests.FacetRequest;
 import de.sliceanddice.maryandpaul.lib.wrapper.RequestWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.ResponseWrapper;
 import de.sliceanddice.maryandpaul.lib.wrapper.request.ProductSearchWrapper;
+import de.sliceanddice.maryandpaul.lib.wrapper.request.ProductsWrapper;
 import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.POST;
@@ -40,5 +42,7 @@ public interface RestInterface {
     @POST(BASEPATH)
     void requestProductSearch(@Body RequestWrapper<ProductSearchRequest> request, Callback<ResponseWrapper<ProductSearchWrapper>> callback);
 
+    @POST(BASEPATH)
+    void requestProducts(@Body RequestWrapper<ProductRequest> request, Callback<ResponseWrapper<ProductsWrapper>> callback);
 
 }

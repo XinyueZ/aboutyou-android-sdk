@@ -45,4 +45,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Productsearch" />
+
+    <Button
+        android:id="@+id/products"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Products" />
 </LinearLayout>
