@@ -4,15 +4,31 @@ import java.util.List;
 
 public class CategoryRequest extends BaseRequest {
 
-    private Category category = new Category();
-
-    public void setCategoryIds(List<Long> categoryIds) {
-        category.ids = categoryIds;
-    }
+    private Category category;
 
     private static class Category {
 
-        List<Long> ids;
+        private List<Long> ids;
+    }
+
+    public static class Builder {
+
+        private List<Long> ids;
+
+        public Builder filterByCategoryIds(List<Long> categoryIds) {
+            this.ids = categoryIds;
+            return this;
+        }
+
+        public CategoryRequest build() {
+            CategoryRequest categoryRequest = new CategoryRequest();
+
+            Category category = new Category();
+            category.ids = ids;
+            categoryRequest.category = category;
+
+            return categoryRequest;
+        }
     }
 
 }

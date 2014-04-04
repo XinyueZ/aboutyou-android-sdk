@@ -1,9 +1,10 @@
 package de.sliceanddice.maryandpaul.lib.requests;
 
-import de.sliceanddice.maryandpaul.lib.wrapper.request.CategoryTreeWrapper;
+import com.google.gson.annotations.SerializedName;
 
 public class CategoryTreeRequest extends BaseRequest {
 
-    private CategoryTreeWrapper category_tree = new CategoryTreeWrapper();
+    @SerializedName("category_tree")
+    private Object categoryTree = new Object();
 
 }

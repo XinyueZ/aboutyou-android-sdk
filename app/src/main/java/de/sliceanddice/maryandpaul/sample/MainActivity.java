@@ -23,6 +23,10 @@ import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
+import de.sliceanddice.maryandpaul.lib.requests.AutocompleteRequest;
+import de.sliceanddice.maryandpaul.lib.requests.CategoryRequest;
+import de.sliceanddice.maryandpaul.lib.requests.FacetRequest;
+import de.sliceanddice.maryandpaul.lib.requests.ProductRequest;
 import de.sliceanddice.maryandpaul.lib.requests.ProductSearchRequest;
 
 public class MainActivity extends Activity {
@@ -57,9 +61,13 @@ public class MainActivity extends Activity {
 
         Button categories = (Button) findViewById(R.id.categories);
         categories.setOnClickListener(new View.OnClickListener() {
+            CategoryRequest categoryRequest = new CategoryRequest.Builder()
+                    .filterByCategoryIds(Arrays.asList(19534l))
+                    .build();
+
             @Override
             public void onClick(View v) {
-                shopApiClient.requestCategories(Arrays.asList(19534l), new ShopApiClient.Callback<List<Category>>() {
+                shopApiClient.requestCategories(categoryRequest, new ShopApiClient.Callback<List<Category>>() {
                     @Override
                     public void onCompleted(List<Category> response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
@@ -77,7 +85,11 @@ public class MainActivity extends Activity {
         facets.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                shopApiClient.requestFacets(Arrays.asList(FacetGroup.SIZE), null, null, new ShopApiClient.Callback<List<Facet>>() {
+                FacetRequest facetRequest = new FacetRequest.Builder()
+                        .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
+                        .build();
+
+                shopApiClient.requestFacets(facetRequest, new ShopApiClient.Callback<List<Facet>>() {
                     @Override
                     public void onCompleted(List<Facet> response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
@@ -111,9 +123,14 @@ public class MainActivity extends Activity {
 
         Button autocomplete = (Button) findViewById(R.id.autocomplete);
         autocomplete.setOnClickListener(new View.OnClickListener() {
+            AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("Sho")
+                    .filterByTypes( Arrays.asList(Type.PRODUCTS))
+                    .limit(10)
+                    .build();
+
             @Override
             public void onClick(View v) {
-                shopApiClient.requestAutocompletion("Sho", 10, Arrays.asList(Type.PRODUCTS), new ShopApiClient.Callback<Autocomplete>() {
+                shopApiClient.requestAutocompletion(autocompleteRequest, new ShopApiClient.Callback<Autocomplete>() {
                     @Override
                     public void onCompleted(Autocomplete response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
@@ -160,9 +177,13 @@ public class MainActivity extends Activity {
 
         Button products = (Button) findViewById(R.id.products);
         products.setOnClickListener(new View.OnClickListener() {
+            ProductRequest productRequest = new ProductRequest.Builder()
+                    .filterByProductIds(Arrays.asList(329777l, 325136l))
+                    .build();
+
             @Override
             public void onClick(View v) {
-                shopApiClient.requestProducts(Arrays.asList(329777l, 325136l), new ShopApiClient.Callback<List<Product>>() {
+                shopApiClient.requestProducts(productRequest, new ShopApiClient.Callback<List<Product>>() {
                     @Override
                     public void onCompleted(List<Product> response) {
                         Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();

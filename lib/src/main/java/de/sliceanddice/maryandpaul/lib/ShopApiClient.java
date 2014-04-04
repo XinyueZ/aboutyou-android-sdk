@@ -81,13 +81,10 @@ public class ShopApiClient {
         return new GsonConverter(gson);
     }
 
-    public void requestCategories(List<Long> categoryIds, final Callback<List<Category>> callback) {
+    public void requestCategories(CategoryRequest categoryRequest, final Callback<List<Category>> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
-
-        CategoryRequest categoryRequest = new CategoryRequest();
-        categoryRequest.setCategoryIds(categoryIds);
 
         RequestWrapper<CategoryRequest> wrappedRequest = RequestWrapper.wrap(categoryRequest);
         mAPI.requestCategories(wrappedRequest, new retrofit.Callback<ResponseWrapper<CategoriesWrapper>>() {
@@ -108,7 +105,7 @@ public class ShopApiClient {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<CategoryTreeRequest> wrappedRequest = RequestWrapper.forType(CategoryTreeRequest.class);
+        RequestWrapper<CategoryTreeRequest> wrappedRequest = RequestWrapper.wrap(new CategoryTreeRequest());
         mAPI.requestCategoryTree(wrappedRequest, new retrofit.Callback<ResponseWrapper<CategoryTreeWrapper>>() {
             @Override
             public void success(ResponseWrapper<CategoryTreeWrapper> categoryTreeWrapper, Response response) {
@@ -122,15 +119,10 @@ public class ShopApiClient {
         });
     }
 
-    public void requestFacets(List<FacetGroup> groupIds, Integer limit, Integer offset, final Callback<List<Facet>> callback) {
+    public void requestFacets(FacetRequest facetRequest, final Callback<List<Facet>> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
-
-        FacetRequest facetRequest = new FacetRequest();
-        facetRequest.setGroup_ids(groupIds);
-        facetRequest.setLimit(limit);
-        facetRequest.setOffset(offset);
 
         RequestWrapper<FacetRequest> wrappedRequest = RequestWrapper.wrap(facetRequest);
         mAPI.requestFacets(wrappedRequest, new retrofit.Callback<ResponseWrapper<FacetsWrapper>>() {
@@ -151,7 +143,7 @@ public class ShopApiClient {
             throw new IllegalArgumentException("Callback must not be null");
         }
 
-        RequestWrapper<FacetTypesRequest> wrappedRequest = RequestWrapper.forType(FacetTypesRequest.class);
+        RequestWrapper<FacetTypesRequest> wrappedRequest = RequestWrapper.wrap(new FacetTypesRequest());
         mAPI.requestFacetTypes(wrappedRequest, new retrofit.Callback<ResponseWrapper<FacetTypesWrapper>> () {
             @Override
             public void success(ResponseWrapper<FacetTypesWrapper> facetTypesWrapper, Response response) {
@@ -173,15 +165,10 @@ public class ShopApiClient {
         });
     }
 
-    public void requestAutocompletion(String searchString, Integer limit, List<Type> types, final Callback<Autocomplete> callback) {
+    public void requestAutocompletion(AutocompleteRequest autocompleteRequest, final Callback<Autocomplete> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
-
-        AutocompleteRequest autocompleteRequest = new AutocompleteRequest();
-        autocompleteRequest.setSearchword(searchString);
-        autocompleteRequest.setLimit(limit);
-        autocompleteRequest.setTypes(types);
 
         RequestWrapper<AutocompleteRequest> wrappedRequest = RequestWrapper.wrap(autocompleteRequest);
         mAPI.requestAutocomplete(wrappedRequest, new retrofit.Callback<ResponseWrapper<AutocompleteWrapper>>() {
@@ -216,13 +203,10 @@ public class ShopApiClient {
         });
     }
 
-    public void requestProducts(List<Long> ids, final Callback<List<Product>> callback) {
+    public void requestProducts(ProductRequest productRequest, final Callback<List<Product>> callback) {
         if (callback == null) {
             throw new IllegalArgumentException("Callback must not be null");
         }
-
-        ProductRequest productRequest = new ProductRequest();
-        productRequest.setIds(ids);
 
         RequestWrapper<ProductRequest> wrappedRequest = RequestWrapper.wrap(productRequest);
         mAPI.requestProducts(wrappedRequest, new retrofit.Callback<ResponseWrapper<ProductsWrapper>>() {
