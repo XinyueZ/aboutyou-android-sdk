@@ -2,6 +2,8 @@ package de.sliceanddice.maryandpaul.lib.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public class Product {
 
     String name;
@@ -17,6 +19,7 @@ public class Product {
     @SerializedName("description_short")
     String descriptionShort;
     Long id;
+    List<Variant> variants;
 
     public String getName() {
         return name;
@@ -80,5 +83,13 @@ public class Product {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Variant> getVariants() {
+        return variants;
+    }
+
+    public void setVariants(List<Variant> variants) {
+        this.variants = variants;
     }
 }

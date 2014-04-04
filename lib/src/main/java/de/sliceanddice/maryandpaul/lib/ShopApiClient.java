@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
+import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.internal.communication.AuthenticationRequestInterceptor;
@@ -25,6 +26,7 @@ import de.sliceanddice.maryandpaul.lib.internal.response.ProductSearchResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.ProductsResponse;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.DirectionTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.FacetGroupTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.internal.typeadapter.ProductFieldsTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.SortbyTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.TypeTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
@@ -87,10 +89,12 @@ public class ShopApiClient {
     private GsonConverter buildGsonConverter() {
         Gson gson = new GsonBuilder()
                 .enableComplexMapKeySerialization()
+                .setDateFormat("dd-MM-yyyy HH:mm:ss")
                 .registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter())
                 .registerTypeAdapter(Type.class, new TypeTypeAdapter())
                 .registerTypeAdapter(Sortby.class, new SortbyTypeAdapter())
                 .registerTypeAdapter(Direction.class, new DirectionTypeAdapter())
+                .registerTypeAdapter(ProductFields.class, new ProductFieldsTypeAdapter())
                 .create();
         return new GsonConverter(gson);
     }

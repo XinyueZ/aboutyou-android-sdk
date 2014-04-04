@@ -16,6 +16,7 @@ import de.sliceanddice.maryandpaul.lib.ShopApiClient;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
+import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
@@ -182,6 +183,7 @@ public class MainActivity extends Activity {
         products.setOnClickListener(new View.OnClickListener() {
             ProductsRequest productRequest = new ProductsRequest.Builder()
                     .filterByProductIds(Arrays.asList(329777l, 325136l))
+                    .listFields(Arrays.asList(ProductFields.VARIANTS))
                     .build();
 
             @Override
