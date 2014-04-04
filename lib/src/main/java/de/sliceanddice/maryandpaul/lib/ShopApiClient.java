@@ -54,26 +54,31 @@ public class ShopApiClient {
 
     public ShopApiClient(String appId, String appPassword) {
         RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appPassword);
-        Client client = new OkClient(new OkHttpClient());
-
-        GsonBuilder gsonBuilder = new GsonBuilder();
-        gsonBuilder.enableComplexMapKeySerialization();
-        gsonBuilder.registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter());
-        gsonBuilder.registerTypeAdapter(Type.class, new TypeTypeAdapter());
-        gsonBuilder.registerTypeAdapter(Sortby.class, new SortbyTypeAdapter());
-        gsonBuilder.registerTypeAdapter(Direction.class, new DirectionTypeAdapter());
-        Gson gson = gsonBuilder.create();
-        GsonConverter gsonConverter = new GsonConverter(gson);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint("http://ant-shop-api1.wavecloud.de")
-                .setClient(client)
+                .setClient(buildClient())
                 .setRequestInterceptor(authRequestInterceptor)
-                .setConverter(gsonConverter)
+                .setConverter(buildGsonConverter())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
 
         mAPI = restAdapter.create(RestInterface.class);
+    }
+
+    private Client buildClient() {
+        return new OkClient(new OkHttpClient());
+    }
+
+    private GsonConverter buildGsonConverter() {
+        Gson gson = new GsonBuilder()
+                .enableComplexMapKeySerialization()
+                .registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter())
+                .registerTypeAdapter(Type.class, new TypeTypeAdapter())
+                .registerTypeAdapter(Sortby.class, new SortbyTypeAdapter())
+                .registerTypeAdapter(Direction.class, new DirectionTypeAdapter())
+                .create();
+        return new GsonConverter(gson);
     }
 
     public void requestCategories(List<Long> categoryIds, final Callback<List<Category>> callback) {
