@@ -29,6 +29,7 @@ import de.sliceanddice.maryandpaul.lib.internal.typeadapter.SortbyTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.TypeTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
+import de.sliceanddice.maryandpaul.lib.logger.CollinsLogger;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
@@ -59,8 +60,9 @@ public class ShopApiClient {
     }
 
     private final RestInterface mAPI;
+    private final CollinsLogger mLogger;
 
-    public ShopApiClient(String appId, String appPassword, Endpoint endpoint) {
+    public ShopApiClient(String appId, String appPassword, Endpoint endpoint, CollinsLogger logger) {
         RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appPassword);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -72,6 +74,7 @@ public class ShopApiClient {
                 .build();
 
         mAPI = restAdapter.create(RestInterface.class);
+        mLogger = logger;
     }
 
     private Client buildClient() {

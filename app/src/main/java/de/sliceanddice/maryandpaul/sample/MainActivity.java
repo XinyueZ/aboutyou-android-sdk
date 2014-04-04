@@ -2,6 +2,7 @@ package de.sliceanddice.maryandpaul.sample;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
+import de.sliceanddice.maryandpaul.lib.logger.CollinsLogger;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
@@ -40,7 +42,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ShopApiClient shopApiClient = new ShopApiClient(APP_ID, APP_PASSWORD, Endpoint.STAGE);
+        final ShopApiClient shopApiClient = new ShopApiClient(APP_ID, APP_PASSWORD, Endpoint.STAGE, new Logger());
 
         Button categoryTree = (Button) findViewById(R.id.category_tree);
         categoryTree.setOnClickListener(new View.OnClickListener() {
@@ -197,6 +199,10 @@ public class MainActivity extends Activity {
                 });
             }
         });
+    }
+
+    private static class Logger implements CollinsLogger {
+
     }
 
 }
