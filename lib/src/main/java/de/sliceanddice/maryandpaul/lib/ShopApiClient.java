@@ -8,6 +8,7 @@ import com.squareup.okhttp.OkHttpClient;
 import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
+import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
@@ -58,11 +59,11 @@ public class ShopApiClient {
 
     private final RestInterface mAPI;
 
-    public ShopApiClient(String appId, String appPassword) {
+    public ShopApiClient(String appId, String appPassword, Endpoint endpoint) {
         RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appPassword);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://ant-shop-api1.wavecloud.de")
+                .setEndpoint(endpoint.getUrl())
                 .setClient(buildClient())
                 .setRequestInterceptor(authRequestInterceptor)
                 .setConverter(buildGsonConverter())

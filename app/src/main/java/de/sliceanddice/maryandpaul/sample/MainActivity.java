@@ -13,6 +13,7 @@ import java.util.Map;
 
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
+import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
@@ -39,7 +40,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ShopApiClient shopApiClient = new ShopApiClient(APP_ID, APP_PASSWORD);
+        final ShopApiClient shopApiClient = new ShopApiClient(APP_ID, APP_PASSWORD, Endpoint.STAGE);
 
         Button categoryTree = (Button) findViewById(R.id.category_tree);
         categoryTree.setOnClickListener(new View.OnClickListener() {
