@@ -1,0 +1,29 @@
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+afterEvaluate { project ->
+    uploadArchives {
+        repositories {
+            mavenDeployer {
+                def homePath = System.properties['user.home']
+                repository(url: "file://${homePath}/maryandpaul")
+
+                beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+                pom.artifactId = POM_ARTIFACT_ID
+                pom.groupId = POM_GROUP_ID
+                pom.version = POM_VERSION
+
+                pom.project {
+                    name POM_NAME
+                    packaging POM_PACKAGING
+                }
+            }
+        }
+    }
+
+    signing {
+        required { gradle.taskGraph.hasTask("uploadArchives") }
+        sign configurations.archives
+    }
+}
