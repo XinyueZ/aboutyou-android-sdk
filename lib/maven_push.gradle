@@ -6,7 +6,8 @@ afterEvaluate { project ->
         repositories {
             mavenDeployer {
                 def homePath = System.properties['user.home']
-                repository(url: "file://${homePath}/maryandpaul")
+                repository(url: "file://${homePath}/.sliceanddice-repo")
+                uniqueVersion = false
 
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
