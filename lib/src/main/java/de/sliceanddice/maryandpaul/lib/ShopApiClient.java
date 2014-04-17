@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 
 import com.squareup.okhttp.OkHttpClient;
 
+import android.content.Context;
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -30,6 +32,7 @@ import de.sliceanddice.maryandpaul.lib.internal.typeadapter.FacetGroupTypeAdapte
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.ProductFieldsTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.SortbyTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.TypeTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.internal.widget.AuthWebDialog;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
 import de.sliceanddice.maryandpaul.lib.logger.CollinsLogger;
@@ -64,8 +67,16 @@ public class ShopApiClient {
         public void onError(String message);
     }
 
+    public interface AuthenticationCallback {
+        public void onSuccess(String accessToken);
+        public void onFailure();
+    }
+
     private final RestInterface mAPI;
     private final CollinsLogger mLogger;
+
+    private final String mAppid;
+    private final Endpoint mEndpoint;
 
     public ShopApiClient(String appId, String appPassword, Endpoint endpoint, CollinsLogger logger) {
         RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appPassword);
@@ -80,6 +91,9 @@ public class ShopApiClient {
 
         mAPI = restAdapter.create(RestInterface.class);
         mLogger = logger;
+
+        mAppid = appId;
+        mEndpoint = endpoint;
     }
 
     private Client buildClient() {
@@ -100,6 +114,22 @@ public class ShopApiClient {
                 .registerTypeAdapter(ProductFields.class, new ProductFieldsTypeAdapter())
                 .create();
         return new GsonConverter(gson);
+    }
+
+    public void requestAuthentication(Context Context, final AuthenticationCallback callback) {
+        AuthWebDialog.OnCompleteListener listener = new AuthWebDialog.OnCompleteListener() {
+            @Override
+            public void onComplete(String accessToken) {
+                if (accessToken != null) {
+                    callback.onSuccess(accessToken);
+                } else {
+                    callback.onFailure();
+                }
+            }
+        };
+
+        AuthWebDialog loginDialog = new AuthWebDialog(Context, mAppid, mEndpoint, listener);
+        loginDialog.show();
     }
 
     public void requestCategories(CategoriesRequest categoriesRequest, final Callback<List<Category>> callback) {

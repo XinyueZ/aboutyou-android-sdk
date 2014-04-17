@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 
     private static final String APP_ID = "110";
     private static final String APP_PASSWORD = "ed8272cc4d993378f595d112915920bb";
-    
+
     private ShopApiClient mShopApiClient;
 
     @Override
@@ -50,6 +50,21 @@ public class MainActivity extends Activity {
         ButterKnife.inject(this);
 
         mShopApiClient = new ShopApiClient(APP_ID, APP_PASSWORD, Endpoint.STAGE, new Logger());
+    }
+
+    @OnClick(R.id.auth)
+    public void auth() {
+        mShopApiClient.requestAuthentication(this, new ShopApiClient.AuthenticationCallback(){
+            @Override
+            public void onSuccess(String accessToken) {
+                Toast.makeText(MainActivity.this, accessToken, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure() {
+                Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @OnClick(R.id.category_tree)
