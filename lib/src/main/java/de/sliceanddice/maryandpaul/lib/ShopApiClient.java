@@ -75,7 +75,7 @@ public class ShopApiClient {
     private final RestInterface mAPI;
     private final CollinsLogger mLogger;
 
-    private final String mAppid;
+    private final String mAppId;
     private final Endpoint mEndpoint;
 
     public ShopApiClient(String appId, String appPassword, Endpoint endpoint, CollinsLogger logger) {
@@ -92,7 +92,7 @@ public class ShopApiClient {
         mAPI = restAdapter.create(RestInterface.class);
         mLogger = logger;
 
-        mAppid = appId;
+        mAppId = appId;
         mEndpoint = endpoint;
     }
 
@@ -128,7 +128,7 @@ public class ShopApiClient {
             }
         };
 
-        AuthWebDialog loginDialog = new AuthWebDialog(Context, mAppid, mEndpoint, listener);
+        AuthWebDialog loginDialog = new AuthWebDialog(Context, mAppId, mEndpoint, listener);
         loginDialog.show();
     }
 
