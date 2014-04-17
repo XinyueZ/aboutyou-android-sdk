@@ -222,7 +222,7 @@ public class AuthWebDialog extends Dialog {
                 AuthWebDialog.this.dismiss();
             }
         });
-        Drawable crossDrawable = getContext().getResources().getDrawable(R.drawable.ic_launcher); // TODO
+        Drawable crossDrawable = getContext().getResources().getDrawable(R.drawable.ic_close);
         mCrossImageView.setImageDrawable(crossDrawable);
         mCrossImageView.setVisibility(View.INVISIBLE);
     }
