@@ -20,7 +20,6 @@ import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
-import de.sliceanddice.maryandpaul.lib.logger.CollinsLogger;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Basket;
 import de.sliceanddice.maryandpaul.lib.models.Category;
@@ -156,7 +155,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    private static class Logger implements CollinsLogger {
+    private class Logger implements ShopApiClient.Logger {
 
     }
 

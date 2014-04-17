@@ -35,7 +35,6 @@ import de.sliceanddice.maryandpaul.lib.internal.typeadapter.TypeTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.widget.AuthWebDialog;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
-import de.sliceanddice.maryandpaul.lib.logger.CollinsLogger;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Basket;
 import de.sliceanddice.maryandpaul.lib.models.Category;
@@ -72,13 +71,17 @@ public class ShopApiClient {
         public void onFailure();
     }
 
+    public interface Logger {
+
+    }
+
     private final RestInterface mAPI;
-    private final CollinsLogger mLogger;
+    private final Logger mLogger;
 
     private final String mAppId;
     private final Endpoint mEndpoint;
 
-    public ShopApiClient(String appId, String appPassword, Endpoint endpoint, CollinsLogger logger) {
+    public ShopApiClient(String appId, String appPassword, Endpoint endpoint, Logger logger) {
         RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appPassword);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
@@ -217,4 +220,5 @@ public class ShopApiClient {
             mCallback = null;
         }
     }
+
 }
