@@ -64,12 +64,26 @@ public class AuthWebDialog extends Dialog {
     private boolean mListenerCalled = false;
     private boolean mIsDetached = false;
 
+    public enum Mode {
+        DEFAULT("auth"), LOGIN("auth"), REGISTER("register");
+
+        private String path;
+
+        private Mode(String path) {
+            this.path = path;
+        }
+
+        public String getPath() {
+            return path;
+        }
+    }
+
     public interface OnCompleteListener {
 
         public void onComplete(String accessToken);
     }
 
-    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, OnCompleteListener listener) {
+    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, Mode mode, OnCompleteListener listener) {
         super(context, DEFAULT_THEME);
 
         Bundle parameters = new Bundle();
@@ -80,7 +94,7 @@ public class AuthWebDialog extends Dialog {
         parameters.putString(PARAM_POPUP, "true");
         parameters.putString(PARAM_SCOPE, "firstname");
 
-        mUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, parameters).toString();
+        mUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), mode.getPath(), parameters).toString();
         mShopUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, null).toString();
 
         mOnCompleteListener = listener;

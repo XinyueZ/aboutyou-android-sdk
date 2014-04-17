@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.auth)
     public void auth() {
-        mShopApiClient.requestAuthentication(this, new ShopApiClient.AuthenticationCallback(){
+        mShopApiClient.authenticate(this, new ShopApiClient.AuthenticationCallback(){
             @Override
             public void onSuccess(String accessToken) {
                 Toast.makeText(MainActivity.this, accessToken, Toast.LENGTH_SHORT).show();

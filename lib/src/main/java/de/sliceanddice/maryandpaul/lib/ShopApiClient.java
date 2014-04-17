@@ -119,7 +119,19 @@ public class ShopApiClient {
         return new GsonConverter(gson);
     }
 
-    public void requestAuthentication(Context Context, final AuthenticationCallback callback) {
+    public void login(Context context, final AuthenticationCallback callback) {
+        requestAuthentication(context, AuthWebDialog.Mode.LOGIN, callback);
+    }
+
+    public void register(Context context, final AuthenticationCallback callback) {
+        requestAuthentication(context, AuthWebDialog.Mode.REGISTER, callback);
+    }
+
+    public void authenticate(Context context, final AuthenticationCallback callback) {
+        requestAuthentication(context, AuthWebDialog.Mode.DEFAULT, callback);
+    }
+
+    private void requestAuthentication(Context context, AuthWebDialog.Mode mode, final AuthenticationCallback callback) {
         AuthWebDialog.OnCompleteListener listener = new AuthWebDialog.OnCompleteListener() {
             @Override
             public void onComplete(String accessToken) {
@@ -131,7 +143,7 @@ public class ShopApiClient {
             }
         };
 
-        AuthWebDialog loginDialog = new AuthWebDialog(Context, mAppId, mEndpoint, listener);
+        AuthWebDialog loginDialog = new AuthWebDialog(context, mAppId, mEndpoint, mode, listener);
         loginDialog.show();
     }
 
