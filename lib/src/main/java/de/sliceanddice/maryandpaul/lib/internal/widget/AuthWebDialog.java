@@ -65,7 +65,7 @@ public class AuthWebDialog extends Dialog {
     private boolean mIsDetached = false;
 
     public enum Mode {
-        DEFAULT("auth"), LOGIN("auth"), REGISTER("register");
+        DEFAULT(null), LOGIN(null), REGISTER(null);
 
         private String path;
 
