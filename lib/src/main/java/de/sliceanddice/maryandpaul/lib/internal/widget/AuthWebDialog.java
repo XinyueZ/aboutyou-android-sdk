@@ -26,6 +26,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import java.util.List;
+
 import de.sliceanddice.maryandpaul.lib.R;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.internal.util.UrlUtil;
@@ -75,7 +77,7 @@ public class AuthWebDialog extends Dialog {
         public void onComplete(String accessToken);
     }
 
-    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, Mode mode, OnCompleteListener listener) {
+    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<String> scopes, Mode mode, OnCompleteListener listener) {
         super(context, DEFAULT_THEME);
 
         Bundle parameters = new Bundle();
@@ -84,7 +86,15 @@ public class AuthWebDialog extends Dialog {
         parameters.putString(PARAM_REDIRECT_URI, REDIRECT_URI);
         parameters.putString(PARAM_RESPONSE_TYPE, "token");
         parameters.putString(PARAM_POPUP, "true");
-        parameters.putString(PARAM_SCOPE, "firstname");
+
+        StringBuilder sb = new StringBuilder();
+        for (String scope : scopes) {
+            sb.append(scope);
+            sb.append(" ");
+        }
+        sb.deleteCharAt(sb.length()-1);
+
+        parameters.putString(PARAM_SCOPE, sb.toString());
 
         if (mode == Mode.REGISTER) {
             parameters.putString(PARAM_REGISTER, "true");

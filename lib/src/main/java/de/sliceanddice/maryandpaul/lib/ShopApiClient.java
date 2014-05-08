@@ -119,19 +119,19 @@ public class ShopApiClient {
         return new GsonConverter(gson);
     }
 
-    public void login(Context context, final AuthenticationCallback callback) {
-        requestAuthentication(context, AuthWebDialog.Mode.LOGIN, callback);
+    public void login(Context context, List<String> scopes, final AuthenticationCallback callback) {
+        requestAuthentication(context, scopes, AuthWebDialog.Mode.LOGIN, callback);
     }
 
-    public void register(Context context, final AuthenticationCallback callback) {
-        requestAuthentication(context, AuthWebDialog.Mode.REGISTER, callback);
+    public void register(Context context, List<String> scopes, final AuthenticationCallback callback) {
+        requestAuthentication(context, scopes, AuthWebDialog.Mode.REGISTER, callback);
     }
 
-    public void authenticate(Context context, final AuthenticationCallback callback) {
-        requestAuthentication(context, AuthWebDialog.Mode.DEFAULT, callback);
+    public void authenticate(Context context, List<String> scopes, final AuthenticationCallback callback) {
+        requestAuthentication(context, scopes, AuthWebDialog.Mode.DEFAULT, callback);
     }
 
-    private void requestAuthentication(Context context, AuthWebDialog.Mode mode, final AuthenticationCallback callback) {
+    private void requestAuthentication(Context context, List<String> scopes, AuthWebDialog.Mode mode, final AuthenticationCallback callback) {
         AuthWebDialog.OnCompleteListener listener = new AuthWebDialog.OnCompleteListener() {
             @Override
             public void onComplete(String accessToken) {
@@ -143,7 +143,7 @@ public class ShopApiClient {
             }
         };
 
-        AuthWebDialog loginDialog = new AuthWebDialog(context, mAppId, mEndpoint, mode, listener);
+        AuthWebDialog loginDialog = new AuthWebDialog(context, mAppId, mEndpoint, scopes, mode, listener);
         loginDialog.show();
     }
 
