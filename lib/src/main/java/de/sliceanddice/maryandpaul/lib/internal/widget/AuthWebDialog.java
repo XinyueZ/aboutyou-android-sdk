@@ -40,6 +40,7 @@ public class AuthWebDialog extends Dialog {
     private static final String PARAM_RESPONSE_TYPE = "response_type";
     private static final String PARAM_SCOPE = "scope";
     private static final String PARAM_POPUP = "popup";
+    private static final String PARAM_REGISTER = "register";
 
     private static final int NO_PADDING_SCREEN_WIDTH = 480;
     private static final int MAX_PADDING_SCREEN_WIDTH = 800;
@@ -65,17 +66,8 @@ public class AuthWebDialog extends Dialog {
     private boolean mIsDetached = false;
 
     public enum Mode {
-        DEFAULT(null), LOGIN(null), REGISTER(null);
+        DEFAULT, LOGIN, REGISTER
 
-        private String path;
-
-        private Mode(String path) {
-            this.path = path;
-        }
-
-        public String getPath() {
-            return path;
-        }
     }
 
     public interface OnCompleteListener {
@@ -94,7 +86,11 @@ public class AuthWebDialog extends Dialog {
         parameters.putString(PARAM_POPUP, "true");
         parameters.putString(PARAM_SCOPE, "firstname");
 
-        mUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), mode.getPath(), parameters).toString();
+        if (mode == Mode.REGISTER) {
+            parameters.putString(PARAM_REGISTER, "true");
+        }
+
+        mUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, parameters).toString();
         mShopUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, null).toString();
 
         mOnCompleteListener = listener;
@@ -251,7 +247,8 @@ public class AuthWebDialog extends Dialog {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith(mShopUrl)) {
+            // TODO improve url recognition
+            if (url.startsWith(mShopUrl) || url.startsWith("https://m-checkout.aboutyou.de")) {
                 return false;
             } else if (url.startsWith(AuthWebDialog.REDIRECT_URI)) {
                 Bundle values = UrlUtil.parseUrl(url);
