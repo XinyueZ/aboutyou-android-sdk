@@ -159,6 +159,11 @@ public class ShopApiClient {
         mAPI.requestCategoryTree(wrappedRequest, new RetrofitCallback<CategoryTreeResponse, CategoryTree>(callback));
     }
 
+    public CategoryTree requestCategoryTreeSync() {
+        RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(new CategoryTreeRequest());
+        return mAPI.requestCategoryTree(wrappedRequest).unwrap().get();
+    }
+
     public void requestFacets(FacetsRequest facetsRequest, final Callback<List<Facet>> callback) {
         validateParams(facetsRequest, callback);
         RequestEnvelope<FacetsRequest> wrappedRequest = RequestEnvelope.wrap(facetsRequest);

@@ -33,6 +33,9 @@ public interface RestInterface {
     void requestCategoryTree(@Body RequestEnvelope<CategoryTreeRequest> request, Callback<ResponseEnvelope<CategoryTreeResponse>> callback);
 
     @POST(BASEPATH)
+    ResponseEnvelope<CategoryTreeResponse> requestCategoryTree(@Body RequestEnvelope<CategoryTreeRequest> request);
+
+    @POST(BASEPATH)
     void requestFacets(@Body RequestEnvelope<FacetsRequest> request, Callback<ResponseEnvelope<FacetsResponse>> callback);
 
     @POST(BASEPATH)
