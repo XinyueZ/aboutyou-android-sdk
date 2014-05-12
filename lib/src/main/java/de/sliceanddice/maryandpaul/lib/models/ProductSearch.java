@@ -4,6 +4,9 @@ import java.util.List;
 
 public class ProductSearch {
 
-    List<Product> products;
+    private List<Product> products;
 
+    public List<Product> getProducts() {
+        return products;
+    }
 }
