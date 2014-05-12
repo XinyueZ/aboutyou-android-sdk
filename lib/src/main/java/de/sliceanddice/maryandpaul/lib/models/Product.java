@@ -20,6 +20,8 @@ public class Product {
     String descriptionShort;
     Long id;
     List<Variant> variants;
+    @SerializedName("default_image")
+    Image image;
 
     public String getName() {
         return name;
@@ -91,5 +93,13 @@ public class Product {
 
     public void setVariants(List<Variant> variants) {
         this.variants = variants;
+    }
+
+    public Image getImage() {
+        return image;
+    }
+
+    public void setImage(Image image) {
+        this.image = image;
     }
 }
