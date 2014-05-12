@@ -1,6 +1,7 @@
 package de.sliceanddice.maryandpaul.sample;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -34,6 +35,7 @@ import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
+import retrofit.RetrofitError;
 
 public class MainActivity extends Activity {
 
@@ -68,7 +70,13 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.category_tree)
     public void categoryTree() {
-        mShopApiClient.requestCategoryTree(new ApiCallback<CategoryTree>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestCategoryTree();
+
+            }
+        })).execute();
     }
 
     @OnClick(R.id.categories)
@@ -77,32 +85,56 @@ public class MainActivity extends Activity {
                 .filterByCategoryIds(Arrays.asList(19534l))
                 .build();
 
-        mShopApiClient.requestCategories(categoriesRequest, new ApiCallback<List<Category>>());
+        //mShopApiClient.requestCategories(categoriesRequest, new ApiCallback<List<Category>>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestCategoryTree();
+
+            }
+        })).execute();
     }
 
     @OnClick(R.id.facets)
     public void facets() {
-        FacetsRequest facetRequest = new FacetsRequest.Builder()
+        final FacetsRequest facetRequest = new FacetsRequest.Builder()
                 .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
                 .build();
 
-        mShopApiClient.requestFacets(facetRequest, new ApiCallback<List<Facet>>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestFacets(facetRequest);
+
+            }
+        })).execute();
     }
 
     @OnClick(R.id.facettypes)
     public void facettypes() {
-        mShopApiClient.requestFacetTypes(new ApiCallback<List<FacetGroup>>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestFacetTypes();
+            }
+        })).execute();
     }
 
     @OnClick(R.id.autocomplete)
     public void autocomplete() {
-        AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("Sho")
+        final AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("Sho")
                 .filterByTypes( Arrays.asList(Type.PRODUCTS))
                 .limit(10)
                 .build();
 
 
-        mShopApiClient.requestAutocompletion(autocompleteRequest, new ApiCallback<Autocomplete>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestAutocompletion(autocompleteRequest);
+
+            }
+        })).execute();
     }
 
     @OnClick(R.id.productsearch)
@@ -110,7 +142,7 @@ public class MainActivity extends Activity {
         Map<FacetGroup, List<Long>> facetFilter = new HashMap<>();
         facetFilter.put(FacetGroup.CUPSIZE, Arrays.asList(93l, 94l, 95l, 96l));
 
-        ProductSearchRequest request = new ProductSearchRequest.Builder("session4711")
+        final ProductSearchRequest request = new ProductSearchRequest.Builder("session4711")
                 .filterByMinPrice(500)
                 .filterByMaxPrice(5000)
                 .filterByStatus(ProductFilter.NONSALEONLY)
@@ -120,38 +152,72 @@ public class MainActivity extends Activity {
                 .limit(10)
                 .build();
 
-        mShopApiClient.requestProductSearch(request, new ApiCallback<ProductSearch>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestProductSearch(request);
+
+            }
+        })).execute();
     }
 
     @OnClick(R.id.products)
     public void products() {
-        ProductsRequest productRequest = new ProductsRequest.Builder()
+        final ProductsRequest productRequest = new ProductsRequest.Builder()
                 .filterByProductIds(Arrays.asList(329777l, 325136l))
                 .listFields(Arrays.asList(ProductFields.VARIANTS))
                 .build();
 
-        mShopApiClient.requestProducts(productRequest, new ApiCallback<List<Product>>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestProducts(productRequest);
+
+            }
+        })).execute();
     }
 
     @OnClick(R.id.basketadd)
     public void basketadd() {
-        BasketAddRequest basketAddRequest = new BasketAddRequest.Builder("session4711")
+        final BasketAddRequest basketAddRequest = new BasketAddRequest.Builder("session4711")
                 .setOrderLines(Arrays.asList(new OrderLine(UUID.randomUUID().toString(), 5615651l)))
                 .build();
 
-            mShopApiClient.requestAddBasket(basketAddRequest, new ApiCallback<Basket>());
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestAddBasket(basketAddRequest);
+
+            }
+        })).execute();
     }
 
-    private class ApiCallback<T> implements ShopApiClient.Callback<T> {
+    public class RequestTask extends AsyncTask<Void, Void, String> {
 
-        @Override
-        public void onCompleted(T response) {
-            Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+        private Runnable mRunnable;
+
+        public RequestTask(Runnable runnable) {
+            mRunnable = runnable;
         }
 
         @Override
-        public void onError(String message) {
-            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+        protected String doInBackground(Void... params) {
+            try {
+                mRunnable.run();
+            } catch (RetrofitError e) {
+                return e.getMessage();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String message) {
+            if (message == null) {
+                Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
 

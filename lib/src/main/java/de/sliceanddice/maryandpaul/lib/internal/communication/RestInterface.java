@@ -27,30 +27,27 @@ public interface RestInterface {
     static final String BASEPATH = "/api";
 
     @POST(BASEPATH)
-    void requestCategories(@Body RequestEnvelope<CategoriesRequest> request, Callback<ResponseEnvelope<CategoriesResponse>> callback);
-
-    @POST(BASEPATH)
-    void requestCategoryTree(@Body RequestEnvelope<CategoryTreeRequest> request, Callback<ResponseEnvelope<CategoryTreeResponse>> callback);
+    ResponseEnvelope<CategoriesResponse> requestCategories(@Body RequestEnvelope<CategoriesRequest> request);
 
     @POST(BASEPATH)
     ResponseEnvelope<CategoryTreeResponse> requestCategoryTree(@Body RequestEnvelope<CategoryTreeRequest> request);
 
     @POST(BASEPATH)
-    void requestFacets(@Body RequestEnvelope<FacetsRequest> request, Callback<ResponseEnvelope<FacetsResponse>> callback);
+    ResponseEnvelope<FacetsResponse> requestFacets(@Body RequestEnvelope<FacetsRequest> request);
 
     @POST(BASEPATH)
-    void requestFacetTypes(@Body RequestEnvelope<FacetTypesRequest> request, Callback<ResponseEnvelope<FacetTypesResponse>> callback);
+    ResponseEnvelope<FacetTypesResponse> requestFacetTypes(@Body RequestEnvelope<FacetTypesRequest> request);
 
     @POST(BASEPATH)
-    void requestAutocomplete(@Body RequestEnvelope<AutocompleteRequest> request, Callback<ResponseEnvelope<AutocompleteResponse>> callback);
+    ResponseEnvelope<AutocompleteResponse> requestAutocomplete(@Body RequestEnvelope<AutocompleteRequest> request);
 
     @POST(BASEPATH)
-    void requestProductSearch(@Body RequestEnvelope<ProductSearchRequest> request, Callback<ResponseEnvelope<ProductSearchResponse>> callback);
+    ResponseEnvelope<ProductSearchResponse> requestProductSearch(@Body RequestEnvelope<ProductSearchRequest> request);
 
     @POST(BASEPATH)
-    void requestProducts(@Body RequestEnvelope<ProductsRequest> request, Callback<ResponseEnvelope<ProductsResponse>> callback);
+    ResponseEnvelope<ProductsResponse> requestProducts(@Body RequestEnvelope<ProductsRequest> request);
 
     @POST(BASEPATH)
-    void requestAddBasket(@Body RequestEnvelope<BasketAddRequest> request, Callback<ResponseEnvelope<BasketAddResponse>> callback);
+    ResponseEnvelope<BasketAddResponse> requestAddBasket(@Body RequestEnvelope<BasketAddRequest> request);
 
 }
