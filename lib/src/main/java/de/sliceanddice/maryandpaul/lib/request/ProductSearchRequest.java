@@ -162,7 +162,7 @@ public class ProductSearchRequest implements CollinsRequest {
             filter.facets = facets;
             filter.priceRange = new ProductSearch.Filter.Prices(priceFrom, priceTo);
             filter.searchword = searchString;
-            filter.sale = productFilter.getValue();
+            filter.sale = productFilter != null ? productFilter.getValue() : null;
             productSearch.filter = filter;
 
             ProductSearch.Result result = new ProductSearch.Result();
