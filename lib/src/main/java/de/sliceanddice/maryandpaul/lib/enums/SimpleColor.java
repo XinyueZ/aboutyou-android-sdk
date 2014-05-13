@@ -24,6 +24,15 @@ public enum SimpleColor {
         mFacetId = facetId;
     }
 
+    public static SimpleColor forFacetId(int facetId) {
+        for (SimpleColor color : SimpleColor.values()) {
+            if (color.getFacetId() == facetId) {
+                return color;
+            }
+        }
+        throw new IllegalArgumentException(String.format("FacetId %d is not valid!", facetId));
+    }
+
     public int getFacetId() {
         return mFacetId;
     }
