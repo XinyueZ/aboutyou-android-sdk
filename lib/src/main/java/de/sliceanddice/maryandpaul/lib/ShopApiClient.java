@@ -7,6 +7,7 @@ import com.squareup.okhttp.OkHttpClient;
 
 import android.content.Context;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +15,7 @@ import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
+import de.sliceanddice.maryandpaul.lib.enums.SimpleColor;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.internal.communication.AuthenticationRequestInterceptor;
@@ -189,6 +191,13 @@ public class ShopApiClient {
     private void validateRequest(CollinsRequest request) {
         if (request == null) {
             throw new IllegalArgumentException("Request must not be null");
+        }
+    }
+
+    public class Helper {
+
+        public List<SimpleColor> getSimpleColorFacets() {
+            return Arrays.asList(SimpleColor.values());
         }
     }
 }
