@@ -25,6 +25,7 @@ public class Variant {
     private Integer quantity;
     @SerializedName("default_image")
     private List<Image> images;
+    private Attributes attributes;
 
     public Date getUpdatedDate() {
         return updatedDate;
@@ -112,5 +113,13 @@ public class Variant {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+
+    public Attributes getAttributes() {
+        return attributes;
+    }
+
+    public void setAttributes(Attributes attributes) {
+        this.attributes = attributes;
     }
 }

@@ -20,6 +20,7 @@ import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.internal.communication.AuthenticationRequestInterceptor;
 import de.sliceanddice.maryandpaul.lib.internal.communication.RestInterface;
+import de.sliceanddice.maryandpaul.lib.internal.typeadapter.AttributesTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.DirectionTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.FacetGroupTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.ProductFieldsTypeAdapter;
@@ -27,6 +28,7 @@ import de.sliceanddice.maryandpaul.lib.internal.typeadapter.SortbyTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.TypeTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.widget.AuthWebDialog;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
+import de.sliceanddice.maryandpaul.lib.models.Attributes;
 import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
 import de.sliceanddice.maryandpaul.lib.models.Basket;
 import de.sliceanddice.maryandpaul.lib.models.Category;
@@ -105,6 +107,7 @@ public class ShopApiClient {
                 .registerTypeAdapter(Sortby.class, new SortbyTypeAdapter())
                 .registerTypeAdapter(Direction.class, new DirectionTypeAdapter())
                 .registerTypeAdapter(ProductFields.class, new ProductFieldsTypeAdapter())
+                .registerTypeAdapter(Attributes.class, new AttributesTypeAdapter())
                 .create();
         return new GsonConverter(gson);
     }

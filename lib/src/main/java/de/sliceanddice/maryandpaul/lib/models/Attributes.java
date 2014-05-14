@@ -3,7 +3,21 @@ package de.sliceanddice.maryandpaul.lib.models;
 import java.util.HashMap;
 import java.util.List;
 
-public class Attributes extends HashMap<Long, List<Long>> {
+import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
+
+public class Attributes extends HashMap<Integer, List<Long>> {
+
+    public List<Long> getAttributes(FacetGroup facetGroup) {
+        if (contains(facetGroup)){
+            return get(facetGroup.getId());
+        } else {
+            return null;
+        }
+    }
+
+    public boolean contains(FacetGroup facetGroup) {
+        return containsKey(facetGroup.getId());
+    }
 
 
 
