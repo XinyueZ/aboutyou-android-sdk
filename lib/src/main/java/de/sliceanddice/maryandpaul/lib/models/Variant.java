@@ -3,6 +3,7 @@ package de.sliceanddice.maryandpaul.lib.models;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
+import java.util.List;
 
 public class Variant {
 
@@ -23,7 +24,7 @@ public class Variant {
     private Long id;
     private Integer quantity;
     @SerializedName("default_image")
-    Image image;
+    private List<Image> images;
 
     public Date getUpdatedDate() {
         return updatedDate;
@@ -105,11 +106,11 @@ public class Variant {
         this.quantity = quantity;
     }
 
-    public Image getImage() {
-        return image;
+    public List<Image> getImages() {
+        return images;
     }
 
-    public void setImage(Image image) {
-        this.image = image;
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }
