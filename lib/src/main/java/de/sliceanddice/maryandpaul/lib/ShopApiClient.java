@@ -38,6 +38,7 @@ import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketGetRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.request.CollinsRequest;
@@ -189,6 +190,12 @@ public class ShopApiClient {
         validateRequest(basketAddRequest);
         RequestEnvelope<BasketAddRequest> wrappedRequest = RequestEnvelope.wrap(basketAddRequest);
         return mAPI.requestAddBasket(wrappedRequest).unwrap().get();
+    }
+
+    public Basket requestGetBasket(BasketGetRequest basketGetRequest) {
+        validateRequest(basketGetRequest);
+        RequestEnvelope<BasketGetRequest> wrappedRequest = RequestEnvelope.wrap(basketGetRequest);
+        return mAPI.requestGetBasket(wrappedRequest).unwrap().get();
     }
 
     private void validateRequest(CollinsRequest request) {

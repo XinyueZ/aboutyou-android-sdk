@@ -2,6 +2,7 @@ package de.sliceanddice.maryandpaul.lib.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
 import java.util.Map;
 
 public class Basket {
@@ -13,6 +14,8 @@ public class Basket {
     @SerializedName("total_vat")
     private Long totalVat;
     private Map<Long, Product> products;
+    @SerializedName("order_lines")
+    List<OrderLine> orderLines;
 
     public Long getTotalPrice() {
         return totalPrice;
@@ -44,5 +47,13 @@ public class Basket {
 
     public void setProducts(Map<Long, Product> products) {
         this.products = products;
+    }
+
+    public List<OrderLine> getOrderLines() {
+        return orderLines;
+    }
+
+    public void setOrderLines(List<OrderLine> orderLines) {
+        this.orderLines = orderLines;
     }
 }

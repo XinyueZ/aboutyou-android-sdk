@@ -1,7 +1,7 @@
 package de.sliceanddice.maryandpaul.lib.internal.communication;
 
 import de.sliceanddice.maryandpaul.lib.internal.response.AutocompleteResponse;
-import de.sliceanddice.maryandpaul.lib.internal.response.BasketAddResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.BasketResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoriesResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.CategoryTreeResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.FacetTypesResponse;
@@ -12,13 +12,13 @@ import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketGetRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetTypesRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
-import retrofit.Callback;
 import retrofit.http.Body;
 import retrofit.http.POST;
 
@@ -48,6 +48,9 @@ public interface RestInterface {
     ResponseEnvelope<ProductsResponse> requestProducts(@Body RequestEnvelope<ProductsRequest> request);
 
     @POST(BASEPATH)
-    ResponseEnvelope<BasketAddResponse> requestAddBasket(@Body RequestEnvelope<BasketAddRequest> request);
+    ResponseEnvelope<BasketResponse> requestAddBasket(@Body RequestEnvelope<BasketAddRequest> request);
+
+    @POST(BASEPATH)
+    ResponseEnvelope<BasketResponse> requestGetBasket(@Body RequestEnvelope<BasketGetRequest> request);
 
 }
