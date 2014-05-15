@@ -39,6 +39,7 @@ import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketDeleteRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketGetRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
@@ -192,6 +193,12 @@ public class ShopApiClient {
         validateRequest(basketAddRequest);
         RequestEnvelope<BasketAddRequest> wrappedRequest = RequestEnvelope.wrap(basketAddRequest);
         return mAPI.requestAddBasket(wrappedRequest).unwrap().get();
+    }
+
+    public Basket requestDeleteBasket(BasketDeleteRequest basketDeleteRequest) {
+        validateRequest(basketDeleteRequest);
+        RequestEnvelope<BasketDeleteRequest> wrappedRequest = RequestEnvelope.wrap(basketDeleteRequest);
+        return mAPI.requestDeleteBasket(wrappedRequest).unwrap().get();
     }
 
     public Basket requestGetBasket(BasketGetRequest basketGetRequest) {
