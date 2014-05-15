@@ -34,6 +34,7 @@ import de.sliceanddice.maryandpaul.lib.models.Basket;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.InitiateOrder;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
@@ -44,6 +45,7 @@ import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.request.CollinsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetTypesRequest;
+import de.sliceanddice.maryandpaul.lib.request.InitiateOrderRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
 import retrofit.RequestInterceptor;
@@ -196,6 +198,12 @@ public class ShopApiClient {
         validateRequest(basketGetRequest);
         RequestEnvelope<BasketGetRequest> wrappedRequest = RequestEnvelope.wrap(basketGetRequest);
         return mAPI.requestGetBasket(wrappedRequest).unwrap().get();
+    }
+
+    public InitiateOrder requestInitiateOrder(InitiateOrderRequest initiateOrderRequest) {
+        validateRequest(initiateOrderRequest);
+        RequestEnvelope<InitiateOrderRequest> wrappedRequest = RequestEnvelope.wrap(initiateOrderRequest);
+        return mAPI.requestInitiateOrder(wrappedRequest).unwrap().get();
     }
 
     private void validateRequest(CollinsRequest request) {
