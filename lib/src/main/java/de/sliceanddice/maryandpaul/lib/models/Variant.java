@@ -23,7 +23,6 @@ public class Variant {
     private Long retailPrice;
     private Long id;
     private Integer quantity;
-    @SerializedName("default_image")
     private List<Image> images;
     private Attributes attributes;
 
