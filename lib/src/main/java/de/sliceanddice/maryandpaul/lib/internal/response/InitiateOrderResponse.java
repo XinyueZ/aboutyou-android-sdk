@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import de.sliceanddice.maryandpaul.lib.models.InitiateOrder;
 
-public class InitiateOrderResponse implements CollinsResponse<InitiateOrder> {
+public class InitiateOrderResponse extends CollinsResponse<InitiateOrder> {
 
     @SerializedName("initiate_order")
     private InitiateOrder initiateOrder;

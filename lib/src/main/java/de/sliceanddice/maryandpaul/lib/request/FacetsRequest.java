@@ -6,7 +6,7 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 
-public class FacetsRequest implements CollinsRequest {
+public class FacetsRequest extends CollinsRequest {
 
     private Facet facets = new Facet();
 

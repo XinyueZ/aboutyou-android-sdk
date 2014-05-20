@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 
-public class ProductsRequest implements CollinsRequest {
+public class ProductsRequest extends CollinsRequest {
 
     private Products products;
 

@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.models.Facet;
 
-public class FacetsResponse implements CollinsResponse<List<Facet>> {
+public class FacetsResponse extends CollinsResponse<List<Facet>> {
 
     private Facets facets;
 

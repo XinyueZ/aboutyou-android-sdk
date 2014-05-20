@@ -2,7 +2,7 @@ package de.sliceanddice.maryandpaul.lib.request;
 
 import java.util.List;
 
-public class CategoriesRequest implements CollinsRequest {
+public class CategoriesRequest extends CollinsRequest {
 
     private Category category;
 

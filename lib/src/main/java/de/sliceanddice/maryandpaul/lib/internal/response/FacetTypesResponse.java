@@ -7,7 +7,7 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 
-public class FacetTypesResponse implements CollinsResponse<List<FacetGroup>> {
+public class FacetTypesResponse extends CollinsResponse<List<FacetGroup>> {
 
     @SerializedName("facet_types")
     private List<Integer> facetTypes;

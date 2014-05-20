@@ -2,7 +2,7 @@ package de.sliceanddice.maryandpaul.lib.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public class BasketGetRequest implements CollinsRequest {
+public class BasketGetRequest extends CollinsRequest {
 
     private Basket basket;
 

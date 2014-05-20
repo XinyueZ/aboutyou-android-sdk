@@ -8,7 +8,7 @@ import java.util.Map;
 
 import de.sliceanddice.maryandpaul.lib.models.Category;
 
-public class CategoriesResponse implements CollinsResponse<List<Category>> {
+public class CategoriesResponse extends CollinsResponse<List<Category>> {
 
     @SerializedName("category")
     private Map<Long, Category> categories;

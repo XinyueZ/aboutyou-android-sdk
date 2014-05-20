@@ -4,7 +4,7 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.enums.Type;
 
-public class AutocompleteRequest implements CollinsRequest {
+public class AutocompleteRequest extends CollinsRequest {
 
     private Autocompletion autocompletion;
 

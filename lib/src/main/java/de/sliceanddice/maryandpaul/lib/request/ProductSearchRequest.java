@@ -10,7 +10,7 @@ import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 
-public class ProductSearchRequest implements CollinsRequest {
+public class ProductSearchRequest extends CollinsRequest {
 
     @SerializedName("product_search")
     private ProductSearch productSearch = new ProductSearch();

@@ -6,7 +6,7 @@ import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.models.OrderLine;
 
-public class BasketModifyRequest implements CollinsRequest {
+public class BasketModifyRequest extends CollinsRequest {
 
     private Basket basket;
 

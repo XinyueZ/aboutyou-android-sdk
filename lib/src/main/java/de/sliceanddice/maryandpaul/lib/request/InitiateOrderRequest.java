@@ -2,7 +2,7 @@ package de.sliceanddice.maryandpaul.lib.request;
 
 import com.google.gson.annotations.SerializedName;
 
-public class InitiateOrderRequest implements CollinsRequest {
+public class InitiateOrderRequest extends CollinsRequest {
 
     @SerializedName("initiate_order")
     private InititateOrder initiateOrder;

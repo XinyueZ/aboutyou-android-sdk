@@ -8,7 +8,7 @@ import java.util.Map;
 
 import de.sliceanddice.maryandpaul.lib.models.Product;
 
-public class ProductsResponse implements CollinsResponse<List<Product>> {
+public class ProductsResponse extends CollinsResponse<List<Product>> {
 
     @SerializedName("products")
     private Products productsResult;
