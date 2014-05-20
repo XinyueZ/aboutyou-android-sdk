@@ -113,7 +113,7 @@ public class ShopApiClient {
         return new GsonConverter(gson);
     }
 
-    public void requestAuthentication(Context context, List<String> scopes, AuthenticationRequestMode mode, final AuthenticationCallback callback) {
+    public void requestAuthentication(Context context, List<String> scopes, AuthenticationRequestMode mode, String redirectUrl, final AuthenticationCallback callback) {
         AuthWebDialog.OnCompleteListener listener = new AuthWebDialog.OnCompleteListener() {
             @Override
             public void onComplete(String accessToken) {
@@ -125,7 +125,7 @@ public class ShopApiClient {
             }
         };
 
-        AuthWebDialog loginDialog = new AuthWebDialog(context, mAppId, mEndpoint, scopes, mode, listener);
+        AuthWebDialog loginDialog = new AuthWebDialog(context, mAppId, mEndpoint, scopes, mode, redirectUrl, listener);
         loginDialog.show();
     }
 

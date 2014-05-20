@@ -36,8 +36,6 @@ import de.sliceanddice.maryandpaul.lib.internal.util.UrlUtil;
 // Based on Facebook SDK WebDialog
 public class AuthWebDialog extends Dialog {
 
-    private static final String REDIRECT_URI = "http://mp.sdk/oauth";
-
     private static final String PARAM_CLIENT_ID = "client_id";
     private static final String PARAM_REDIRECT_URI = "redirect_uri";
     private static final String PARAM_RESPONSE_TYPE = "response_type";
@@ -57,6 +55,7 @@ public class AuthWebDialog extends Dialog {
 
     private String mUrl;
     private String mShopUrl;
+    private String mRedirectUrl;
 
     private FrameLayout mContentFrameLayout;
     private WebView mWebView;
@@ -73,13 +72,13 @@ public class AuthWebDialog extends Dialog {
         public void onComplete(String accessToken);
     }
 
-    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<String> scopes, AuthenticationRequestMode mode, OnCompleteListener listener) {
+    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<String> scopes, AuthenticationRequestMode mode, String redirectUrl, OnCompleteListener listener) {
         super(context, DEFAULT_THEME);
 
         Bundle parameters = new Bundle();
 
         parameters.putString(PARAM_CLIENT_ID, clientId);
-        parameters.putString(PARAM_REDIRECT_URI, REDIRECT_URI);
+        parameters.putString(PARAM_REDIRECT_URI, redirectUrl);
         parameters.putString(PARAM_RESPONSE_TYPE, "token");
         parameters.putString(PARAM_POPUP, "true");
 
@@ -98,6 +97,7 @@ public class AuthWebDialog extends Dialog {
 
         mUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, parameters).toString();
         mShopUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, null).toString();
+        mRedirectUrl = redirectUrl;
 
         mOnCompleteListener = listener;
     }
@@ -256,7 +256,7 @@ public class AuthWebDialog extends Dialog {
             // TODO improve url recognition
             if (url.startsWith(mShopUrl) || url.startsWith("https://m-checkout.aboutyou.de")) {
                 return false;
-            } else if (url.startsWith(AuthWebDialog.REDIRECT_URI)) {
+            } else if (url.startsWith(mRedirectUrl)) {
                 Bundle values = UrlUtil.parseUrl(url);
 
                 // TODO error handling
