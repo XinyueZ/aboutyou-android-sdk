@@ -56,11 +56,6 @@ import retrofit.converter.GsonConverter;
 
 public class ShopApiClient {
 
-    public interface Callback<T> {
-        public void onCompleted(T response);
-        public void onError(String message);
-    }
-
     public interface AuthenticationCallback {
         public void onSuccess(String accessToken);
         public void onFailure();
