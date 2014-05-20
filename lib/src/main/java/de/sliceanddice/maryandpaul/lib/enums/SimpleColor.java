@@ -18,10 +18,10 @@ public enum SimpleColor {
     WHITE(570),
     GREEN(579);
 
-    private int mFacetId;
+    private int facetId;
 
     private SimpleColor(int facetId){
-        mFacetId = facetId;
+        this.facetId = facetId;
     }
 
     public static SimpleColor forFacetId(int facetId) {
@@ -34,6 +34,6 @@ public enum SimpleColor {
     }
 
     public int getFacetId() {
-        return mFacetId;
+        return facetId;
     }
 }
