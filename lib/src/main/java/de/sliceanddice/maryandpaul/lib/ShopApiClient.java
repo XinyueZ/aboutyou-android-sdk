@@ -56,6 +56,8 @@ import retrofit.converter.GsonConverter;
 
 public class ShopApiClient {
 
+    public static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
+
     public interface AuthenticationCallback {
         public void onSuccess(String accessToken);
         public void onFailure();
@@ -99,7 +101,7 @@ public class ShopApiClient {
     private GsonConverter buildGsonConverter() {
         Gson gson = new GsonBuilder()
                 .enableComplexMapKeySerialization()
-                .setDateFormat("dd-MM-yyyy HH:mm:ss")
+                .setDateFormat(DATE_FORMAT)
                 .registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter())
                 .registerTypeAdapter(Type.class, new TypeTypeAdapter())
                 .registerTypeAdapter(Sortby.class, new SortbyTypeAdapter())
