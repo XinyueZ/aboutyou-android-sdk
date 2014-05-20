@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -21,16 +22,10 @@ import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
 import de.sliceanddice.maryandpaul.lib.enums.Type;
-import de.sliceanddice.maryandpaul.lib.models.Autocomplete;
-import de.sliceanddice.maryandpaul.lib.models.Basket;
-import de.sliceanddice.maryandpaul.lib.models.Category;
-import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
-import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.AddOrderLine;
 import de.sliceanddice.maryandpaul.lib.models.OrderLine;
-import de.sliceanddice.maryandpaul.lib.models.Product;
-import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
-import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketModifyRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
@@ -179,14 +174,17 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.basketadd)
     public void basketadd() {
-        final BasketAddRequest basketAddRequest = new BasketAddRequest.Builder("session4711")
-                .setOrderLines(Arrays.asList(new OrderLine(UUID.randomUUID().toString(), 5615651l)))
+        List<OrderLine> orderLines = new ArrayList<>();
+        orderLines.add(new AddOrderLine(UUID.randomUUID().toString(), 5615651l));
+
+        final BasketModifyRequest basketModifyRequest = new BasketModifyRequest.Builder("session4711")
+                .setOrderLines(orderLines)
                 .build();
 
         (new RequestTask(new Runnable() {
             @Override
             public void run() {
-                mShopApiClient.requestAddBasket(basketAddRequest);
+                mShopApiClient.requestModifyBasket(basketModifyRequest);
 
             }
         })).execute();
