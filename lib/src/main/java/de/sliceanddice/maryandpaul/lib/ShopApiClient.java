@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import de.sliceanddice.maryandpaul.lib.enums.AuthenticationRequestMode;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
@@ -112,19 +113,7 @@ public class ShopApiClient {
         return new GsonConverter(gson);
     }
 
-    public void login(Context context, List<String> scopes, final AuthenticationCallback callback) {
-        requestAuthentication(context, scopes, AuthWebDialog.Mode.LOGIN, callback);
-    }
-
-    public void register(Context context, List<String> scopes, final AuthenticationCallback callback) {
-        requestAuthentication(context, scopes, AuthWebDialog.Mode.REGISTER, callback);
-    }
-
-    public void authenticate(Context context, List<String> scopes, final AuthenticationCallback callback) {
-        requestAuthentication(context, scopes, AuthWebDialog.Mode.DEFAULT, callback);
-    }
-
-    private void requestAuthentication(Context context, List<String> scopes, AuthWebDialog.Mode mode, final AuthenticationCallback callback) {
+    public void requestAuthentication(Context context, List<String> scopes, AuthenticationRequestMode mode, final AuthenticationCallback callback) {
         AuthWebDialog.OnCompleteListener listener = new AuthWebDialog.OnCompleteListener() {
             @Override
             public void onComplete(String accessToken) {

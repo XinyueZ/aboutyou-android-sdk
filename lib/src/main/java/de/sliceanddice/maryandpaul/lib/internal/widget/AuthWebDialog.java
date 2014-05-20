@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.R;
+import de.sliceanddice.maryandpaul.lib.enums.AuthenticationRequestMode;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.internal.util.UrlUtil;
 
@@ -67,17 +68,12 @@ public class AuthWebDialog extends Dialog {
     private boolean mListenerCalled = false;
     private boolean mIsDetached = false;
 
-    public enum Mode {
-        DEFAULT, LOGIN, REGISTER
-
-    }
-
     public interface OnCompleteListener {
 
         public void onComplete(String accessToken);
     }
 
-    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<String> scopes, Mode mode, OnCompleteListener listener) {
+    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<String> scopes, AuthenticationRequestMode mode, OnCompleteListener listener) {
         super(context, DEFAULT_THEME);
 
         Bundle parameters = new Bundle();
@@ -96,7 +92,7 @@ public class AuthWebDialog extends Dialog {
 
         parameters.putString(PARAM_SCOPE, sb.toString());
 
-        if (mode == Mode.REGISTER) {
+        if (mode == AuthenticationRequestMode.REGISTER) {
             parameters.putString(PARAM_REGISTER, "true");
         }
 
