@@ -140,11 +140,6 @@ public class ShopApiClient {
         return mAPI.requestCategoryTree(wrappedRequest).unwrap().get();
     }
 
-    @Deprecated
-    public CategoryTree requestCategoryTreeSync() {
-        return requestCategoryTree();
-    }
-
     public List<Facet> requestFacets(FacetsRequest facetsRequest) {
         validateRequest(facetsRequest);
         RequestEnvelope<FacetsRequest> wrappedRequest = RequestEnvelope.wrap(facetsRequest);
