@@ -15,6 +15,7 @@ import java.util.UUID;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
+import de.sliceanddice.maryandpaul.lib.enums.AuthenticationRequestMode;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
@@ -50,17 +51,18 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.auth)
     public void auth() {
-        mShopApiClient.authenticate(this, Arrays.asList("firstname", "lastname", "id", "email"), new ShopApiClient.AuthenticationCallback(){
-            @Override
-            public void onSuccess(String accessToken) {
-                Toast.makeText(MainActivity.this, accessToken, Toast.LENGTH_SHORT).show();
-            }
+        mShopApiClient.requestAuthentication(this, Arrays.asList("firstname", "lastname", "id", "email"), AuthenticationRequestMode.DEFAULT,
+                new ShopApiClient.AuthenticationCallback() {
+                    @Override
+                    public void onSuccess(String accessToken) {
+                        Toast.makeText(MainActivity.this, accessToken, Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onFailure() {
-                Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onFailure() {
+                        Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     @OnClick(R.id.category_tree)
