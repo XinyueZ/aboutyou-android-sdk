@@ -15,7 +15,7 @@ public class Basket {
     private Long totalVat;
     private Map<Long, Product> products;
     @SerializedName("order_lines")
-    List<OrderLine> orderLines;
+    private List<OrderLine> orderLines;
 
     public Long getTotalPrice() {
         return totalPrice;

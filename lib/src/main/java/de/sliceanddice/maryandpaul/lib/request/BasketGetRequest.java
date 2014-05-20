@@ -2,10 +2,6 @@ package de.sliceanddice.maryandpaul.lib.request;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
-import de.sliceanddice.maryandpaul.lib.models.OrderLine;
-
 public class BasketGetRequest implements CollinsRequest {
 
     private Basket basket;

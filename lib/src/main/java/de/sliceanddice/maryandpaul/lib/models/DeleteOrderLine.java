@@ -2,12 +2,12 @@ package de.sliceanddice.maryandpaul.lib.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class DeleteLine {
+public class DeleteOrderLine extends OrderLine {
 
     @SerializedName("delete")
     private String id;
 
-    public DeleteLine(String id) {
+    public DeleteOrderLine(String id) {
         this.id = id;
     }
 

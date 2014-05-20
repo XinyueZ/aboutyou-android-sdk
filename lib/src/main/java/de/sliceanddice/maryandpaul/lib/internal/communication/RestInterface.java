@@ -12,8 +12,7 @@ import de.sliceanddice.maryandpaul.lib.internal.response.ProductsResponse;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
-import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
-import de.sliceanddice.maryandpaul.lib.request.BasketDeleteRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketModifyRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketGetRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
@@ -51,10 +50,7 @@ public interface RestInterface {
     ResponseEnvelope<ProductsResponse> requestProducts(@Body RequestEnvelope<ProductsRequest> request);
 
     @POST(BASEPATH)
-    ResponseEnvelope<BasketResponse> requestAddBasket(@Body RequestEnvelope<BasketAddRequest> request);
-
-    @POST(BASEPATH)
-    ResponseEnvelope<BasketResponse> requestDeleteBasket(@Body RequestEnvelope<BasketDeleteRequest> request);
+    ResponseEnvelope<BasketResponse> requestModifyBasket(@Body RequestEnvelope<BasketModifyRequest> request);
 
     @POST(BASEPATH)
     ResponseEnvelope<BasketResponse> requestGetBasket(@Body RequestEnvelope<BasketGetRequest> request);

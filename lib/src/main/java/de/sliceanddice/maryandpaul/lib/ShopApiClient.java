@@ -38,8 +38,7 @@ import de.sliceanddice.maryandpaul.lib.models.InitiateOrder;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
-import de.sliceanddice.maryandpaul.lib.request.BasketAddRequest;
-import de.sliceanddice.maryandpaul.lib.request.BasketDeleteRequest;
+import de.sliceanddice.maryandpaul.lib.request.BasketModifyRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketGetRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
@@ -189,16 +188,10 @@ public class ShopApiClient {
         return mAPI.requestProducts(wrappedRequest).unwrap().get();
     }
 
-    public Basket requestAddBasket(BasketAddRequest basketAddRequest) {
-        validateRequest(basketAddRequest);
-        RequestEnvelope<BasketAddRequest> wrappedRequest = RequestEnvelope.wrap(basketAddRequest);
-        return mAPI.requestAddBasket(wrappedRequest).unwrap().get();
-    }
-
-    public Basket requestDeleteBasket(BasketDeleteRequest basketDeleteRequest) {
-        validateRequest(basketDeleteRequest);
-        RequestEnvelope<BasketDeleteRequest> wrappedRequest = RequestEnvelope.wrap(basketDeleteRequest);
-        return mAPI.requestDeleteBasket(wrappedRequest).unwrap().get();
+    public Basket requestModifyBasket(BasketModifyRequest basketModifyRequest) {
+        validateRequest(basketModifyRequest);
+        RequestEnvelope<BasketModifyRequest> wrappedRequest = RequestEnvelope.wrap(basketModifyRequest);
+        return mAPI.requestModifyBasket(wrappedRequest).unwrap().get();
     }
 
     public Basket requestGetBasket(BasketGetRequest basketGetRequest) {

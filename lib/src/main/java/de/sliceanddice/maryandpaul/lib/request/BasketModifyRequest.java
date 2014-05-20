@@ -4,10 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import de.sliceanddice.maryandpaul.lib.models.DeleteLine;
 import de.sliceanddice.maryandpaul.lib.models.OrderLine;
 
-public class BasketDeleteRequest implements CollinsRequest {
+public class BasketModifyRequest implements CollinsRequest {
 
     private Basket basket;
 
@@ -15,13 +14,13 @@ public class BasketDeleteRequest implements CollinsRequest {
         @SerializedName("session_id")
         private String sessionId;
         @SerializedName("order_lines")
-        private List<DeleteLine> deleteLines;
+        private List<OrderLine> orderLines;
     }
 
     public static class Builder {
 
         private String sessionId;
-        private List<DeleteLine> deleteLines;
+        private List<OrderLine> orderLines;
 
         public Builder(String sessionId) {
             if (sessionId == null) {
@@ -30,20 +29,20 @@ public class BasketDeleteRequest implements CollinsRequest {
             this.sessionId = sessionId;
         }
 
-        public Builder setDeleteLines(List<DeleteLine> deleteLines) {
-            this.deleteLines = deleteLines;
+        public Builder setOrderLines(List<OrderLine> orderLines) {
+            this.orderLines = orderLines;
             return this;
         }
 
-        public BasketDeleteRequest build() {
-            BasketDeleteRequest basketDeleteRequest = new BasketDeleteRequest();
+        public BasketModifyRequest build() {
+            BasketModifyRequest basketModifyRequest = new BasketModifyRequest();
 
             Basket basket = new Basket();
             basket.sessionId = sessionId;
-            basket.deleteLines = deleteLines;
-            basketDeleteRequest.basket = basket;
+            basket.orderLines = orderLines;
+            basketModifyRequest.basket = basket;
 
-            return basketDeleteRequest;
+            return basketModifyRequest;
         }
 
     }
