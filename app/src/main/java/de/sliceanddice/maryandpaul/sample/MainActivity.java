@@ -51,7 +51,7 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.auth)
     public void auth() {
-        mShopApiClient.requestAuthentication(this, Arrays.asList("firstname", "lastname", "id", "email"), AuthenticationRequestMode.DEFAULT,
+        mShopApiClient.requestAuthentication(this, Arrays.asList("firstname", "lastname", "id", "email"), AuthenticationRequestMode.DEFAULT, "http://mp.sdk/oauth",
                 new ShopApiClient.AuthenticationCallback() {
                     @Override
                     public void onSuccess(String accessToken) {
