@@ -4,13 +4,13 @@ import com.google.gson.annotations.SerializedName;
 
 public class Facet {
 
-    public String name;
+    private String name;
     @SerializedName("facet_id")
-    public long facetId;
-    public long id;
-    public String value;
+    private long facetId;
+    private long id;
+    private String value;
     @SerializedName("group_name")
-    public String groupName;
+    private String groupName;
 
     public String getName() {
         return name;

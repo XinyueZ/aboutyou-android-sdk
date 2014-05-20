@@ -4,9 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 public class AddOrderLine extends OrderLine {
 
-    protected String id;
+    private String id;
     @SerializedName("variant_id")
-    protected long variantId;
+    private long variantId;
 
     public AddOrderLine(String id, Long variantId) {
         this.id = id;

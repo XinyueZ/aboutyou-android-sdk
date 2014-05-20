@@ -6,23 +6,23 @@ import java.util.List;
 
 public class Product {
 
-    String name;
+    private String name;
     @SerializedName("decription_long")
-    String descriptionLong;
-    Boolean sale;
+    private String descriptionLong;
+    private Boolean sale;
     @SerializedName("max_price")
-    Long maxPrice;
+    private Long maxPrice;
     @SerializedName("brand_id")
-    Long brandId;
+    private Long brandId;
     @SerializedName("min_price")
-    Long minPrice;
+    private Long minPrice;
     @SerializedName("description_short")
-    String descriptionShort;
-    Long id;
-    List<Variant> variants;
+    private String descriptionShort;
+    private Long id;
+    private List<Variant> variants;
     @SerializedName("default_image")
-    Image image;
-    List<Product> styles;
+    private Image image;
+    private List<Product> styles;
 
     public String getName() {
         return name;
