@@ -6,6 +6,8 @@ import retrofit.RequestInterceptor;
 
 public class AuthenticationRequestInterceptor implements RequestInterceptor {
 
+    private static final String HEADER_AUTHORIZATION = "Authorization";
+
     private final String mAppId;
     private final String mAppPassword;
 
@@ -17,6 +19,6 @@ public class AuthenticationRequestInterceptor implements RequestInterceptor {
     @Override
     public void intercept(RequestFacade requestFacade) {
         OkAuthenticator.Credential credential = OkAuthenticator.Credential.basic(mAppId, mAppPassword);
-        requestFacade.addHeader("Authorization", credential.getHeaderValue());
+        requestFacade.addHeader(HEADER_AUTHORIZATION, credential.getHeaderValue());
     }
 }
