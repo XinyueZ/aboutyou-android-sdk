@@ -7,7 +7,7 @@ import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 
 public class Attributes extends HashMap<Integer, List<Long>> {
 
-    public List<Long> getAttributes(FacetGroup facetGroup) {
+    public List<Long> get(FacetGroup facetGroup) {
         if (contains(facetGroup)){
             return get(facetGroup.getId());
         } else {
@@ -18,7 +18,5 @@ public class Attributes extends HashMap<Integer, List<Long>> {
     public boolean contains(FacetGroup facetGroup) {
         return containsKey(facetGroup.getId());
     }
-
-
 
 }
