@@ -11,18 +11,18 @@ public class Variant {
     private Date updatedDate;
     private String ean;
     @SerializedName("default")
-    private Boolean defaultVariant;
+    private boolean defaultVariant;
     @SerializedName("first_sale_date")
     private Date firstSaleDate;
-    private Long price;
+    private long price;
     @SerializedName("first_active_date")
     private Date firstActiveDate;
     @SerializedName("old_price")
-    private Long oldPrice;
+    private long oldPrice;
     @SerializedName("retail_price")
-    private Long retailPrice;
-    private Long id;
-    private Integer quantity;
+    private long retailPrice;
+    private long id;
+    private int quantity;
     private List<Image> images;
     private Attributes attributes;
 
@@ -42,11 +42,11 @@ public class Variant {
         this.ean = ean;
     }
 
-    public Boolean getDefaultVariant() {
+    public boolean getDefaultVariant() {
         return defaultVariant;
     }
 
-    public void setDefaultVariant(Boolean defaultVariant) {
+    public void setDefaultVariant(boolean defaultVariant) {
         this.defaultVariant = defaultVariant;
     }
 
@@ -58,11 +58,11 @@ public class Variant {
         this.firstSaleDate = firstSaleDate;
     }
 
-    public Long getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
@@ -74,35 +74,35 @@ public class Variant {
         this.firstActiveDate = firstActiveDate;
     }
 
-    public Long getOldPrice() {
+    public long getOldPrice() {
         return oldPrice;
     }
 
-    public void setOldPrice(Long oldPrice) {
+    public void setOldPrice(long oldPrice) {
         this.oldPrice = oldPrice;
     }
 
-    public Long getRetailPrice() {
+    public long getRetailPrice() {
         return retailPrice;
     }
 
-    public void setRetailPrice(Long retailPrice) {
+    public void setRetailPrice(long retailPrice) {
         this.retailPrice = retailPrice;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

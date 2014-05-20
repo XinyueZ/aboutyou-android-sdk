@@ -6,22 +6,22 @@ import java.util.List;
 
 public class Category {
 
-    private Long id;
+    private long id;
     private String name;
-    private Boolean active;
-    private Integer position;
+    private boolean active;
+    private int position;
     private Category parentObject;
     @SerializedName("parent")
-    private Long parentId;
+    private long parentId;
     @SerializedName("sub_categories")
     private List<Category> allSubCategories;
     private List<Category> activeSubCategories;
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -33,19 +33,19 @@ public class Category {
         this.name = name;
     }
 
-    public Boolean isActive() {
+    public boolean isActive() {
         return active;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         this.active = active;
     }
 
-    public Integer getPosition() {
+    public int getPosition() {
         return position;
     }
 
-    public void setPosition(Integer position) {
+    public void setPosition(int position) {
         this.position = position;
     }
 
@@ -57,11 +57,11 @@ public class Category {
         this.parentObject = parentObject;
     }
 
-    public Long getParentId() {
+    public long getParentId() {
         return parentId;
     }
 
-    public void setParentId(Long parentId) {
+    public void setParentId(long parentId) {
         this.parentId = parentId;
     }
 

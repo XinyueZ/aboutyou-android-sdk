@@ -9,16 +9,16 @@ public class Product {
     private String name;
     @SerializedName("decription_long")
     private String descriptionLong;
-    private Boolean sale;
+    private boolean sale;
     @SerializedName("max_price")
-    private Long maxPrice;
+    private long maxPrice;
     @SerializedName("brand_id")
-    private Long brandId;
+    private long brandId;
     @SerializedName("min_price")
-    private Long minPrice;
+    private long minPrice;
     @SerializedName("description_short")
     private String descriptionShort;
-    private Long id;
+    private long id;
     private List<Variant> variants;
     @SerializedName("default_image")
     private Image image;
@@ -40,27 +40,27 @@ public class Product {
         this.descriptionLong = descriptionLong;
     }
 
-    public Boolean getSale() {
+    public boolean getSale() {
         return sale;
     }
 
-    public void setSale(Boolean sale) {
+    public void setSale(boolean sale) {
         this.sale = sale;
     }
 
-    public Long getMaxPrice() {
+    public long getMaxPrice() {
         return maxPrice;
     }
 
-    public void setMaxPrice(Long maxPrice) {
+    public void setMaxPrice(long maxPrice) {
         this.maxPrice = maxPrice;
     }
 
-    public Long getBrandId() {
+    public long getBrandId() {
         return brandId;
     }
 
-    public void setBrandId(Long brandId) {
+    public void setBrandId(long brandId) {
         this.brandId = brandId;
     }
 
@@ -68,7 +68,7 @@ public class Product {
         return minPrice;
     }
 
-    public void setMinPrice(Long minPrice) {
+    public void setMinPrice(long minPrice) {
         this.minPrice = minPrice;
     }
 
@@ -80,11 +80,11 @@ public class Product {
         this.descriptionShort = descriptionShort;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

@@ -8,36 +8,36 @@ import java.util.Map;
 public class Basket {
 
     @SerializedName("total_price")
-    private Long totalPrice;
+    private long totalPrice;
     @SerializedName("total_net")
-    private Long totalNet;
+    private long totalNet;
     @SerializedName("total_vat")
-    private Long totalVat;
+    private long totalVat;
     private Map<Long, Product> products;
     @SerializedName("order_lines")
     private List<OrderLine> orderLines;
 
-    public Long getTotalPrice() {
+    public long getTotalPrice() {
         return totalPrice;
     }
 
-    public void setTotalPrice(Long totalPrice) {
+    public void setTotalPrice(long totalPrice) {
         this.totalPrice = totalPrice;
     }
 
-    public Long getTotalNet() {
+    public long getTotalNet() {
         return totalNet;
     }
 
-    public void setTotalNet(Long totalNet) {
+    public void setTotalNet(long totalNet) {
         this.totalNet = totalNet;
     }
 
-    public Long getTotalVat() {
+    public long getTotalVat() {
         return totalVat;
     }
 
-    public void setTotalVat(Long totalVat) {
+    public void setTotalVat(long totalVat) {
         this.totalVat = totalVat;
     }
 
