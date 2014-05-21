@@ -3,6 +3,7 @@ package de.sliceanddice.maryandpaul.sample;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -215,6 +216,12 @@ public class MainActivity extends Activity {
 
     private class Logger implements ShopApiClient.Logger {
 
+        private static final String TAG = "ShopSDK";
+
+        @Override
+        public void log(String message) {
+            Log.d(TAG, message);
+        }
     }
 
 }
