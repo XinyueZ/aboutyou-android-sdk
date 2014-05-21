@@ -43,8 +43,6 @@ public class AuthWebDialog extends Dialog {
     private static final String PARAM_POPUP = "popup";
     private static final String PARAM_REGISTER = "register";
 
-    public static final String MOBILE_CHECKOUT_URL = "https://m-checkout.aboutyou.de";
-
     private static final int NO_PADDING_SCREEN_WIDTH = 480;
     private static final int MAX_PADDING_SCREEN_WIDTH = 800;
     private static final int NO_PADDING_SCREEN_HEIGHT = 800;
@@ -57,6 +55,7 @@ public class AuthWebDialog extends Dialog {
 
     private String mUrl;
     private String mShopUrl;
+    private String mShopUrlMobile;
     private String mRedirectUrl;
 
     private FrameLayout mContentFrameLayout;
@@ -99,6 +98,7 @@ public class AuthWebDialog extends Dialog {
 
         mUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, parameters).toString();
         mShopUrl = UrlUtil.buildUri("https", endpoint.getAuthAuthority(), null, null).toString();
+        mShopUrlMobile = UrlUtil.buildUri("https", endpoint.getAuthAuthorityMobile(), null, null).toString();
         mRedirectUrl = redirectUrl;
 
         mOnCompleteListener = listener;
@@ -255,7 +255,7 @@ public class AuthWebDialog extends Dialog {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url.startsWith(mShopUrl) || url.startsWith(MOBILE_CHECKOUT_URL)) {
+            if (url.startsWith(mShopUrl) || url.startsWith(mShopUrlMobile)) {
                 return false;
             } else if (url.startsWith(mRedirectUrl)) {
                 Bundle values = UrlUtil.parseUrl(url);
