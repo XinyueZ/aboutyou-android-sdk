@@ -199,7 +199,6 @@ public class ShopApiClient {
         }
     }
 
-
     public Suggest requestSuggest(SuggestRequest suggestRequest) {
         validateRequest(suggestRequest);
         RequestEnvelope<SuggestRequest> wrappedRequest = RequestEnvelope.wrap(suggestRequest);
@@ -211,7 +210,6 @@ public class ShopApiClient {
             return null;
         }
     }
-
 
     public ProductSearch requestProductSearch(ProductSearchRequest productSearchRequest) {
         validateRequest(productSearchRequest);
@@ -225,7 +223,6 @@ public class ShopApiClient {
         }
     }
 
-
     public List<LiveVariant> requestLiveVariants(LiveVariantRequest liveVariantRequest) {
         validateRequest(liveVariantRequest);
         RequestEnvelope<LiveVariantRequest> wrappedRequest = RequestEnvelope.wrap(liveVariantRequest);
@@ -237,7 +234,6 @@ public class ShopApiClient {
             return null;
         }
     }
-
 
     public List<Product> requestProducts(ProductsRequest productsRequest) {
         validateRequest(productsRequest);
@@ -251,7 +247,6 @@ public class ShopApiClient {
         }
     }
 
-
     public Basket requestModifyBasket(BasketModifyRequest basketModifyRequest) {
         validateRequest(basketModifyRequest);
         RequestEnvelope<BasketModifyRequest> wrappedRequest = RequestEnvelope.wrap(basketModifyRequest);
@@ -264,7 +259,6 @@ public class ShopApiClient {
         }
     }
 
-
     public Basket requestGetBasket(BasketGetRequest basketGetRequest) {
         validateRequest(basketGetRequest);
         RequestEnvelope<BasketGetRequest> wrappedRequest = RequestEnvelope.wrap(basketGetRequest);
@@ -276,7 +270,6 @@ public class ShopApiClient {
             return null;
         }
     }
-
 
     public InitiateOrder requestInitiateOrder(InitiateOrderRequest initiateOrderRequest) {
         validateRequest(initiateOrderRequest);
