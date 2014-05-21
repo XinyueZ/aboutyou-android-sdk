@@ -29,11 +29,14 @@ import de.aboutyou.exceptions.CollinsException;
 import de.aboutyou.models.AddOrderLine;
 import de.aboutyou.models.OrderLine;
 import de.aboutyou.request.AutocompleteRequest;
+import de.aboutyou.request.BasketGetRequest;
 import de.aboutyou.request.BasketModifyRequest;
 import de.aboutyou.request.CategoriesRequest;
 import de.aboutyou.request.FacetsRequest;
+import de.aboutyou.request.LiveVariantRequest;
 import de.aboutyou.request.ProductsRequest;
 import de.aboutyou.request.ProductSearchRequest;
+import de.aboutyou.request.SuggestRequest;
 
 public class MainActivity extends Activity {
 
@@ -115,6 +118,20 @@ public class MainActivity extends Activity {
         })).execute();
     }
 
+    @OnClick(R.id.livevariant)
+    public void livevariant() {
+        final LiveVariantRequest liveVariantRequest = new LiveVariantRequest.Builder()
+                .filterByVariantIds(Arrays.asList(5621829l))
+                .build();
+
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestLiveVariants(liveVariantRequest);
+            }
+        })).execute();
+    }
+
     @OnClick(R.id.autocomplete)
     public void autocomplete() {
         final AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("Sho")
@@ -127,6 +144,20 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestAutocompletion(autocompleteRequest);
+            }
+        })).execute();
+    }
+
+    @OnClick(R.id.suggest)
+    public void suggest() {
+        final SuggestRequest suggestRequest = new SuggestRequest.Builder("Sho")
+                .limit(10)
+                .build();
+
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestSuggest(suggestRequest);
             }
         })).execute();
     }
@@ -181,6 +212,19 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestModifyBasket(basketModifyRequest);
+            }
+        })).execute();
+    }
+
+    @OnClick(R.id.getbasket)
+    public void basketget() {
+        final BasketGetRequest basketGetRequest = new BasketGetRequest.Builder("session4711")
+                .build();
+
+        (new RequestTask(new Runnable() {
+            @Override
+            public void run() {
+                mShopApiClient.requestGetBasket(basketGetRequest);
             }
         })).execute();
     }

@@ -47,10 +47,22 @@
         android:text="Autocomplete" />
 
     <Button
+        android:id="@+id/suggest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Suggest" />
+
+    <Button
         android:id="@+id/productsearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Productsearch" />
+
+    <Button
+        android:id="@+id/livevariant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Live variants" />
 
     <Button
         android:id="@+id/products"
@@ -63,5 +75,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add to basket" />
+
+    <Button
+        android:id="@+id/getbasket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get basket" />
 
 </LinearLayout>
