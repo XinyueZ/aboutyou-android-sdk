@@ -12,7 +12,7 @@ public class AutocompleteRequest extends CollinsRequest {
 
         private Integer limit;
         private String searchword;
-        private List<AutocompleteType> autocompleteTypes;
+        private List<AutocompleteType> types;
 
     }
 
@@ -20,7 +20,7 @@ public class AutocompleteRequest extends CollinsRequest {
 
         private Integer limit;
         private String searchword;
-        private List<AutocompleteType> autocompleteTypes;
+        private List<AutocompleteType> types;
 
         public Builder(String searchword) {
             this.searchword = searchword;
@@ -31,8 +31,8 @@ public class AutocompleteRequest extends CollinsRequest {
             return this;
         }
 
-        public Builder filterByTypes(List<AutocompleteType> autocompleteTypes) {
-            this.autocompleteTypes = autocompleteTypes;
+        public Builder filterByTypes(List<AutocompleteType> types) {
+            this.types = types;
             return this;
         }
 
@@ -42,7 +42,7 @@ public class AutocompleteRequest extends CollinsRequest {
             Autocompletion autocompletion = new Autocompletion();
             autocompletion.searchword = searchword;
             autocompletion.limit = limit;
-            autocompletion.autocompleteTypes = autocompleteTypes;
+            autocompletion.types = types;
             autocompleteRequest.autocompletion = autocompletion;
 
             return autocompleteRequest;
