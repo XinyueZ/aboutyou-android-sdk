@@ -15,7 +15,7 @@ public class Basket {
     private long totalVat;
     private Map<Long, Product> products;
     @SerializedName("order_lines")
-    private List<OrderLine> orderLines;
+    private List<AddOrderLine> orderLines;
 
     public long getTotalPrice() {
         return totalPrice;
@@ -49,11 +49,11 @@ public class Basket {
         this.products = products;
     }
 
-    public List<OrderLine> getOrderLines() {
+    public List<AddOrderLine> getOrderLines() {
         return orderLines;
     }
 
-    public void setOrderLines(List<OrderLine> orderLines) {
+    public void setOrderLines(List<AddOrderLine> orderLines) {
         this.orderLines = orderLines;
     }
 }
