@@ -24,6 +24,7 @@ import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
+import de.sliceanddice.maryandpaul.lib.exceptions.CollinsException;
 import de.sliceanddice.maryandpaul.lib.models.AddOrderLine;
 import de.sliceanddice.maryandpaul.lib.models.OrderLine;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
@@ -32,7 +33,6 @@ import de.sliceanddice.maryandpaul.lib.request.CategoriesRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
-import retrofit.RetrofitError;
 
 public class MainActivity extends Activity {
 
@@ -72,23 +72,20 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestCategoryTree();
-
             }
         })).execute();
     }
 
     @OnClick(R.id.categories)
     public void categories() {
-        CategoriesRequest categoriesRequest = new CategoriesRequest.Builder()
+        final CategoriesRequest categoriesRequest = new CategoriesRequest.Builder()
                 .filterByCategoryIds(Arrays.asList(19534l))
                 .build();
 
-        //mShopApiClient.requestCategories(categoriesRequest, new ApiCallback<List<Category>>());
         (new RequestTask(new Runnable() {
             @Override
             public void run() {
-                mShopApiClient.requestCategoryTree();
-
+                mShopApiClient.requestCategories(categoriesRequest);
             }
         })).execute();
     }
@@ -103,7 +100,6 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestFacets(facetRequest);
-
             }
         })).execute();
     }
@@ -130,7 +126,6 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestAutocompletion(autocompleteRequest);
-
             }
         })).execute();
     }
@@ -153,7 +148,6 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestProductSearch(request);
-
             }
         })).execute();
     }
@@ -169,7 +163,6 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestProducts(productRequest);
-
             }
         })).execute();
     }
@@ -187,7 +180,6 @@ public class MainActivity extends Activity {
             @Override
             public void run() {
                 mShopApiClient.requestModifyBasket(basketModifyRequest);
-
             }
         })).execute();
     }
@@ -204,7 +196,7 @@ public class MainActivity extends Activity {
         protected String doInBackground(Void... params) {
             try {
                 mRunnable.run();
-            } catch (RetrofitError e) {
+            } catch (CollinsException e) {
                 return e.getMessage();
             }
             return null;

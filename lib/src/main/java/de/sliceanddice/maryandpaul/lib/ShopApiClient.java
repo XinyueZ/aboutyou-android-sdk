@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 
 import com.squareup.okhttp.OkHttpClient;
 
+import org.apache.http.HttpStatus;
+
 import android.content.Context;
 
 import java.util.Arrays;
@@ -20,6 +22,9 @@ import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.SimpleColor;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
+import de.sliceanddice.maryandpaul.lib.exceptions.CollinsException;
+import de.sliceanddice.maryandpaul.lib.exceptions.HttpException;
+import de.sliceanddice.maryandpaul.lib.exceptions.NetworkException;
 import de.sliceanddice.maryandpaul.lib.internal.communication.AuthenticationRequestInterceptor;
 import de.sliceanddice.maryandpaul.lib.internal.communication.RestInterface;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.AttributesTypeAdapter;
@@ -36,6 +41,7 @@ import de.sliceanddice.maryandpaul.lib.models.Basket;
 import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
+import de.sliceanddice.maryandpaul.lib.models.HttpError;
 import de.sliceanddice.maryandpaul.lib.models.InitiateOrder;
 import de.sliceanddice.maryandpaul.lib.models.LiveVariant;
 import de.sliceanddice.maryandpaul.lib.models.Product;
@@ -56,6 +62,7 @@ import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
 import de.sliceanddice.maryandpaul.lib.request.SuggestRequest;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
 import retrofit.client.Client;
 import retrofit.client.OkClient;
 import retrofit.converter.GsonConverter;
@@ -70,7 +77,7 @@ public class ShopApiClient {
     }
 
     public interface Logger {
-
+        public void log(String message);
     }
 
     private final RestInterface mAPI;
@@ -137,76 +144,167 @@ public class ShopApiClient {
     public List<Category> requestCategories(CategoriesRequest categoriesRequest) {
         validateRequest(categoriesRequest);
         RequestEnvelope<CategoriesRequest> wrappedRequest = RequestEnvelope.wrap(categoriesRequest);
-        return mAPI.requestCategories(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestCategories(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
 
     public CategoryTree requestCategoryTree() {
         RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(new CategoryTreeRequest());
-        return mAPI.requestCategoryTree(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestCategoryTree(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
 
     public List<Facet> requestFacets(FacetsRequest facetsRequest) {
         validateRequest(facetsRequest);
         RequestEnvelope<FacetsRequest> wrappedRequest = RequestEnvelope.wrap(facetsRequest);
-        return mAPI.requestFacets(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestFacets(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
 
     public List<FacetGroup> requestFacetTypes() {
         RequestEnvelope<FacetTypesRequest> wrappedRequest = RequestEnvelope.wrap(new FacetTypesRequest());
-        return mAPI.requestFacetTypes(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestFacetTypes(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
 
     public Autocomplete requestAutocompletion(AutocompleteRequest autocompleteRequest) {
         validateRequest(autocompleteRequest);
         RequestEnvelope<AutocompleteRequest> wrappedRequest = RequestEnvelope.wrap(autocompleteRequest);
-        return mAPI.requestAutocomplete(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestAutocomplete(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     public Suggest requestSuggest(SuggestRequest suggestRequest) {
         validateRequest(suggestRequest);
         RequestEnvelope<SuggestRequest> wrappedRequest = RequestEnvelope.wrap(suggestRequest);
-        return mAPI.requestSuggest(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestSuggest(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     public ProductSearch requestProductSearch(ProductSearchRequest productSearchRequest) {
         validateRequest(productSearchRequest);
         RequestEnvelope<ProductSearchRequest> wrappedRequest = RequestEnvelope.wrap(productSearchRequest);
-        return mAPI.requestProductSearch(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestProductSearch(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     public List<LiveVariant> requestLiveVariants(LiveVariantRequest liveVariantRequest) {
         validateRequest(liveVariantRequest);
         RequestEnvelope<LiveVariantRequest> wrappedRequest = RequestEnvelope.wrap(liveVariantRequest);
-        return mAPI.requestLiveVariants(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestLiveVariants(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     public List<Product> requestProducts(ProductsRequest productsRequest) {
         validateRequest(productsRequest);
         RequestEnvelope<ProductsRequest> wrappedRequest = RequestEnvelope.wrap(productsRequest);
-        return mAPI.requestProducts(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestProducts(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     public Basket requestModifyBasket(BasketModifyRequest basketModifyRequest) {
         validateRequest(basketModifyRequest);
         RequestEnvelope<BasketModifyRequest> wrappedRequest = RequestEnvelope.wrap(basketModifyRequest);
-        return mAPI.requestModifyBasket(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestModifyBasket(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     public Basket requestGetBasket(BasketGetRequest basketGetRequest) {
         validateRequest(basketGetRequest);
         RequestEnvelope<BasketGetRequest> wrappedRequest = RequestEnvelope.wrap(basketGetRequest);
-        return mAPI.requestGetBasket(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestGetBasket(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     public InitiateOrder requestInitiateOrder(InitiateOrderRequest initiateOrderRequest) {
         validateRequest(initiateOrderRequest);
         RequestEnvelope<InitiateOrderRequest> wrappedRequest = RequestEnvelope.wrap(initiateOrderRequest);
-        return mAPI.requestInitiateOrder(wrappedRequest).unwrap().get();
+
+        try {
+            return mAPI.requestInitiateOrder(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
     }
+
 
     private void validateRequest(CollinsRequest request) {
         if (request == null) {
             throw new IllegalArgumentException("Request must not be null");
+        }
+    }
+
+    private void handleRetrofitError(RetrofitError e) {
+        if (e.isNetworkError()) {
+            throw new NetworkException(e.getCause());
+        } else if (e.getResponse().getStatus() == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
+            HttpError httpError = (HttpError) e.getBodyAs(HttpError.class);
+            throw new HttpException(httpError, null);
+        } else {
+            throw new CollinsException("Unknown exception");
         }
     }
 
