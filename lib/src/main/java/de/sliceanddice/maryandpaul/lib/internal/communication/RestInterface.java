@@ -10,6 +10,7 @@ import de.sliceanddice.maryandpaul.lib.internal.response.InitiateOrderResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.LiveVariantResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.ProductSearchResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.ProductsResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.SuggestResponse;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.ResponseEnvelope;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
@@ -23,6 +24,7 @@ import de.sliceanddice.maryandpaul.lib.request.InitiateOrderRequest;
 import de.sliceanddice.maryandpaul.lib.request.LiveVariantRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
+import de.sliceanddice.maryandpaul.lib.request.SuggestRequest;
 import retrofit.http.Body;
 import retrofit.http.POST;
 
@@ -44,6 +46,9 @@ public interface RestInterface {
 
     @POST(BASEPATH)
     ResponseEnvelope<AutocompleteResponse> requestAutocomplete(@Body RequestEnvelope<AutocompleteRequest> request);
+
+    @POST(BASEPATH)
+    ResponseEnvelope<SuggestResponse> requestSuggest(@Body RequestEnvelope<SuggestRequest> request);
 
     @POST(BASEPATH)
     ResponseEnvelope<ProductSearchResponse> requestProductSearch(@Body RequestEnvelope<ProductSearchRequest> request);

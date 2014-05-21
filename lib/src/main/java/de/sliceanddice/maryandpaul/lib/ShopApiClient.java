@@ -39,6 +39,7 @@ import de.sliceanddice.maryandpaul.lib.models.InitiateOrder;
 import de.sliceanddice.maryandpaul.lib.models.LiveVariant;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
+import de.sliceanddice.maryandpaul.lib.models.Suggest;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketModifyRequest;
 import de.sliceanddice.maryandpaul.lib.request.BasketGetRequest;
@@ -51,6 +52,7 @@ import de.sliceanddice.maryandpaul.lib.request.InitiateOrderRequest;
 import de.sliceanddice.maryandpaul.lib.request.LiveVariantRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
+import de.sliceanddice.maryandpaul.lib.request.SuggestRequest;
 import retrofit.RequestInterceptor;
 import retrofit.RestAdapter;
 import retrofit.client.Client;
@@ -157,6 +159,12 @@ public class ShopApiClient {
         validateRequest(autocompleteRequest);
         RequestEnvelope<AutocompleteRequest> wrappedRequest = RequestEnvelope.wrap(autocompleteRequest);
         return mAPI.requestAutocomplete(wrappedRequest).unwrap().get();
+    }
+
+    public Suggest requestSuggest(SuggestRequest suggestRequest) {
+        validateRequest(suggestRequest);
+        RequestEnvelope<SuggestRequest> wrappedRequest = RequestEnvelope.wrap(suggestRequest);
+        return mAPI.requestSuggest(wrappedRequest).unwrap().get();
     }
 
     public ProductSearch requestProductSearch(ProductSearchRequest productSearchRequest) {
