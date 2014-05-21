@@ -143,12 +143,8 @@ public class ProductSearchRequest extends CollinsRequest {
             return this;
         }
 
-        public Builder sortBy(Sortby sortby) {
+        public Builder sortBy(Sortby sortby, Direction direction) {
             this.sortby = sortby;
-            return this;
-        }
-
-        public Builder sortDirection(Direction direction) {
             this.sortDirection = direction;
             return this;
         }

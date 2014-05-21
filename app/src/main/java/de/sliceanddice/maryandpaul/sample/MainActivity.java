@@ -145,8 +145,7 @@ public class MainActivity extends Activity {
                 .filterByMaxPrice(5000)
                 .filterByStatus(ProductFilter.NONSALEONLY)
                 .filterByFacets(facetFilter)
-                .sortBy(Sortby.RELEVANCE)
-                .sortDirection(Direction.DESC)
+                .sortBy(Sortby.RELEVANCE, Direction.DESC)
                 .limit(10)
                 .build();
 
