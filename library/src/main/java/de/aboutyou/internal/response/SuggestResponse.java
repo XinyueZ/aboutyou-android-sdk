@@ -9,6 +9,7 @@ public class SuggestResponse extends CollinsResponse<Suggest> {
     @SerializedName("suggest")
     private Suggest suggests;
 
+    @Override
     public Suggest get() {
         return suggests;
     }

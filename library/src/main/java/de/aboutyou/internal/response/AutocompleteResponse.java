@@ -9,6 +9,7 @@ public class AutocompleteResponse extends CollinsResponse<Autocomplete> {
     @SerializedName("autocompletion")
     private Autocomplete autocomplete;
 
+    @Override
     public Autocomplete get() {
         return autocomplete;
     }

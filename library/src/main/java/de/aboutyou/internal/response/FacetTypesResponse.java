@@ -12,6 +12,7 @@ public class FacetTypesResponse extends CollinsResponse<List<FacetGroup>> {
     @SerializedName("facet_types")
     private List<Integer> facetTypes;
 
+    @Override
     public List<FacetGroup> get() {
         List<FacetGroup> facetGroups = new ArrayList<>();
         for (Integer facetGroupId : facetTypes) {

@@ -12,6 +12,7 @@ public class CategoryTreeResponse extends CollinsResponse<CategoryTree> {
     @SerializedName("category_tree")
     private List<Category> categoryTree;
 
+    @Override
     public CategoryTree get() {
         return new CategoryTree(categoryTree);
     }

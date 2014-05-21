@@ -8,6 +8,7 @@ public class FacetsResponse extends CollinsResponse<List<Facet>> {
 
     private Facets facets;
 
+    @Override
     public List<Facet> get() {
         return facets.facet;
     }

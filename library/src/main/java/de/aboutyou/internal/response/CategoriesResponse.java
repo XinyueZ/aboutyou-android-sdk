@@ -13,6 +13,7 @@ public class CategoriesResponse extends CollinsResponse<List<Category>> {
     @SerializedName("category")
     private Map<Long, Category> categories;
 
+    @Override
     public List<Category> get() {
         return new ArrayList<>(categories.values());
     }

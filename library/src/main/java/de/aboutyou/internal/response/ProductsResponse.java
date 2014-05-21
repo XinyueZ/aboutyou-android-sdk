@@ -19,6 +19,7 @@ public class ProductsResponse extends CollinsResponse<List<Product>> {
         private Map<Long, Product> products;
     }
 
+    @Override
     public List<Product> get() {
         return new ArrayList<>(productsResult.products.values());
     }
