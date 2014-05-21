@@ -7,6 +7,7 @@ import de.sliceanddice.maryandpaul.lib.internal.response.CategoryTreeResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.FacetTypesResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.FacetsResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.InitiateOrderResponse;
+import de.sliceanddice.maryandpaul.lib.internal.response.LiveVariantResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.ProductSearchResponse;
 import de.sliceanddice.maryandpaul.lib.internal.response.ProductsResponse;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
@@ -19,6 +20,7 @@ import de.sliceanddice.maryandpaul.lib.request.CategoryTreeRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetTypesRequest;
 import de.sliceanddice.maryandpaul.lib.request.InitiateOrderRequest;
+import de.sliceanddice.maryandpaul.lib.request.LiveVariantRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
 import retrofit.http.Body;
@@ -57,4 +59,8 @@ public interface RestInterface {
 
     @POST(BASEPATH)
     ResponseEnvelope<InitiateOrderResponse> requestInitiateOrder(@Body RequestEnvelope<InitiateOrderRequest> request);
+
+    @POST(BASEPATH)
+    ResponseEnvelope<LiveVariantResponse> requestLiveVariants(@Body RequestEnvelope<LiveVariantRequest> request);
+
 }

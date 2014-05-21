@@ -36,6 +36,7 @@ import de.sliceanddice.maryandpaul.lib.models.Category;
 import de.sliceanddice.maryandpaul.lib.models.CategoryTree;
 import de.sliceanddice.maryandpaul.lib.models.Facet;
 import de.sliceanddice.maryandpaul.lib.models.InitiateOrder;
+import de.sliceanddice.maryandpaul.lib.models.LiveVariant;
 import de.sliceanddice.maryandpaul.lib.models.Product;
 import de.sliceanddice.maryandpaul.lib.models.ProductSearch;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
@@ -47,6 +48,7 @@ import de.sliceanddice.maryandpaul.lib.request.CollinsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetsRequest;
 import de.sliceanddice.maryandpaul.lib.request.FacetTypesRequest;
 import de.sliceanddice.maryandpaul.lib.request.InitiateOrderRequest;
+import de.sliceanddice.maryandpaul.lib.request.LiveVariantRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductsRequest;
 import de.sliceanddice.maryandpaul.lib.request.ProductSearchRequest;
 import retrofit.RequestInterceptor;
@@ -161,6 +163,12 @@ public class ShopApiClient {
         validateRequest(productSearchRequest);
         RequestEnvelope<ProductSearchRequest> wrappedRequest = RequestEnvelope.wrap(productSearchRequest);
         return mAPI.requestProductSearch(wrappedRequest).unwrap().get();
+    }
+
+    public List<LiveVariant> requestLiveVariants(LiveVariantRequest liveVariantRequest) {
+        validateRequest(liveVariantRequest);
+        RequestEnvelope<LiveVariantRequest> wrappedRequest = RequestEnvelope.wrap(liveVariantRequest);
+        return mAPI.requestLiveVariants(wrappedRequest).unwrap().get();
     }
 
     public List<Product> requestProducts(ProductsRequest productsRequest) {
