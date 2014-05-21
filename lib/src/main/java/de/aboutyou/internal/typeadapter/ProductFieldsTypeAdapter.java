@@ -8,7 +8,6 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 
 import de.aboutyou.enums.ProductFields;
-import de.aboutyou.enums.Sortby;
 
 public class ProductFieldsTypeAdapter implements JsonSerializer<ProductFields> {
 
