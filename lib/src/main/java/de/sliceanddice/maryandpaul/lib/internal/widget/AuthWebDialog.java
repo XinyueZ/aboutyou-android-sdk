@@ -43,6 +43,8 @@ public class AuthWebDialog extends Dialog {
     private static final String PARAM_POPUP = "popup";
     private static final String PARAM_REGISTER = "register";
 
+    public static final String MOBILE_CHECKOUT_URL = "https://m-checkout.aboutyou.de";
+
     private static final int NO_PADDING_SCREEN_WIDTH = 480;
     private static final int MAX_PADDING_SCREEN_WIDTH = 800;
     private static final int NO_PADDING_SCREEN_HEIGHT = 800;
@@ -253,8 +255,7 @@ public class AuthWebDialog extends Dialog {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            // TODO improve url recognition
-            if (url.startsWith(mShopUrl) || url.startsWith("https://m-checkout.aboutyou.de")) {
+            if (url.startsWith(mShopUrl) || url.startsWith(MOBILE_CHECKOUT_URL)) {
                 return false;
             } else if (url.startsWith(mRedirectUrl)) {
                 Bundle values = UrlUtil.parseUrl(url);
