@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,80 +6,86 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
-    android:gravity="center"
     tools:context="de.aboutyou.sample.MainActivity">
 
-    <Button
-        android:id="@+id/auth"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Auth" />
+        android:orientation="vertical"
+        android:gravity="center">
 
-    <Button
-        android:id="@+id/category_tree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Category Tree" />
+        <Button
+            android:id="@+id/auth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Auth" />
 
-    <Button
-        android:id="@+id/categories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Categories" />
+        <Button
+            android:id="@+id/category_tree"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Category Tree" />
 
-    <Button
-        android:id="@+id/facets"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Facets" />
+        <Button
+            android:id="@+id/categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Categories" />
 
-    <Button
-        android:id="@+id/facettypes"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Facettypess" />
+        <Button
+            android:id="@+id/facets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facets" />
 
-    <Button
-        android:id="@+id/autocomplete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Autocomplete" />
+        <Button
+            android:id="@+id/facettypes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Facettypess" />
 
-    <Button
-        android:id="@+id/suggest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Suggest" />
+        <Button
+            android:id="@+id/autocomplete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Autocomplete" />
 
-    <Button
-        android:id="@+id/productsearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Productsearch" />
+        <Button
+            android:id="@+id/suggest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Suggest" />
 
-    <Button
-        android:id="@+id/livevariant"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Live variants" />
+        <Button
+            android:id="@+id/productsearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Productsearch" />
 
-    <Button
-        android:id="@+id/products"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Products" />
+        <Button
+            android:id="@+id/livevariant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Live variants" />
 
-    <Button
-        android:id="@+id/basketadd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to basket" />
+        <Button
+            android:id="@+id/products"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Products" />
 
-    <Button
-        android:id="@+id/getbasket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Get basket" />
+        <Button
+            android:id="@+id/basketadd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add to basket" />
 
-</LinearLayout>
+        <Button
+            android:id="@+id/getbasket"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Get basket" />
+
+    </LinearLayout>
+
+</ScrollView>
