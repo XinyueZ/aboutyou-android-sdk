@@ -29,6 +29,7 @@ import android.widget.LinearLayout;
 import java.util.List;
 
 import de.sliceanddice.maryandpaul.lib.R;
+import de.sliceanddice.maryandpaul.lib.enums.AuthScope;
 import de.sliceanddice.maryandpaul.lib.enums.AuthenticationRequestMode;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.internal.util.UrlUtil;
@@ -73,7 +74,7 @@ public class AuthWebDialog extends Dialog {
         public void onComplete(String accessToken);
     }
 
-    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<String> scopes, AuthenticationRequestMode mode, String redirectUrl, OnCompleteListener listener) {
+    public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<AuthScope> scopes, AuthenticationRequestMode mode, String redirectUrl, OnCompleteListener listener) {
         super(context, DEFAULT_THEME);
 
         Bundle parameters = new Bundle();
@@ -84,8 +85,8 @@ public class AuthWebDialog extends Dialog {
         parameters.putString(PARAM_POPUP, "true");
 
         StringBuilder sb = new StringBuilder();
-        for (String scope : scopes) {
-            sb.append(scope);
+        for (AuthScope scope : scopes) {
+            sb.append(scope.getScope());
             sb.append(" ");
         }
         sb.deleteCharAt(sb.length()-1);

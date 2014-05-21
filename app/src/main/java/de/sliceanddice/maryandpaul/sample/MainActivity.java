@@ -15,6 +15,7 @@ import java.util.UUID;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
+import de.sliceanddice.maryandpaul.lib.enums.AuthScope;
 import de.sliceanddice.maryandpaul.lib.enums.AuthenticationRequestMode;
 import de.sliceanddice.maryandpaul.lib.enums.AutocompleteType;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
@@ -51,7 +52,7 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.auth)
     public void auth() {
-        mShopApiClient.requestAuthentication(this, Arrays.asList("firstname", "lastname", "id", "email"), AuthenticationRequestMode.DEFAULT, "http://mp.sdk/oauth",
+        mShopApiClient.requestAuthentication(this, Arrays.asList(AuthScope.FIRSTNAME, AuthScope.LASTNAME, AuthScope.ID, AuthScope.EMAIL), AuthenticationRequestMode.DEFAULT, "http://mp.sdk/oauth",
                 new ShopApiClient.AuthenticationCallback() {
                     @Override
                     public void onSuccess(String accessToken) {
