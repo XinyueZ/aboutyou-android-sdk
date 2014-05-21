@@ -9,7 +9,7 @@ public abstract class FallibleModel {
     @SerializedName("error_message")
     private List<String> errorMessages;
     @SerializedName("error_code")
-    private int errorCode;
+    private Integer errorCode;
 
     public List<String> getErrorMessages() {
         return errorMessages;
