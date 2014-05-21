@@ -1,13 +1,13 @@
 package de.sliceanddice.maryandpaul.lib.enums;
 
-public enum Type {
+public enum AutocompleteType {
 
     PRODUCTS("products"),
     CATEGORIES("categories");
 
     private String name;
 
-    private Type(String name) {
+    private AutocompleteType(String name) {
         this.name = name;
     }
 

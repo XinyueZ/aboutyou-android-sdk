@@ -12,21 +12,21 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import de.sliceanddice.maryandpaul.lib.enums.AuthenticationRequestMode;
+import de.sliceanddice.maryandpaul.lib.enums.AutocompleteType;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.SimpleColor;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
-import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.internal.communication.AuthenticationRequestInterceptor;
 import de.sliceanddice.maryandpaul.lib.internal.communication.RestInterface;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.AttributesTypeAdapter;
+import de.sliceanddice.maryandpaul.lib.internal.typeadapter.AutocompleteTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.DirectionTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.FacetGroupTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.ProductFieldsTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.typeadapter.SortbyTypeAdapter;
-import de.sliceanddice.maryandpaul.lib.internal.typeadapter.TypeTypeAdapter;
 import de.sliceanddice.maryandpaul.lib.internal.widget.AuthWebDialog;
 import de.sliceanddice.maryandpaul.lib.internal.wrapper.RequestEnvelope;
 import de.sliceanddice.maryandpaul.lib.models.Attributes;
@@ -108,7 +108,7 @@ public class ShopApiClient {
                 .enableComplexMapKeySerialization()
                 .setDateFormat(DATE_FORMAT)
                 .registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter())
-                .registerTypeAdapter(Type.class, new TypeTypeAdapter())
+                .registerTypeAdapter(AutocompleteType.class, new AutocompleteTypeAdapter())
                 .registerTypeAdapter(Sortby.class, new SortbyTypeAdapter())
                 .registerTypeAdapter(Direction.class, new DirectionTypeAdapter())
                 .registerTypeAdapter(ProductFields.class, new ProductFieldsTypeAdapter())

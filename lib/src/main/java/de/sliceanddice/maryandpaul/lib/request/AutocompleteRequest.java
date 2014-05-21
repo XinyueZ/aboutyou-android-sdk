@@ -2,7 +2,7 @@ package de.sliceanddice.maryandpaul.lib.request;
 
 import java.util.List;
 
-import de.sliceanddice.maryandpaul.lib.enums.Type;
+import de.sliceanddice.maryandpaul.lib.enums.AutocompleteType;
 
 public class AutocompleteRequest extends CollinsRequest {
 
@@ -12,7 +12,7 @@ public class AutocompleteRequest extends CollinsRequest {
 
         private Integer limit;
         private String searchword;
-        private List<Type> types;
+        private List<AutocompleteType> autocompleteTypes;
 
     }
 
@@ -20,7 +20,7 @@ public class AutocompleteRequest extends CollinsRequest {
 
         private Integer limit;
         private String searchword;
-        private List<Type> types;
+        private List<AutocompleteType> autocompleteTypes;
 
         public Builder(String searchword) {
             this.searchword = searchword;
@@ -31,8 +31,8 @@ public class AutocompleteRequest extends CollinsRequest {
             return this;
         }
 
-        public Builder filterByTypes(List<Type> types) {
-            this.types = types;
+        public Builder filterByTypes(List<AutocompleteType> autocompleteTypes) {
+            this.autocompleteTypes = autocompleteTypes;
             return this;
         }
 
@@ -42,7 +42,7 @@ public class AutocompleteRequest extends CollinsRequest {
             Autocompletion autocompletion = new Autocompletion();
             autocompletion.searchword = searchword;
             autocompletion.limit = limit;
-            autocompletion.types = types;
+            autocompletion.autocompleteTypes = autocompleteTypes;
             autocompleteRequest.autocompletion = autocompletion;
 
             return autocompleteRequest;

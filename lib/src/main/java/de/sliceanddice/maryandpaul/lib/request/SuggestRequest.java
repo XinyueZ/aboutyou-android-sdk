@@ -4,8 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import de.sliceanddice.maryandpaul.lib.enums.Type;
-
 public class SuggestRequest extends CollinsRequest {
 
     private Suggest suggest;

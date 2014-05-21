@@ -16,13 +16,13 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.sliceanddice.maryandpaul.lib.ShopApiClient;
 import de.sliceanddice.maryandpaul.lib.enums.AuthenticationRequestMode;
+import de.sliceanddice.maryandpaul.lib.enums.AutocompleteType;
 import de.sliceanddice.maryandpaul.lib.enums.Direction;
 import de.sliceanddice.maryandpaul.lib.enums.Endpoint;
 import de.sliceanddice.maryandpaul.lib.enums.FacetGroup;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFields;
 import de.sliceanddice.maryandpaul.lib.enums.ProductFilter;
 import de.sliceanddice.maryandpaul.lib.enums.Sortby;
-import de.sliceanddice.maryandpaul.lib.enums.Type;
 import de.sliceanddice.maryandpaul.lib.models.AddOrderLine;
 import de.sliceanddice.maryandpaul.lib.models.OrderLine;
 import de.sliceanddice.maryandpaul.lib.request.AutocompleteRequest;
@@ -120,7 +120,7 @@ public class MainActivity extends Activity {
     @OnClick(R.id.autocomplete)
     public void autocomplete() {
         final AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("Sho")
-                .filterByTypes( Arrays.asList(Type.PRODUCTS))
+                .filterByTypes( Arrays.asList(AutocompleteType.PRODUCTS))
                 .limit(10)
                 .build();
 
