@@ -2,7 +2,7 @@ package de.sliceanddice.maryandpaul.lib.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LiveVariant {
+public class LiveVariant extends FallibleModel {
 
     private long id;
     @SerializedName("product_id")

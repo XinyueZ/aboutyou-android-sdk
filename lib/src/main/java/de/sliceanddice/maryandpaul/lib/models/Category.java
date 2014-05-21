@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Category {
+public class Category extends FallibleModel {
 
     private long id;
     private String name;
