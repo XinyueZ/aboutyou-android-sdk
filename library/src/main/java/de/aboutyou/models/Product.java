@@ -7,7 +7,7 @@ import java.util.List;
 public class Product extends FallibleModel {
 
     private String name;
-    @SerializedName("decription_long")
+    @SerializedName("description_long")
     private String descriptionLong;
     private boolean sale;
     @SerializedName("max_price")
