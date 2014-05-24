@@ -33,6 +33,7 @@ import de.aboutyou.internal.typeadapter.DirectionTypeAdapter;
 import de.aboutyou.internal.typeadapter.FacetGroupTypeAdapter;
 import de.aboutyou.internal.typeadapter.ProductFieldsTypeAdapter;
 import de.aboutyou.internal.typeadapter.SortbyTypeAdapter;
+import de.aboutyou.internal.typeadapter.SuggestTypeAdapter;
 import de.aboutyou.internal.widget.AuthWebDialog;
 import de.aboutyou.internal.wrapper.RequestEnvelope;
 import de.aboutyou.models.Attributes;
@@ -123,6 +124,7 @@ public class ShopApiClient {
                 .registerTypeAdapter(Direction.class, new DirectionTypeAdapter())
                 .registerTypeAdapter(ProductFields.class, new ProductFieldsTypeAdapter())
                 .registerTypeAdapter(Attributes.class, new AttributesTypeAdapter())
+                .registerTypeAdapter(Suggest.class, new SuggestTypeAdapter())
                 .create();
         return new GsonConverter(gson);
     }
