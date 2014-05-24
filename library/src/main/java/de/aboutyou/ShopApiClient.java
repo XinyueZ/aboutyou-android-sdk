@@ -90,11 +90,15 @@ public class ShopApiClient {
     private final Endpoint mEndpoint;
 
     public ShopApiClient(String appId, String appPassword, Endpoint endpoint, Logger logger) {
+        this(appId, appPassword, endpoint, logger, buildClient());
+    }
+
+    protected ShopApiClient(String appId, String appPassword, Endpoint endpoint, Logger logger, Client client) {
         RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appPassword);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(endpoint.getUrl())
-                .setClient(buildClient())
+                .setClient(client)
                 .setRequestInterceptor(authRequestInterceptor)
                 .setConverter(buildGsonConverter())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -107,14 +111,14 @@ public class ShopApiClient {
         mEndpoint = endpoint;
     }
 
-    private Client buildClient() {
+    private static Client buildClient() {
         OkHttpClient okHttpClient = new OkHttpClient();
         okHttpClient.setConnectTimeout(5, TimeUnit.SECONDS);
         okHttpClient.setReadTimeout(10, TimeUnit.SECONDS);
         return new OkClient(okHttpClient);
     }
 
-    private GsonConverter buildGsonConverter() {
+    private static GsonConverter buildGsonConverter() {
         Gson gson = new GsonBuilder()
                 .enableComplexMapKeySerialization()
                 .setDateFormat(DATE_FORMAT)
