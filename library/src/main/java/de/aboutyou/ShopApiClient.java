@@ -71,6 +71,8 @@ public class ShopApiClient {
 
     public static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
+    public static final String CDN_URL = "http://cdn.mary-paul.de/file/";
+
     public interface AuthenticationCallback {
         public void onSuccess(String accessToken);
         public void onFailure();

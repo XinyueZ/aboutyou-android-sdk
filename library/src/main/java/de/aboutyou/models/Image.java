@@ -2,27 +2,25 @@ package de.aboutyou.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Image {
+import de.aboutyou.ShopApiClient;
+import de.aboutyou.enums.Dimension;
 
-    private static final String CDN_URL = "http://cdn.mary-paul.de/file/"; // TODO mode to proper location
+public class Image {
 
     private String mime;
     @SerializedName("image")
     private Dimensions dimensions;
     private String hash;
-    private String ext;
+    @SerializedName("ext")
+    private String extension;
     private long size;
 
     public String getUrl() {
-        return String.format("%s%s", CDN_URL, hash);
+        return String.format("%s%s", ShopApiClient.CDN_URL, hash);
     }
 
-    public String getUrlWithWidth(int width) {
-        return String.format("%s%s%d", getUrl(), "?width=", width);
-    }
-
-    public String getUrlWithHeight(int height) {
-        return String.format("%s%s%d", getUrl(), "?height=", height);
+    public String getUrl(Dimension dimension, int size) {
+        return String.format("%s?%s=%d", getUrl(), dimension.getSearchParam(), size);
     }
 
     public String getMime() {
@@ -49,12 +47,12 @@ public class Image {
         this.hash = hash;
     }
 
-    public String getExt() {
-        return ext;
+    public String getExtension() {
+        return extension;
     }
 
-    public void setExt(String ext) {
-        this.ext = ext;
+    public void setExtension(String extension) {
+        this.extension = extension;
     }
 
     public long getSize() {
