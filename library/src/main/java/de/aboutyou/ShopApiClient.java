@@ -297,7 +297,7 @@ public class ShopApiClient {
     private void handleRetrofitError(RetrofitError e) {
         if (e.isNetworkError()) {
             throw new NetworkException(e.getCause());
-        } else if (e.getResponse().getStatus() == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
+        } else if (e.getResponse() != null && e.getResponse().getStatus() == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
             HttpError httpError = (HttpError) e.getBodyAs(HttpError.class);
             throw new HttpException(httpError, null);
         } else {
