@@ -3,7 +3,7 @@ package de.aboutyou.models;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Autocomplete {
+public class Autocomplete extends BaseModel {
 
     private List<Product> products;
     private List<Category> categories;

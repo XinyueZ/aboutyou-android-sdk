@@ -2,7 +2,7 @@ package de.aboutyou.models;
 
 import java.util.List;
 
-public class ProductSearch {
+public class ProductSearch extends BaseModel {
 
     private List<Product> products;
 

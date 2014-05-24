@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class Product extends FallibleModel {
+public class Product extends BaseModel {
 
     private String name;
     @SerializedName("description_long")

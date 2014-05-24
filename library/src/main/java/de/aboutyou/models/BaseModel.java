@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public abstract class FallibleModel {
+public abstract class BaseModel {
 
     @SerializedName("error_message")
     private List<String> errorMessages;

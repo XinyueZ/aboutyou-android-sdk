@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 
-public class Basket {
+public class Basket extends BaseModel {
 
     @SerializedName("total_price")
     private long totalPrice;

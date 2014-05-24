@@ -2,7 +2,7 @@ package de.aboutyou.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class InitiateOrder {
+public class InitiateOrder extends BaseModel {
 
     private String url;
     @SerializedName("user_token")

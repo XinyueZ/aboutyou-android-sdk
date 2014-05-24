@@ -2,7 +2,7 @@ package de.aboutyou.models;
 
 import com.google.gson.annotations.SerializedName;
 
-public class LiveVariant extends FallibleModel {
+public class LiveVariant extends BaseModel {
 
     private long id;
     @SerializedName("product_id")
