@@ -26,7 +26,7 @@ public class CategoryTreeTest extends TestBase {
 
         @Override
         protected String getResponse() {
-            return "[{\"category_tree\":[{name:\"Damen\",parent:null,sub_categories:[],active:true,position:1,id:1},{name:\"Herren\",parent:null,sub_categories:[],active:false,position:2,id:2}]}]";
+            return "[{\"category_tree\":[{\"name\":\"Damen\",\"parent\":null,\"sub_categories\":[],\"active\":true,\"position\":1,\"id\":1},{\"name\":\"Herren\",\"parent\":null,\"sub_categories\":[],\"active\":false,\"position\":2,\"id\":2}]}]";
         }
 
     }
