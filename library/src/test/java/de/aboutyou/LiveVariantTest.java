@@ -5,9 +5,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import de.aboutyou.models.Category;
 import de.aboutyou.models.LiveVariant;
-import de.aboutyou.request.CategoriesRequest;
 import de.aboutyou.request.LiveVariantRequest;
 import de.aboutyou.util.MockClient;
 
@@ -18,8 +16,8 @@ import static org.junit.Assert.assertTrue;
 public class LiveVariantTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         LiveVariantRequest liveVariantRequest = new LiveVariantRequest.Builder()
                 .filterByVariantIds(Arrays.asList(1l))
@@ -36,7 +34,7 @@ public class LiveVariantTest extends TestBase {
 
     @Test
     public void testVariantNotFound() {
-        ShopApiClient shopApiClient = getNewApiClient(new FailureMockClient());
+        ShopApiClient shopApiClient = getNewApiClient(new VariantNotFoundMockClient());
 
         LiveVariantRequest liveVariantRequest = new LiveVariantRequest.Builder()
                 .filterByVariantIds(Arrays.asList(2l))
@@ -51,7 +49,7 @@ public class LiveVariantTest extends TestBase {
         assertEquals("Variant not found", liveVariants.get(0).getErrorMessages().get(0));
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected void validateRequestBody(String requestBody) {
@@ -65,7 +63,7 @@ public class LiveVariantTest extends TestBase {
 
     }
 
-    private class FailureMockClient extends MockClient {
+    private class VariantNotFoundMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

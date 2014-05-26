@@ -10,8 +10,8 @@ import static org.junit.Assert.*;
 public class CategoryTreeTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         CategoryTree categoryTree = shopApiClient.requestCategoryTree();
 
@@ -21,7 +21,7 @@ public class CategoryTreeTest extends TestBase {
         assertEquals("Damen", categoryTree.getAllCategories().get(0).getName());
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

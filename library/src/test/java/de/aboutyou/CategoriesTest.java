@@ -16,8 +16,8 @@ import static org.junit.Assert.assertTrue;
 public class CategoriesTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         CategoriesRequest categoriesRequest = new CategoriesRequest.Builder()
                 .filterByCategoryIds(Arrays.asList(1l, 2l))
@@ -32,7 +32,7 @@ public class CategoriesTest extends TestBase {
 
     @Test
     public void testUnknownCategory() {
-        ShopApiClient shopApiClient = getNewApiClient(new FailureMockClient());
+        ShopApiClient shopApiClient = getNewApiClient(new UnknownCategoryMockClient());
 
         CategoriesRequest categoriesRequest = new CategoriesRequest.Builder()
                 .filterByCategoryIds(Arrays.asList(1l))
@@ -47,7 +47,7 @@ public class CategoriesTest extends TestBase {
         assertEquals("category not found", categories.get(0).getErrorMessages().get(0));
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected void validateRequestBody(String requestBody) {
@@ -61,7 +61,7 @@ public class CategoriesTest extends TestBase {
 
     }
 
-    private class FailureMockClient extends MockClient {
+    private class UnknownCategoryMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

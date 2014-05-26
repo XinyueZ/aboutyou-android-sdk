@@ -17,8 +17,8 @@ import static org.junit.Assert.assertTrue;
 public class FacetTypesTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         List<FacetGroup> facetGroups = shopApiClient.requestFacetTypes();
 
@@ -27,7 +27,7 @@ public class FacetTypesTest extends TestBase {
         assertEquals(FacetGroup.SIZE, facetGroups.get(2));
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

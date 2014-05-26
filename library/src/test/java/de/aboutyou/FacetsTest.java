@@ -19,8 +19,8 @@ import static org.junit.Assert.assertTrue;
 public class FacetsTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         FacetsRequest facetsRequest = new FacetsRequest.Builder()
                 .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
@@ -33,7 +33,7 @@ public class FacetsTest extends TestBase {
         assertEquals("Rot", facets.get(0).getName());
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected void validateRequestBody(String requestBody) {

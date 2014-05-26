@@ -2,21 +2,9 @@ package de.aboutyou;
 
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import de.aboutyou.models.AddOrderLine;
 import de.aboutyou.models.Basket;
-import de.aboutyou.models.CategoryTree;
-import de.aboutyou.models.OrderLine;
 import de.aboutyou.request.BasketGetRequest;
-import de.aboutyou.request.BasketModifyRequest;
 import de.aboutyou.util.MockClient;
-import retrofit.client.Request;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -25,8 +13,8 @@ import static org.junit.Assert.assertTrue;
 public class BasketGetTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         BasketGetRequest basketGetRequest = new BasketGetRequest.Builder("foobar")
                 .build();
@@ -36,7 +24,7 @@ public class BasketGetTest extends TestBase {
         assertTrue(basket.getOrderLines().size() == 2);
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

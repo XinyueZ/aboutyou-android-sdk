@@ -15,8 +15,8 @@ import static org.junit.Assert.assertTrue;
 public class InitiateOrderTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         InitiateOrderRequest initiateOrderRequest = new InitiateOrderRequest.Builder("foobar")
                 .setSuccessUrl("foo://bar")
@@ -29,7 +29,7 @@ public class InitiateOrderTest extends TestBase {
         assertEquals(initiateOrder.getAppToken(), "3c4d");
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected void validateRequestBody(String requestBody) {

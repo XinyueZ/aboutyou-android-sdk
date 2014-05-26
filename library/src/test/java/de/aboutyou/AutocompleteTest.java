@@ -11,8 +11,8 @@ import static org.junit.Assert.*;
 public class AutocompleteTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("to").build();
 
@@ -55,7 +55,7 @@ public class AutocompleteTest extends TestBase {
         assertEquals("searchword: u't' is too short", autocomplete.getErrorMessages().get(0));
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

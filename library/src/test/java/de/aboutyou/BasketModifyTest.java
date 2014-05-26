@@ -18,8 +18,8 @@ import static org.junit.Assert.assertTrue;
 public class BasketModifyTest extends TestBase {
 
     @Test
-    public void testSuccess() {
-        ShopApiClient shopApiClient = getNewApiClient(new SuccessMockClient());
+    public void testValidRequest() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         List<OrderLine> orderLines = new ArrayList<>();
         orderLines.add(new AddOrderLine("id1", 1l));
@@ -33,7 +33,7 @@ public class BasketModifyTest extends TestBase {
         assertTrue(basket.getOrderLines().size() == 2);
     }
 
-    private class SuccessMockClient extends MockClient {
+    private class ValidRequestMockClient extends MockClient {
 
         @Override
         protected void validateRequestBody(String requestBody) {
