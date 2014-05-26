@@ -5,8 +5,8 @@ import retrofit.client.Client;
 
 public abstract class TestBase {
 
-    private static final String APP_ID = "110";
-    private static final String APP_PASSWORD = "ed8272cc4d993378f595d112915920bb";
+    private static final String APP_ID = "";
+    private static final String APP_PASSWORD = "";
 
     protected ShopApiClient getApiClient(Client retrofitClient) {
         ShopApiClient.Logger logger = new ShopApiClient.Logger() {
