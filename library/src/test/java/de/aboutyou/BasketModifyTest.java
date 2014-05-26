@@ -37,7 +37,7 @@ public class BasketModifyTest extends TestBase {
 
         @Override
         protected void validateRequestBody(String requestBody) {
-            assertEquals(requestBody, "[{\"basket\":{\"session_id\":\"foobar\",\"order_lines\":[{\"id\":\"id1\",\"variant_id\":1}]}}]");
+            assertEquals("[{\"basket\":{\"session_id\":\"foobar\",\"order_lines\":[{\"id\":\"id1\",\"variant_id\":1}]}}]", requestBody);
         }
 
         @Override

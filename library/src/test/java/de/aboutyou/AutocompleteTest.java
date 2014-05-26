@@ -36,7 +36,7 @@ public class AutocompleteTest extends TestBase {
         assertTrue(autocomplete.getCategories().size() == 0);
         assertTrue(autocomplete.getErrorCode() == 400);
         assertTrue(autocomplete.getErrorMessages().size() == 1);
-        assertEquals(autocomplete.getErrorMessages().get(0), ": 'searchword' is required property");
+        assertEquals(": 'searchword' is required property", autocomplete.getErrorMessages().get(0));
     }
 
     @Test
@@ -52,7 +52,7 @@ public class AutocompleteTest extends TestBase {
         assertTrue(autocomplete.getCategories().size() == 0);
         assertTrue(autocomplete.getErrorCode() == 400);
         assertTrue(autocomplete.getErrorMessages().size() == 1);
-        assertEquals(autocomplete.getErrorMessages().get(0), "searchword: u't' is too short");
+        assertEquals("searchword: u't' is too short", autocomplete.getErrorMessages().get(0));
     }
 
     private class SuccessMockClient extends MockClient {

@@ -27,7 +27,7 @@ public class CategoriesTest extends TestBase {
 
         assertNotNull(categories);
         assertTrue(categories.size() == 2);
-        assertEquals(categories.get(0).getName(), "Cat1");
+        assertEquals("Cat1", categories.get(0).getName());
     }
 
     @Test
@@ -44,7 +44,7 @@ public class CategoriesTest extends TestBase {
         assertTrue(categories.size() == 1);
         assertTrue(categories.get(0).getErrorCode() == 404);
         assertTrue(categories.get(0).getErrorMessages().size() == 1);
-        assertEquals(categories.get(0).getErrorMessages().get(0), "category not found");
+        assertEquals("category not found", categories.get(0).getErrorMessages().get(0));
     }
 
     private class SuccessMockClient extends MockClient {

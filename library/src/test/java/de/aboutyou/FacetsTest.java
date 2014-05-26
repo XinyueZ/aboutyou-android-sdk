@@ -30,14 +30,14 @@ public class FacetsTest extends TestBase {
 
         assertNotNull(facets);
         assertTrue(facets.size() == 1);
-        assertEquals(facets.get(0).getName(), "Rot");
+        assertEquals("Rot", facets.get(0).getName());
     }
 
     private class SuccessMockClient extends MockClient {
 
         @Override
         protected void validateRequestBody(String requestBody) {
-            assertEquals(requestBody, "[{\"facets\":{\"group_ids\":[2]}}]");
+            assertEquals("[{\"facets\":{\"group_ids\":[2]}}]", requestBody);
         }
 
         @Override

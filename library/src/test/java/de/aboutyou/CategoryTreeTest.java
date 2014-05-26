@@ -18,7 +18,7 @@ public class CategoryTreeTest extends TestBase {
         assertNotNull(categoryTree);
         assertTrue(categoryTree.getAllCategories().size() == 2);
         assertTrue(categoryTree.getActiveCategories().size() == 1);
-        assertTrue(categoryTree.getAllCategories().get(0).getName().equals("Damen"));
+        assertEquals("Damen", categoryTree.getAllCategories().get(0).getName());
     }
 
     private class SuccessMockClient extends MockClient {
