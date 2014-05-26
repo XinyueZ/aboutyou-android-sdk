@@ -5,8 +5,7 @@ import org.junit.Test;
 import de.aboutyou.models.CategoryTree;
 import de.aboutyou.util.MockClient;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class CategoryTreeTest extends TestBase {
 
