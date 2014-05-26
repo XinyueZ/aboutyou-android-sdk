@@ -8,7 +8,7 @@ public abstract class TestBase {
     private static final String APP_ID = "";
     private static final String APP_PASSWORD = "";
 
-    protected ShopApiClient getApiClient(Client retrofitClient) {
+    protected ShopApiClient getNewApiClient(Client retrofitClient) {
         ShopApiClient.Logger logger = new ShopApiClient.Logger() {
             @Override
             public void log(String message) {
