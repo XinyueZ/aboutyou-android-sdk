@@ -7,8 +7,6 @@ public class Facet {
     private String name;
     @SerializedName("facet_id")
     private long facetId;
-    @SerializedName("facet_id")
-    private long facetGroupId;
     private String value;
     @SerializedName("group_name")
     private String groupName;
@@ -27,14 +25,6 @@ public class Facet {
 
     public void setFacetId(long facetId) {
         this.facetId = facetId;
-    }
-
-    public long getFacetGroupId() {
-        return facetGroupId;
-    }
-
-    public void setFacetGroupId(long facetGroupId) {
-        this.facetGroupId = facetGroupId;
     }
 
     public String getValue() {
