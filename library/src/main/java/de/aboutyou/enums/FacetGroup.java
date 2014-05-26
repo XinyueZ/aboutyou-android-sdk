@@ -8,7 +8,7 @@ public enum FacetGroup {
     GENDERAGE(3),
     CUPSIZE(4),
     LENGTH(5),
-    DIMENSION3(6),
+    DIMENSION(6),
     SIZE_RUN(172),
     CLOTHING_UNISEX_INT(173),
     CLOTHING_UNISEX_INCH(174),
