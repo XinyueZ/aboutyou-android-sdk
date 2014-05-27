@@ -70,8 +70,6 @@ import retrofit.converter.GsonConverter;
 
 public class ShopApiClient {
 
-    public static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
-
     public static final String CDN_URL = "http://cdn.mary-paul.de/file/";
 
     public interface AuthenticationCallback {
@@ -82,6 +80,8 @@ public class ShopApiClient {
     public interface Logger {
         public void log(String message);
     }
+
+    private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
     private final RestInterface mAPI;
     private final Logger mLogger;
