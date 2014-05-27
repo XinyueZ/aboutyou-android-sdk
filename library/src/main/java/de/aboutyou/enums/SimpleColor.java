@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Subset of all color facets */
 public enum SimpleColor {
 
     BLUE(1),

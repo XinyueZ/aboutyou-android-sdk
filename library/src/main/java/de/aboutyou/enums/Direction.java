@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Sort direction for product search */
 public enum Direction {
 
     ASC("asc"),

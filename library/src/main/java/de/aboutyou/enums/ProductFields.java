@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Product fields to be request as part of a product search */
 public enum ProductFields {
 
     ID("id"),

@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Filter for product sale state */
 public enum ProductFilter {
 
     SALEONLY(true),

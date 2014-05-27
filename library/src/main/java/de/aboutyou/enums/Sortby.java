@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Sort column for product search*/
 public enum Sortby {
 
     RELEVANCE("relevance"),

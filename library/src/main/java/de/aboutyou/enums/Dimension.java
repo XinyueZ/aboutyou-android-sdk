@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Image dimension */
 public enum Dimension {
 
     WIDTH("width"), HEIGHT("height");

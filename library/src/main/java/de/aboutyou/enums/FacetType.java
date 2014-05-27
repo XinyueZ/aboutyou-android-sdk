@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Facet types */
 public enum FacetType {
 
     BRAND(0),

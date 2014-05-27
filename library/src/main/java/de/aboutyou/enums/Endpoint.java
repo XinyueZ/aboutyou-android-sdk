@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** SDK endpoint */
 public enum Endpoint {
 
     LIVE("http://ant-shop-api1.wavecloud.de", "checkout.aboutyou.de", "m-checkout.aboutyou.de"),

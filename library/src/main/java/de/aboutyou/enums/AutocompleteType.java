@@ -1,5 +1,6 @@
 package de.aboutyou.enums;
 
+/** Autocomplete type selection */
 public enum AutocompleteType {
 
     PRODUCTS("products"),
