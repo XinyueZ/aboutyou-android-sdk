@@ -15,7 +15,7 @@ public class LiveVariantRequest extends CollinsRequest {
 
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<LiveVariantRequest> {
 
         private List<Long> ids;
 
@@ -27,6 +27,7 @@ public class LiveVariantRequest extends CollinsRequest {
             return this;
         }
 
+        /** {@inheritDoc} */
         public LiveVariantRequest build() {
             LiveVariantRequest liveVariantRequest = new LiveVariantRequest();
 

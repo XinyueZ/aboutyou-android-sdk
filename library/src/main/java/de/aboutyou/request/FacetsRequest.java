@@ -17,12 +17,13 @@ public class FacetsRequest extends CollinsRequest {
         private Integer offset;
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<FacetsRequest> {
 
         private List<FacetType> facetTypes;
         private Integer limit;
         private Integer offset;
 
+        /** Filter results by facet groups */
         public Builder filterByFacetGroup(List<FacetType> facetTypes) {
             this.facetTypes = facetTypes;
             return this;
@@ -38,6 +39,7 @@ public class FacetsRequest extends CollinsRequest {
             return this;
         }
 
+        /** {@inheritDoc} */
         public FacetsRequest build() {
             FacetsRequest facetRequest = new FacetsRequest();
 

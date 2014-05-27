@@ -16,12 +16,16 @@ public class AutocompleteRequest extends CollinsRequest {
 
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<AutocompleteRequest> {
 
         private Integer limit;
         private String searchword;
         private List<AutocompleteType> types;
 
+        /**
+         * Constructs a new Builder for an {@link de.aboutyou.request.AutocompleteRequest}
+         * @param searchword The searchword used for autocompletion, not null or empty
+         */
         public Builder(String searchword) {
             validateNotEmpty(searchword, "searchword");
             this.searchword = searchword;
@@ -32,11 +36,13 @@ public class AutocompleteRequest extends CollinsRequest {
             return this;
         }
 
+        /** Filter results by object type */
         public Builder filterByTypes(List<AutocompleteType> types) {
             this.types = types;
             return this;
         }
 
+        /** {@inheritDoc} */
         public AutocompleteRequest build() {
             AutocompleteRequest autocompleteRequest = new AutocompleteRequest();
 

@@ -11,15 +11,17 @@ public class CategoriesRequest extends CollinsRequest {
         private List<Long> ids;
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<CategoriesRequest> {
 
         private List<Long> ids;
 
+        /** Filter results by category ids */
         public Builder filterByCategoryIds(List<Long> categoryIds) {
             this.ids = categoryIds;
             return this;
         }
 
+        /** {@inheritDoc} */
         public CategoriesRequest build() {
             CategoriesRequest categoriesRequest = new CategoriesRequest();
 

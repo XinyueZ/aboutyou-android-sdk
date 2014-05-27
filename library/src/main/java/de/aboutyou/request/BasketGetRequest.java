@@ -11,15 +11,20 @@ public class BasketGetRequest extends CollinsRequest {
         private String sessionId;
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<BasketGetRequest> {
 
         private String sessionId;
 
+        /**
+         * Constructs a new Builder for a {@link de.aboutyou.request.BasketGetRequest}
+         * @param sessionId A session id provided by the caller, not null or empty
+         */
         public Builder(String sessionId) {
             validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
         }
 
+        /** {@inheritDoc} */
         public BasketGetRequest build() {
             BasketGetRequest basketAddRequest = new BasketGetRequest();
 

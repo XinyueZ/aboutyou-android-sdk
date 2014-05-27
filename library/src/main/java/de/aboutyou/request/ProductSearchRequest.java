@@ -64,7 +64,7 @@ public class ProductSearchRequest extends CollinsRequest {
         }
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<ProductSearchRequest> {
 
         private String sessionId;
         private List<Long> categories;
@@ -81,51 +81,64 @@ public class ProductSearchRequest extends CollinsRequest {
         private Sortby sortby;
         private Direction sortDirection;
 
+        /**
+         * Constructs a new Builder for a {@link de.aboutyou.request.ProductSearchRequest}
+         * @param sessionId A session id provided by the caller, not null or empty
+         */
         public Builder(String sessionId) {
             validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
         }
 
+        /** Filter results by category ids */
         public Builder filterByCategories(List<Long> categories) {
             this.categories = categories;
             return this;
         }
 
+        /** Filter results by sale status */
         public Builder filterByStatus(ProductFilter productFilter) {
             this.productFilter = productFilter;
             return this;
         }
 
+        /** Filter results by minimum price */
         public Builder filterByMinPrice(long priceInCents) {
             this.priceFrom = priceInCents;
             return this;
         }
 
+        /** Filter results by maximum price */
         public Builder filterByMaxPrice(long priceInCents) {
             this.priceTo = priceInCents;
             return this;
         }
 
+        /** Filter results by a search string */
         public Builder filterBySearchString(String searchString) {
             this.searchString = searchString;
             return this;
         }
 
+        /** Filter results by facet ids */
         public Builder filterByFacets(Map<FacetType, List<Long>> facets) {
             this.facets = facets;
             return this;
         }
 
+        /** Request sale details in the response */
         public Builder listSaleDetails(boolean listSaleDetails) {
             this.listSaleDetails = listSaleDetails;
             return this;
         }
 
+        /** Request price details in the response */
         public Builder listPriceDetails(boolean listPriceDetails) {
             this.listPriceDetails = listPriceDetails;
             return this;
         }
 
+        /** Request to list category ids in the response */
         public Builder listCategoriesWithResults(boolean listCategories) {
             this.listCategories = listCategories;
             return this;

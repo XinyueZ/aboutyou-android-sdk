@@ -17,21 +17,27 @@ public class BasketModifyRequest extends CollinsRequest {
         private List<OrderLine> orderLines;
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<BasketModifyRequest> {
 
         private String sessionId;
         private List<OrderLine> orderLines;
 
+        /**
+         * Constructs a new Builder for a {@link de.aboutyou.request.BasketModifyRequest}
+         * @param sessionId A session id provided by the caller, not null or empty
+         */
         public Builder(String sessionId) {
             validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
         }
 
+        /** Set the order lines to modify the basket */
         public Builder setOrderLines(List<OrderLine> orderLines) {
             this.orderLines = orderLines;
             return this;
         }
 
+        /** {@inheritDoc} */
         public BasketModifyRequest build() {
             BasketModifyRequest basketModifyRequest = new BasketModifyRequest();
 

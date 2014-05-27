@@ -15,21 +15,24 @@ public class ProductsRequest extends CollinsRequest {
 
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<ProductsRequest> {
 
         private List<Long> ids;
         private List<ProductFields> fields;
 
+        /** Filter result by product ids */
         public Builder filterByProductIds(List<Long> productIds) {
             this.ids = productIds;
             return this;
         }
 
+        /** Request additional fields in the response */
         public Builder listFields(List<ProductFields> fields) {
             this.fields = fields;
             return this;
         }
 
+        /** {@inheritDoc} */
         public ProductsRequest build() {
             ProductsRequest productRequest = new ProductsRequest();
 

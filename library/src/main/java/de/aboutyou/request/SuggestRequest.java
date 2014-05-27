@@ -17,12 +17,16 @@ public class SuggestRequest extends CollinsRequest {
 
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<SuggestRequest> {
 
         private Integer limit;
         private String searchword;
         private List<Long> categoryIds;
 
+        /**
+         * Constructs a new Builder for a {@link de.aboutyou.request.SuggestRequest}
+         * @param searchword The searchword used for suggestions, not null or empty
+         */
         public Builder(String searchword) {
             validateNotEmpty(searchword, "searchword");
             this.searchword = searchword;
@@ -33,11 +37,13 @@ public class SuggestRequest extends CollinsRequest {
             return this;
         }
 
+        /** Filter resulst by category ids  */
         public Builder filterByCategories(List<Long> categoryIds) {
             this.categoryIds = categoryIds;
             return this;
         }
 
+        /** {@inheritDoc} */
         public SuggestRequest build() {
             SuggestRequest autocompleteRequest = new SuggestRequest();
 

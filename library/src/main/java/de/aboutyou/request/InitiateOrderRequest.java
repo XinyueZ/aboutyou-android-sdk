@@ -14,11 +14,18 @@ public class InitiateOrderRequest extends CollinsRequest {
         private String successUrl;
     }
 
-    public static class Builder extends CollinsRequest.Builder {
+    public static class Builder extends CollinsRequest.Builder<InitiateOrderRequest> {
 
         private String sessionId;
         private String successUrl;
 
+        /**
+         * Constructs a new Builder for an {@link de.aboutyou.request.InitiateOrderRequest}
+         * <p>
+         * You need to provide a successUrl using {@link de.aboutyou.request.InitiateOrderRequest.Builder#setSuccessUrl(String)}
+         *
+         * @param sessionId A session id provided by the caller, not null or empty
+         */
         public Builder(String sessionId) {
             validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
@@ -30,6 +37,7 @@ public class InitiateOrderRequest extends CollinsRequest {
             return this;
         }
 
+        /** {@inheritDoc} */
         public InitiateOrderRequest build() {
             validateNotEmpty(successUrl, "successUrl");
             InitiateOrderRequest basketAddRequest = new InitiateOrderRequest();
