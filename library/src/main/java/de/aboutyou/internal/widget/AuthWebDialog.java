@@ -1,6 +1,8 @@
 package de.aboutyou.internal.widget;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -11,6 +13,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -141,7 +144,7 @@ public class AuthWebDialog extends Dialog {
             }
         });
 
-        mSpinner = new ProgressDialog(getContext());
+        mSpinner = new ProgressDialog(getContext(), resolveDialogTheme());
         mSpinner.requestWindowFeature(Window.FEATURE_NO_TITLE);
         mSpinner.setMessage("Loading");
         mSpinner.setOnCancelListener(new OnCancelListener() {
@@ -167,6 +170,18 @@ public class AuthWebDialog extends Dialog {
         mContentFrameLayout.addView(mCrossImageView, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         setContentView(mContentFrameLayout);
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    private int resolveDialogTheme() {
+        int build = Build.VERSION.SDK_INT;
+        if (build <= Build.VERSION_CODES.HONEYCOMB) {
+            return 0;
+        } else if (build <= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+            return AlertDialog.THEME_HOLO_LIGHT;
+        } else {
+            return AlertDialog.THEME_DEVICE_DEFAULT_LIGHT;
+        }
     }
 
     private void calculateSize() {
