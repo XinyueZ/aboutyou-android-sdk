@@ -3,6 +3,7 @@ package de.aboutyou;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import de.aboutyou.models.AddOrderLine;
@@ -27,10 +28,7 @@ public class BasketModifyTest extends TestBase {
         BasketModifyRequest basketModifyRequest = new BasketModifyRequest.Builder("foobar")
                 .setOrderLines(orderLines)
                 .build();
-
-        Basket basket = shopApiClient.requestModifyBasket(basketModifyRequest);
-        assertNotNull(basket);
-        assertTrue(basket.getOrderLines().size() == 2);
+        shopApiClient.requestModifyBasket(basketModifyRequest);
     }
 
     private class ValidRequestMockClient extends MockClient {
@@ -39,6 +37,33 @@ public class BasketModifyTest extends TestBase {
         protected void validateRequestBody(String requestBody) {
             assertEquals("[{\"basket\":{\"session_id\":\"foobar\",\"order_lines\":[{\"id\":\"id1\",\"variant_id\":1}]}}]", requestBody);
         }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"basket\":{\"order_lines\":[]}}]";
+        }
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMissingSessionIdRequest() {
+        new BasketModifyRequest.Builder(null).build();
+    }
+
+    @Test
+    public void testValidReponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        BasketModifyRequest basketModifyRequest = new BasketModifyRequest.Builder("foobar")
+                .setOrderLines(Collections.<OrderLine>emptyList())
+                .build();
+        Basket basket = shopApiClient.requestModifyBasket(basketModifyRequest);
+
+        assertNotNull(basket);
+        assertTrue(basket.getOrderLines().size() == 2);
+    }
+
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

@@ -13,6 +13,27 @@ public class CategoryTreeTest extends TestBase {
     public void testValidRequest() {
         ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
+        shopApiClient.requestCategoryTree();
+    }
+
+    private class ValidRequestMockClient extends MockClient {
+
+        @Override
+        protected void validateRequestBody(String requestBody) {
+            assertEquals("[{\"category_tree\":{}}]", requestBody);
+        }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"category_tree\":[]}]";
+        }
+
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
         CategoryTree categoryTree = shopApiClient.requestCategoryTree();
 
         assertNotNull(categoryTree);
@@ -21,7 +42,7 @@ public class CategoryTreeTest extends TestBase {
         assertEquals("Damen", categoryTree.getAllCategories().get(0).getName());
     }
 
-    private class ValidRequestMockClient extends MockClient {
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

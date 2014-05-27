@@ -20,6 +20,27 @@ public class FacetTypesTest extends TestBase {
     public void testValidRequest() {
         ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
+        shopApiClient.requestFacetTypes();
+    }
+
+    private class ValidRequestMockClient extends MockClient {
+
+        @Override
+        protected void validateRequestBody(String requestBody) {
+            assertEquals("[{\"facet_types\":{}}]", requestBody);
+        }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"facet_types\":[]}]";
+        }
+
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
         List<FacetGroup> facetGroups = shopApiClient.requestFacetTypes();
 
         assertNotNull(facetGroups);
@@ -27,7 +48,7 @@ public class FacetTypesTest extends TestBase {
         assertEquals(FacetGroup.SIZE, facetGroups.get(2));
     }
 
-    private class ValidRequestMockClient extends MockClient {
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

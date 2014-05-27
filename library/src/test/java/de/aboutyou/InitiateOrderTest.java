@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import de.aboutyou.models.Basket;
 import de.aboutyou.models.InitiateOrder;
+import de.aboutyou.request.AutocompleteRequest;
 import de.aboutyou.request.BasketGetRequest;
 import de.aboutyou.request.InitiateOrderRequest;
 import de.aboutyou.util.MockClient;
@@ -22,11 +23,7 @@ public class InitiateOrderTest extends TestBase {
                 .setSuccessUrl("foo://bar")
                 .build();
 
-        InitiateOrder initiateOrder = shopApiClient.requestInitiateOrder(initiateOrderRequest);
-        assertNotNull(initiateOrder);
-        assertEquals(initiateOrder.getUrl(), "foo://bar");
-        assertEquals(initiateOrder.getUserToken(), "1a2b");
-        assertEquals(initiateOrder.getAppToken(), "3c4d");
+        shopApiClient.requestInitiateOrder(initiateOrderRequest);
     }
 
     private class ValidRequestMockClient extends MockClient {
@@ -35,6 +32,44 @@ public class InitiateOrderTest extends TestBase {
         protected void validateRequestBody(String requestBody) {
             assertEquals("[{\"initiate_order\":{\"session_id\":\"foobar\",\"success_url\":\"foo://bar\"}}]", requestBody);
         }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"initiate_order\":{}}]";
+        }
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMissingSessionIdRequest() {
+        new InitiateOrderRequest.Builder(null)
+                .setSuccessUrl("foo://bar")
+                .build();
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMissingSuccessUrlRequest() {
+        new InitiateOrderRequest.Builder("foobar")
+                .setSuccessUrl(null)
+                .build();
+    }
+
+    @Test
+    public void testValidResonse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        InitiateOrderRequest initiateOrderRequest = new InitiateOrderRequest.Builder("foobar")
+                .setSuccessUrl("foo://bar")
+                .build();
+
+        InitiateOrder initiateOrder = shopApiClient.requestInitiateOrder(initiateOrderRequest);
+        assertNotNull(initiateOrder);
+        assertEquals(initiateOrder.getUrl(), "foo://bar");
+        assertEquals(initiateOrder.getUserToken(), "1a2b");
+        assertEquals(initiateOrder.getAppToken(), "3c4d");
+    }
+
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

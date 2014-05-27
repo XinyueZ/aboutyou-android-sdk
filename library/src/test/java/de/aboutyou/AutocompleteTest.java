@@ -15,7 +15,32 @@ public class AutocompleteTest extends TestBase {
         ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("to").build();
+        shopApiClient.requestAutocompletion(autocompleteRequest);
+    }
 
+    private class ValidRequestMockClient extends MockClient {
+
+        @Override
+        protected void validateRequestBody(String requestBody) {
+            assertEquals("[{\"autocompletion\":{\"searchword\":\"to\"}}]", requestBody);
+        }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"autocompletion\":{}}]";
+        }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMissingSearchwordRequest() {
+        new AutocompleteRequest.Builder(null).build();
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("foobar").build();
         Autocomplete autocomplete = shopApiClient.requestAutocompletion(autocompleteRequest);
 
         assertNotNull(autocomplete);
@@ -23,24 +48,17 @@ public class AutocompleteTest extends TestBase {
         assertTrue(autocomplete.getCategories().size() == 1);
     }
 
-    @Test
-    public void testMissingSearchword() {
-        ShopApiClient shopApiClient = getNewApiClient(new MissingSearchwordMockClient());
+    private class ValidResponseMockClient extends MockClient {
 
-        AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder(null).build();
+        @Override
+        protected String getResponse() {
+            return "[{\"autocompletion\":{\"products\":[{\"name\":\"Top\",\"id\":1}],\"categories\":[{\"name\":\"Tops\",\"id\":1}]}}]";
+        }
 
-        Autocomplete autocomplete = shopApiClient.requestAutocompletion(autocompleteRequest);
-
-        assertNotNull(autocomplete);
-        assertTrue(autocomplete.getProducts().size() == 0);
-        assertTrue(autocomplete.getCategories().size() == 0);
-        assertTrue(autocomplete.getErrorCode() == 400);
-        assertTrue(autocomplete.getErrorMessages().size() == 1);
-        assertEquals(": 'searchword' is required property", autocomplete.getErrorMessages().get(0));
     }
 
     @Test
-    public void testShortSearchword() {
+    public void testShortSearchwordResponse() {
         ShopApiClient shopApiClient = getNewApiClient(new ShortSearchwordMockClient());
 
         AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("t").build();
@@ -55,24 +73,6 @@ public class AutocompleteTest extends TestBase {
         assertEquals("searchword: u't' is too short", autocomplete.getErrorMessages().get(0));
     }
 
-    private class ValidRequestMockClient extends MockClient {
-
-        @Override
-        protected String getResponse() {
-            return "[{\"autocompletion\":{\"products\":[{\"name\":\"Top\",\"id\":1}],\"categories\":[{\"name\":\"Tops\",\"id\":1}]}}]";
-        }
-
-    }
-
-    private class MissingSearchwordMockClient extends MockClient {
-
-        @Override
-        protected String getResponse() {
-            return "[{\"autocompletion\":{\"error_message\":[\": 'searchword' is required property\"],\"error_code\":400}}]";
-        }
-
-    }
-
     private class ShortSearchwordMockClient extends MockClient {
 
         @Override
@@ -81,6 +81,7 @@ public class AutocompleteTest extends TestBase {
         }
 
     }
+
 }
 
 

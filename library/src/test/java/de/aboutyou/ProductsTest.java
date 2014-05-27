@@ -23,6 +23,31 @@ public class ProductsTest extends TestBase {
                 .filterByProductIds(Arrays.asList(1l))
                 .build();
 
+        shopApiClient.requestProducts(productsRequest);
+    }
+
+    private class ValidRequestMockClient extends MockClient {
+
+        @Override
+        protected void validateRequestBody(String requestBody) {
+            assertEquals("[{\"products\":{\"ids\":[1]}}]", requestBody);
+        }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"products\":{}}]";
+        }
+
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        ProductsRequest productsRequest = new ProductsRequest.Builder()
+                .filterByProductIds(Arrays.asList(1l))
+                .build();
+
         List<Product> products = shopApiClient.requestProducts(productsRequest);
 
         assertNotNull(products);
@@ -30,7 +55,7 @@ public class ProductsTest extends TestBase {
         assertEquals("Product 1", products.get(0).getName());
     }
 
-    private class ValidRequestMockClient extends MockClient {
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected void validateRequestBody(String requestBody) {

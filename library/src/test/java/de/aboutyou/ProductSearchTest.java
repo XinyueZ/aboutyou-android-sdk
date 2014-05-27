@@ -25,11 +25,7 @@ public class ProductSearchTest extends TestBase {
                 .filterByCategories(Arrays.asList(1l))
                 .build();
 
-        ProductSearch productSearch = shopApiClient.requestProductSearch(productSearchRequest);
-
-        assertNotNull(productSearch);
-        assertTrue(productSearch.getProductCount() == 1);
-        assertEquals("Produkt 1", productSearch.getProducts().get(0).getName());
+        shopApiClient.requestProductSearch(productSearchRequest);
     }
 
     private class ValidRequestMockClient extends MockClient {
@@ -38,6 +34,30 @@ public class ProductSearchTest extends TestBase {
         protected void validateRequestBody(String requestBody) {
             assertEquals("[{\"product_search\":{\"session_id\":\"foobar\",\"filter\":{\"categories\":[1],\"prices\":{}},\"result\":{\"sort\":{}}}}]", requestBody);
         }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"product_search\":{}}]";
+        }
+
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        ProductSearchRequest productSearchRequest = new ProductSearchRequest.Builder("foobar")
+                .filterByCategories(Arrays.asList(1l))
+                .build();
+
+        ProductSearch productSearch = shopApiClient.requestProductSearch(productSearchRequest);
+
+        assertNotNull(productSearch);
+        assertTrue(productSearch.getProductCount() == 1);
+        assertEquals("Produkt 1", productSearch.getProducts().get(0).getName());
+    }
+
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

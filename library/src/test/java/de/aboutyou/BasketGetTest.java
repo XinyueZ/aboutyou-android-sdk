@@ -16,15 +16,41 @@ public class BasketGetTest extends TestBase {
     public void testValidRequest() {
         ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
-        BasketGetRequest basketGetRequest = new BasketGetRequest.Builder("foobar")
-                .build();
+        BasketGetRequest basketGetRequest = new BasketGetRequest.Builder("foobar").build();
+        shopApiClient.requestGetBasket(basketGetRequest);
+    }
 
+    private class ValidRequestMockClient extends MockClient {
+
+        @Override
+        protected void validateRequestBody(String requestBody) {
+            assertEquals("[{\"basket\":{\"session_id\":\"foobar\"}}]", requestBody);
+        }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"basket\":{\"order_lines\":[]}}]";
+        }
+
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testMissingSessionIdRequest() {
+        new BasketGetRequest.Builder(null).build();
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        BasketGetRequest basketGetRequest = new BasketGetRequest.Builder("foobar").build();
         Basket basket = shopApiClient.requestGetBasket(basketGetRequest);
+
         assertNotNull(basket);
         assertTrue(basket.getOrderLines().size() == 2);
     }
 
-    private class ValidRequestMockClient extends MockClient {
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

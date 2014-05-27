@@ -21,11 +21,7 @@ public class SuggestTest extends TestBase {
         SuggestRequest suggestRequest = new SuggestRequest.Builder("Schuh")
                 .build();
 
-        Suggest suggest = shopApiClient.requestSuggest(suggestRequest);
-
-        assertNotNull(suggest);
-        assertTrue(suggest.size() == 2);
-        assertEquals("bar", suggest.get(1));
+        shopApiClient.requestSuggest(suggestRequest);
     }
 
     private class ValidRequestMockClient extends MockClient {
@@ -34,6 +30,29 @@ public class SuggestTest extends TestBase {
         protected void validateRequestBody(String requestBody) {
             assertEquals("[{\"suggest\":{\"searchword\":\"Schuh\"}}]", requestBody);
         }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"suggest\":[]}]";
+        }
+
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        SuggestRequest suggestRequest = new SuggestRequest.Builder("foobar")
+                .build();
+
+        Suggest suggest = shopApiClient.requestSuggest(suggestRequest);
+
+        assertNotNull(suggest);
+        assertTrue(suggest.size() == 2);
+        assertEquals("bar", suggest.get(1));
+    }
+
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {

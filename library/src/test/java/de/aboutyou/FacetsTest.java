@@ -3,6 +3,7 @@ package de.aboutyou;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import de.aboutyou.enums.FacetGroup;
@@ -25,12 +26,7 @@ public class FacetsTest extends TestBase {
         FacetsRequest facetsRequest = new FacetsRequest.Builder()
                 .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
                 .build();
-
-        List<Facet> facets = shopApiClient.requestFacets(facetsRequest);
-
-        assertNotNull(facets);
-        assertTrue(facets.size() == 1);
-        assertEquals("Rot", facets.get(0).getName());
+        shopApiClient.requestFacets(facetsRequest);
     }
 
     private class ValidRequestMockClient extends MockClient {
@@ -39,6 +35,30 @@ public class FacetsTest extends TestBase {
         protected void validateRequestBody(String requestBody) {
             assertEquals("[{\"facets\":{\"group_ids\":[2]}}]", requestBody);
         }
+
+        @Override
+        protected String getResponse() {
+            return "[{\"facets\":{}}]";
+        }
+
+    }
+
+    @Test
+    public void testValidResponse() {
+        ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
+
+        FacetsRequest facetsRequest = new FacetsRequest.Builder()
+                .filterByFacetGroup(Collections.<FacetGroup>emptyList())
+                .build();
+
+        List<Facet> facets = shopApiClient.requestFacets(facetsRequest);
+
+        assertNotNull(facets);
+        assertTrue(facets.size() == 1);
+        assertEquals("Rot", facets.get(0).getName());
+    }
+
+    private class ValidResponseMockClient extends MockClient {
 
         @Override
         protected String getResponse() {
