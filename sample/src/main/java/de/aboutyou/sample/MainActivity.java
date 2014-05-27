@@ -21,7 +21,7 @@ import de.aboutyou.enums.AuthenticationRequestMode;
 import de.aboutyou.enums.AutocompleteType;
 import de.aboutyou.enums.Direction;
 import de.aboutyou.enums.Endpoint;
-import de.aboutyou.enums.FacetGroup;
+import de.aboutyou.enums.FacetType;
 import de.aboutyou.enums.ProductFields;
 import de.aboutyou.enums.ProductFilter;
 import de.aboutyou.enums.Sortby;
@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
     @OnClick(R.id.facets)
     public void facets() {
         final FacetsRequest facetRequest = new FacetsRequest.Builder()
-                .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
+                .filterByFacetGroup(Arrays.asList(FacetType.SIZE))
                 .build();
 
         (new RequestTask(new Runnable() {
@@ -164,8 +164,8 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.productsearch)
     public void productsearch() {
-        Map<FacetGroup, List<Long>> facetFilter = new HashMap<>();
-        facetFilter.put(FacetGroup.CUPSIZE, Arrays.asList(93l, 94l, 95l, 96l));
+        Map<FacetType, List<Long>> facetFilter = new HashMap<>();
+        facetFilter.put(FacetType.CUPSIZE, Arrays.asList(93l, 94l, 95l, 96l));
 
         final ProductSearchRequest request = new ProductSearchRequest.Builder("session4711")
                 .filterByMinPrice(500)
