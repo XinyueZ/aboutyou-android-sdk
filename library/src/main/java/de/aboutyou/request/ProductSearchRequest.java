@@ -64,7 +64,7 @@ public class ProductSearchRequest extends CollinsRequest {
         }
     }
 
-    public static class Builder {
+    public static class Builder extends CollinsRequest.Builder {
 
         private String sessionId;
         private List<Long> categories;
@@ -82,9 +82,7 @@ public class ProductSearchRequest extends CollinsRequest {
         private Direction sortDirection;
 
         public Builder(String sessionId) {
-            if (sessionId == null) {
-                throw new IllegalArgumentException("sessionId must not be null");
-            }
+            validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
         }
 

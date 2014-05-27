@@ -17,15 +17,13 @@ public class BasketModifyRequest extends CollinsRequest {
         private List<OrderLine> orderLines;
     }
 
-    public static class Builder {
+    public static class Builder extends CollinsRequest.Builder {
 
         private String sessionId;
         private List<OrderLine> orderLines;
 
         public Builder(String sessionId) {
-            if (sessionId == null) {
-                throw new IllegalArgumentException("sessionId must not be null");
-            }
+            validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
         }
 

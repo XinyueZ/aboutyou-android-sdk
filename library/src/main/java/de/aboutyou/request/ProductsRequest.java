@@ -15,7 +15,7 @@ public class ProductsRequest extends CollinsRequest {
 
     }
 
-    public static class Builder {
+    public static class Builder extends CollinsRequest.Builder {
 
         private List<Long> ids;
         private List<ProductFields> fields;

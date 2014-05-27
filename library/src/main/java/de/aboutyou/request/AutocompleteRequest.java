@@ -16,13 +16,14 @@ public class AutocompleteRequest extends CollinsRequest {
 
     }
 
-    public static class Builder {
+    public static class Builder extends CollinsRequest.Builder {
 
         private Integer limit;
         private String searchword;
         private List<AutocompleteType> types;
 
         public Builder(String searchword) {
+            validateNotEmpty(searchword, "searchword");
             this.searchword = searchword;
         }
 

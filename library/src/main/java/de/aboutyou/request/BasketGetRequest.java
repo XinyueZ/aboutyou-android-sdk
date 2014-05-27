@@ -11,14 +11,12 @@ public class BasketGetRequest extends CollinsRequest {
         private String sessionId;
     }
 
-    public static class Builder {
+    public static class Builder extends CollinsRequest.Builder {
 
         private String sessionId;
 
         public Builder(String sessionId) {
-            if (sessionId == null) {
-                throw new IllegalArgumentException("sessionId must not be null");
-            }
+            validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
         }
 

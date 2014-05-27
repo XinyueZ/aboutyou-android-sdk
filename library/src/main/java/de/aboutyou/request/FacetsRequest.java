@@ -17,7 +17,7 @@ public class FacetsRequest extends CollinsRequest {
         private Integer offset;
     }
 
-    public static class Builder {
+    public static class Builder extends CollinsRequest.Builder {
 
         private List<FacetGroup> facetGroups;
         private Integer limit;

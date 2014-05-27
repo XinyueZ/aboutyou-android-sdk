@@ -14,24 +14,24 @@ public class InitiateOrderRequest extends CollinsRequest {
         private String successUrl;
     }
 
-    public static class Builder {
+    public static class Builder extends CollinsRequest.Builder {
 
         private String sessionId;
         private String successUrl;
 
         public Builder(String sessionId) {
-            if (sessionId == null) {
-                throw new IllegalArgumentException("sessionId must not be null");
-            }
+            validateNotEmpty(sessionId, "sessionId");
             this.sessionId = sessionId;
         }
 
         public Builder setSuccessUrl(String successUrl) {
+            validateNotEmpty(successUrl, "successUrl");
             this.successUrl = successUrl;
             return this;
         }
 
         public InitiateOrderRequest build() {
+            validateNotEmpty(successUrl, "successUrl");
             InitiateOrderRequest basketAddRequest = new InitiateOrderRequest();
 
             InititateOrder initiateOrder = new InititateOrder();
