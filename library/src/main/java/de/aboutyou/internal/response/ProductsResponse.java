@@ -21,6 +21,10 @@ public class ProductsResponse extends CollinsResponse<List<Product>> {
 
     @Override
     public List<Product> get() {
-        return new ArrayList<>(productsResult.products.values());
+        if (productsResult.products != null) {
+            return new ArrayList<>(productsResult.products.values());
+        } else {
+            return null;
+        }
     }
 }
