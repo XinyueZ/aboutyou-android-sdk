@@ -22,7 +22,7 @@ public class FacetsTest extends TestBase {
         ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         FacetsRequest facetsRequest = new FacetsRequest.Builder()
-                .filterByFacetGroup(Arrays.asList(FacetType.SIZE))
+                .filterByFacetTypes(Arrays.asList(FacetType.SIZE))
                 .build();
         shopApiClient.requestFacets(facetsRequest);
     }
@@ -46,7 +46,7 @@ public class FacetsTest extends TestBase {
         ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
 
         FacetsRequest facetsRequest = new FacetsRequest.Builder()
-                .filterByFacetGroup(Collections.<FacetType>emptyList())
+                .filterByFacetTypes(Collections.<FacetType>emptyList())
                 .build();
 
         List<Facet> facets = shopApiClient.requestFacets(facetsRequest);

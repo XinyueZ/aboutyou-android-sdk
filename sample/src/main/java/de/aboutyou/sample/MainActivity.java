@@ -97,7 +97,7 @@ public class MainActivity extends Activity {
     @OnClick(R.id.facets)
     public void facets() {
         final FacetsRequest facetRequest = new FacetsRequest.Builder()
-                .filterByFacetGroup(Arrays.asList(FacetType.SIZE))
+                .filterByFacetTypes(Arrays.asList(FacetType.SIZE))
                 .build();
 
         (new RequestTask(new Runnable() {

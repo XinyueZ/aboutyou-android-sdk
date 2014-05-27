@@ -23,8 +23,8 @@ public class FacetsRequest extends CollinsRequest {
         private Integer limit;
         private Integer offset;
 
-        /** Filter results by facet groups */
-        public Builder filterByFacetGroup(List<FacetType> facetTypes) {
+        /** Filter results by facet types */
+        public Builder filterByFacetTypes(List<FacetType> facetTypes) {
             this.facetTypes = facetTypes;
             return this;
         }
