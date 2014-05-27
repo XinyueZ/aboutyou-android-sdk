@@ -89,12 +89,22 @@ public class ShopApiClient {
     private final String mAppId;
     private final Endpoint mEndpoint;
 
-    public ShopApiClient(String appId, String appPassword, Endpoint endpoint, Logger logger) {
-        this(appId, appPassword, endpoint, logger, buildClient());
+    /**
+     * Constructs a ShopApiClient
+     * <p>
+     * To get a valid appId / appSecret, please visit our <a href="http://developer.aboutyou.de">Developer Center</a>.
+     *
+     * @param appId The "App-ID" for your app from our <a href="http://developer.aboutyou.de">Developer Center</a>
+     * @param appSecret The "Secret" for your app from our <a href="http://developer.aboutyou.de">Developer Center</a>
+     * @param endpoint The {@link de.aboutyou.enums.Endpoint} you want to connect to; either LIVE or STAGE
+     * @param logger A {@link de.aboutyou.ShopApiClient.Logger} instance to receive log output from the SDK
+     */
+    public ShopApiClient(String appId, String appSecret, Endpoint endpoint, Logger logger) {
+        this(appId, appSecret, endpoint, logger, buildClient());
     }
 
-    protected ShopApiClient(String appId, String appPassword, Endpoint endpoint, Logger logger, Client client) {
-        RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appPassword);
+    protected ShopApiClient(String appId, String appSecret, Endpoint endpoint, Logger logger, Client client) {
+        RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appSecret);
 
         RestAdapter restAdapter = new RestAdapter.Builder()
                 .setEndpoint(endpoint.getUrl())
@@ -133,6 +143,15 @@ public class ShopApiClient {
         return new GsonConverter(gson);
     }
 
+    /**
+     * Starts an OAuth authentication flow to get an access token
+     *
+     * @param context An Android context to use for showing the web based OAuth dialog
+     * @param scopes A list of {@link de.aboutyou.enums.AuthScope AuthScopes} to request authentication for
+     * @param mode The {@link de.aboutyou.enums.AuthenticationRequestMode} to use
+     * @param redirectUrl A redirect URL for the OAuth process; this URL has to match one of the URLs in "OAuth Callback URL" in the developer center
+     * @param callback An {@link de.aboutyou.ShopApiClient.AuthenticationCallback} instance to be called after authentication success / failure
+     */
     public void requestAuthentication(Context context, List<AuthScope> scopes, AuthenticationRequestMode mode, String redirectUrl, final AuthenticationCallback callback) {
         AuthWebDialog.OnCompleteListener listener = new AuthWebDialog.OnCompleteListener() {
             @Override
@@ -149,6 +168,12 @@ public class ShopApiClient {
         loginDialog.show();
     }
 
+    /**
+     * Requests a list of {@link de.aboutyou.models.Category Categories}
+     *
+     * @param categoriesRequest A {@link de.aboutyou.request.CategoriesRequest}
+     * @return The list of {@link de.aboutyou.models.Category Categories} matching the {@link de.aboutyou.request.CategoriesRequest} request parameter
+     */
     public List<Category> requestCategories(CategoriesRequest categoriesRequest) {
         validateRequest(categoriesRequest);
         RequestEnvelope<CategoriesRequest> wrappedRequest = RequestEnvelope.wrap(categoriesRequest);
@@ -161,6 +186,11 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests the tree of categories configured for your app in our <a href="http://developer.aboutyou.de">Developer Center</a>
+     *
+     * @return The {@link de.aboutyou.models.CategoryTree} for your app
+     */
     public CategoryTree requestCategoryTree() {
         RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(new CategoryTreeRequest());
 
@@ -172,6 +202,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests a list of {@link de.aboutyou.models.Facet Facets}
+     *
+     * @param facetsRequest A {@link de.aboutyou.request.FacetsRequest}
+     * @return The list of {@link de.aboutyou.models.Facet Facets} matching the {@link de.aboutyou.request.FacetsRequest} request parameter
+     */
     public List<Facet> requestFacets(FacetsRequest facetsRequest) {
         validateRequest(facetsRequest);
         RequestEnvelope<FacetsRequest> wrappedRequest = RequestEnvelope.wrap(facetsRequest);
@@ -184,6 +220,11 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests the list of available {@link de.aboutyou.enums.FacetGroup FacetGroups}
+     *
+     * @return The list of available {@link de.aboutyou.enums.FacetGroup FacetGroups}
+     */
     public List<FacetGroup> requestFacetTypes() {
         RequestEnvelope<FacetTypesRequest> wrappedRequest = RequestEnvelope.wrap(new FacetTypesRequest());
 
@@ -195,6 +236,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests autocomplete suggestions for a search input field
+     *
+     * @param autocompleteRequest A {@link de.aboutyou.request.AutocompleteRequest}
+     * @return An {@link de.aboutyou.models.Autocomplete} instance with {@link de.aboutyou.models.Product Products} and {@link de.aboutyou.models.Category Categories} matching the {@link de.aboutyou.request.AutocompleteRequest @AutocompleteRequest} request parameter
+     */
     public Autocomplete requestAutocompletion(AutocompleteRequest autocompleteRequest) {
         validateRequest(autocompleteRequest);
         RequestEnvelope<AutocompleteRequest> wrappedRequest = RequestEnvelope.wrap(autocompleteRequest);
@@ -207,6 +254,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests suggestions
+     *
+     * @param suggestRequest A {@link de.aboutyou.request.SuggestRequest}
+     * @return An {@link de.aboutyou.models.Suggest} instance which is a list of {@link java.lang.String Strings} matching the {@link de.aboutyou.request.SuggestRequest} request parameter
+     */
     public Suggest requestSuggest(SuggestRequest suggestRequest) {
         validateRequest(suggestRequest);
         RequestEnvelope<SuggestRequest> wrappedRequest = RequestEnvelope.wrap(suggestRequest);
@@ -219,6 +272,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Request a product search
+     *
+     * @param productSearchRequest A {@link de.aboutyou.request.ProductSearchRequest}
+     * @return A {@link de.aboutyou.models.ProductSearch} instance with {@link de.aboutyou.models.Product Products} matching the {@link de.aboutyou.request.ProductSearchRequest} request parameter
+     */
     public ProductSearch requestProductSearch(ProductSearchRequest productSearchRequest) {
         validateRequest(productSearchRequest);
         RequestEnvelope<ProductSearchRequest> wrappedRequest = RequestEnvelope.wrap(productSearchRequest);
@@ -231,6 +290,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests a list of live variants
+     *
+     * @param liveVariantRequest A {@link de.aboutyou.request.LiveVariantRequest}
+     * @return A list of {@link de.aboutyou.models.LiveVariant LiveVariants} matching the {@link de.aboutyou.request.LiveVariantRequest} request parameter
+     */
     public List<LiveVariant> requestLiveVariants(LiveVariantRequest liveVariantRequest) {
         validateRequest(liveVariantRequest);
         RequestEnvelope<LiveVariantRequest> wrappedRequest = RequestEnvelope.wrap(liveVariantRequest);
@@ -243,6 +308,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests a list of products
+     *
+     * @param productsRequest A {@link de.aboutyou.request.ProductsRequest}
+     * @return A list of {@link de.aboutyou.models.Product Products} mathing the {@link de.aboutyou.request.ProductsRequest} request parameter
+     */
     public List<Product> requestProducts(ProductsRequest productsRequest) {
         validateRequest(productsRequest);
         RequestEnvelope<ProductsRequest> wrappedRequest = RequestEnvelope.wrap(productsRequest);
@@ -255,6 +326,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests to modify a basket
+     *
+     * @param basketModifyRequest A {@link de.aboutyou.request.BasketModifyRequest}
+     * @return The newly created or modified {@link de.aboutyou.models.Basket}
+     */
     public Basket requestModifyBasket(BasketModifyRequest basketModifyRequest) {
         validateRequest(basketModifyRequest);
         RequestEnvelope<BasketModifyRequest> wrappedRequest = RequestEnvelope.wrap(basketModifyRequest);
@@ -267,6 +344,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Requests a basket
+     *
+     * @param basketGetRequest {@link de.aboutyou.request.BasketGetRequest}
+     * @return The requested {@link de.aboutyou.models.Basket}
+     */
     public Basket requestGetBasket(BasketGetRequest basketGetRequest) {
         validateRequest(basketGetRequest);
         RequestEnvelope<BasketGetRequest> wrappedRequest = RequestEnvelope.wrap(basketGetRequest);
@@ -279,6 +362,12 @@ public class ShopApiClient {
         }
     }
 
+    /**
+     * Initiates an order
+     *
+     * @param initiateOrderRequest A {@link de.aboutyou.request.InitiateOrderRequest}
+     * @return A {@link de.aboutyou.models.InitiateOrder} instance
+     */
     public InitiateOrder requestInitiateOrder(InitiateOrderRequest initiateOrderRequest) {
         validateRequest(initiateOrderRequest);
         RequestEnvelope<InitiateOrderRequest> wrappedRequest = RequestEnvelope.wrap(initiateOrderRequest);
@@ -290,7 +379,6 @@ public class ShopApiClient {
             return null;
         }
     }
-
 
     private void validateRequest(CollinsRequest request) {
         if (request == null) {
@@ -311,6 +399,11 @@ public class ShopApiClient {
 
     public class Helper {
 
+        /**
+         * Returns a list of {@link de.aboutyou.enums.SimpleColor SimpleColors} which is a subset of all available colors
+         *
+         * @return A list of {@link de.aboutyou.enums.SimpleColor SimpleColors}
+         */
         public List<SimpleColor> getSimpleColorFacets() {
             return Arrays.asList(SimpleColor.values());
         }
