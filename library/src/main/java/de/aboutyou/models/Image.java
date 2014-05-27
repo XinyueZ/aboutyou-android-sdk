@@ -2,9 +2,12 @@ package de.aboutyou.models;
 
 import com.google.gson.annotations.SerializedName;
 
+import android.annotation.SuppressLint;
+
 import de.aboutyou.ShopApiClient;
 import de.aboutyou.enums.Dimension;
 
+@SuppressLint("DefaultLocale")
 public class Image {
 
     private String mime;
