@@ -19,9 +19,6 @@ public class LiveVariantRequest extends CollinsRequest {
 
         private List<Long> ids;
 
-        public Builder() {
-        }
-
         public Builder filterByVariantIds(List<Long> variantIds) {
             this.ids = variantIds;
             return this;

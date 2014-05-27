@@ -32,14 +32,14 @@ public class SuggestRequest extends CollinsRequest {
             this.searchword = searchword;
         }
 
-        public Builder limit(Integer limit) {
-            this.limit = limit;
-            return this;
-        }
-
         /** Filter resulst by category ids  */
         public Builder filterByCategories(List<Long> categoryIds) {
             this.categoryIds = categoryIds;
+            return this;
+        }
+
+        public Builder limit(Integer limit) {
+            this.limit = limit;
             return this;
         }
 

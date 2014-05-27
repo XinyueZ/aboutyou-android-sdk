@@ -31,14 +31,14 @@ public class AutocompleteRequest extends CollinsRequest {
             this.searchword = searchword;
         }
 
-        public Builder limit(Integer limit) {
-            this.limit = limit;
-            return this;
-        }
-
         /** Filter results by object type */
         public Builder filterByTypes(List<AutocompleteType> types) {
             this.types = types;
+            return this;
+        }
+
+        public Builder limit(Integer limit) {
+            this.limit = limit;
             return this;
         }
 
