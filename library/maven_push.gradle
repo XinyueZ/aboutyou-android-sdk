@@ -31,6 +31,9 @@ afterEvaluate { project ->
     task androidJavadocs(type: Javadoc) {
         source = android.sourceSets.main.allJava
         classpath += project.files(android.plugin.getRuntimeJarList().join(File.pathSeparator))
+        options.quiet()
+        options.showFromPublic()
+        options.setWindowTitle("${POM_ARTIFACT_ID} ${POM_VERSION}")
     }
 
     task androidJavadocsJar(type: Jar, dependsOn: androidJavadocs) {
