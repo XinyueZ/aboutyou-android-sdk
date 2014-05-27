@@ -5,7 +5,7 @@ The aboutyou.de Shop SDK for Android is a library for [AboutYou](http://aboutyou
 ## Getting Started
 
 * [Register for an account](https://devcenter.aboutyou.de) at the AboutYou Devcenter and create a new app. You will be given credentials to utilize the About You API.
-* Add a depedency to the aboutyou.de Shop SDK Android to you project - [see below](#dep) for details
+* Add a depedency to the aboutyou.de Shop SDK Android to you project - see section "Download" below for details
 * Run and discover the sample application to become familiar with the basic principles of the aboutyou.de Shop SDK for Android.
 * Need some help? Feel free to ask questions to henning.dodenhof(at)slice-dice.de
 
@@ -38,7 +38,7 @@ new AsyncTask<Void, Void, Void>(){
 }.execute();
 ```
 
-## <a name="dep"></a>Download
+## Download
 Grab the latest release via Maven:
 ```xml
 <dependency>
