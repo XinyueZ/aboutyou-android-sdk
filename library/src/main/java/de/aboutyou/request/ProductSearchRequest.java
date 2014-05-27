@@ -102,13 +102,13 @@ public class ProductSearchRequest extends CollinsRequest {
             return this;
         }
 
-        /** Filter results by minimum price */
+        /** Filter results by minimum price in cents */
         public Builder filterByMinPrice(long priceInCents) {
             this.priceFrom = priceInCents;
             return this;
         }
 
-        /** Filter results by maximum price */
+        /** Filter results by maximum price in cents */
         public Builder filterByMaxPrice(long priceInCents) {
             this.priceTo = priceInCents;
             return this;
