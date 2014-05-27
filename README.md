@@ -38,8 +38,7 @@ new AsyncTask<Void, Void, Void>(){
 }.execute();
 ```
 
-<a name="dep"/>
-## Download
+## <a name="dep"></a>Download
 Grab the latest release via Maven:
 ```xml
 <dependency>
