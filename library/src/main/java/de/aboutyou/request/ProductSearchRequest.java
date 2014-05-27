@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.aboutyou.enums.Direction;
-import de.aboutyou.enums.FacetGroup;
+import de.aboutyou.enums.FacetType;
 import de.aboutyou.enums.ProductFilter;
 import de.aboutyou.enums.Sortby;
 
@@ -28,7 +28,7 @@ public class ProductSearchRequest extends CollinsRequest {
             @SerializedName("prices")
             private Prices priceRange;
             private String searchword;
-            private Map<FacetGroup, List<Long>> facets;
+            private Map<FacetType, List<Long>> facets;
 
             private static class Prices {
                 private Long from;
@@ -72,7 +72,7 @@ public class ProductSearchRequest extends CollinsRequest {
         private Long priceFrom;
         private Long priceTo;
         private String searchString;
-        private Map<FacetGroup, List<Long>> facets;
+        private Map<FacetType, List<Long>> facets;
         private Boolean listSaleDetails;
         private Boolean listPriceDetails;
         private Boolean listCategories;
@@ -111,7 +111,7 @@ public class ProductSearchRequest extends CollinsRequest {
             return this;
         }
 
-        public Builder filterByFacets(Map<FacetGroup, List<Long>> facets) {
+        public Builder filterByFacets(Map<FacetType, List<Long>> facets) {
             this.facets = facets;
             return this;
         }

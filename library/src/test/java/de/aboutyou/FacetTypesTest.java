@@ -2,12 +2,9 @@ package de.aboutyou;
 
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
-import de.aboutyou.enums.FacetGroup;
-import de.aboutyou.models.Facet;
-import de.aboutyou.request.FacetsRequest;
+import de.aboutyou.enums.FacetType;
 import de.aboutyou.util.MockClient;
 
 import static org.junit.Assert.assertEquals;
@@ -41,11 +38,11 @@ public class FacetTypesTest extends TestBase {
     public void testValidResponse() {
         ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
 
-        List<FacetGroup> facetGroups = shopApiClient.requestFacetTypes();
+        List<FacetType> facetTypes = shopApiClient.requestFacetTypes();
 
-        assertNotNull(facetGroups);
-        assertTrue(facetGroups.size() == 5);
-        assertEquals(FacetGroup.SIZE, facetGroups.get(2));
+        assertNotNull(facetTypes);
+        assertTrue(facetTypes.size() == 5);
+        assertEquals(FacetType.SIZE, facetTypes.get(2));
     }
 
     private class ValidResponseMockClient extends MockClient {

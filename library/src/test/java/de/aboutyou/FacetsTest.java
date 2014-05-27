@@ -6,10 +6,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import de.aboutyou.enums.FacetGroup;
-import de.aboutyou.models.Category;
+import de.aboutyou.enums.FacetType;
 import de.aboutyou.models.Facet;
-import de.aboutyou.request.CategoriesRequest;
 import de.aboutyou.request.FacetsRequest;
 import de.aboutyou.util.MockClient;
 
@@ -24,7 +22,7 @@ public class FacetsTest extends TestBase {
         ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
         FacetsRequest facetsRequest = new FacetsRequest.Builder()
-                .filterByFacetGroup(Arrays.asList(FacetGroup.SIZE))
+                .filterByFacetGroup(Arrays.asList(FacetType.SIZE))
                 .build();
         shopApiClient.requestFacets(facetsRequest);
     }
@@ -48,7 +46,7 @@ public class FacetsTest extends TestBase {
         ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
 
         FacetsRequest facetsRequest = new FacetsRequest.Builder()
-                .filterByFacetGroup(Collections.<FacetGroup>emptyList())
+                .filterByFacetGroup(Collections.<FacetType>emptyList())
                 .build();
 
         List<Facet> facets = shopApiClient.requestFacets(facetsRequest);

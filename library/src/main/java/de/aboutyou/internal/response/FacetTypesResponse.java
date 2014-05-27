@@ -5,23 +5,23 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.aboutyou.enums.FacetGroup;
+import de.aboutyou.enums.FacetType;
 
-public class FacetTypesResponse extends CollinsResponse<List<FacetGroup>> {
+public class FacetTypesResponse extends CollinsResponse<List<FacetType>> {
 
     @SerializedName("facet_types")
     private List<Integer> facetTypes;
 
     @Override
-    public List<FacetGroup> get() {
-        List<FacetGroup> facetGroups = new ArrayList<>();
-        for (Integer facetGroupId : facetTypes) {
-            FacetGroup facetGroup = FacetGroup.fromInteger(facetGroupId);
-            if (facetGroup != null) {
-                facetGroups.add(facetGroup);
+    public List<FacetType> get() {
+        List<FacetType> facetTypes = new ArrayList<>();
+        for (Integer facetGroupId : this.facetTypes) {
+            FacetType facetType = FacetType.fromInteger(facetGroupId);
+            if (facetType != null) {
+                facetTypes.add(facetType);
             }
         }
-        return facetGroups;
+        return facetTypes;
     }
 
 }

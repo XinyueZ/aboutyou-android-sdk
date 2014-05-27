@@ -1,6 +1,6 @@
 package de.aboutyou.enums;
 
-public enum FacetGroup {
+public enum FacetType {
 
     BRAND(0),
     COLOR(1),
@@ -28,12 +28,12 @@ public enum FacetGroup {
 
     private int id;
 
-    private FacetGroup(int id) {
+    private FacetType(int id) {
         this.id = id;
     }
 
-    public static FacetGroup fromInteger(int index) {
-        for (FacetGroup currentValue : FacetGroup.values()) {
+    public static FacetType fromInteger(int index) {
+        for (FacetType currentValue : FacetType.values()) {
             if (currentValue.getId() == index) {
                 return currentValue;
             }

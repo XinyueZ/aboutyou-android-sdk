@@ -18,7 +18,7 @@ import de.aboutyou.enums.AuthenticationRequestMode;
 import de.aboutyou.enums.AutocompleteType;
 import de.aboutyou.enums.Direction;
 import de.aboutyou.enums.Endpoint;
-import de.aboutyou.enums.FacetGroup;
+import de.aboutyou.enums.FacetType;
 import de.aboutyou.enums.ProductFields;
 import de.aboutyou.enums.SimpleColor;
 import de.aboutyou.enums.Sortby;
@@ -30,7 +30,7 @@ import de.aboutyou.internal.communication.RestInterface;
 import de.aboutyou.internal.typeadapter.AttributesTypeAdapter;
 import de.aboutyou.internal.typeadapter.AutocompleteTypeAdapter;
 import de.aboutyou.internal.typeadapter.DirectionTypeAdapter;
-import de.aboutyou.internal.typeadapter.FacetGroupTypeAdapter;
+import de.aboutyou.internal.typeadapter.FacetTypeTypeAdapter;
 import de.aboutyou.internal.typeadapter.ProductFieldsTypeAdapter;
 import de.aboutyou.internal.typeadapter.SortbyTypeAdapter;
 import de.aboutyou.internal.typeadapter.SuggestTypeAdapter;
@@ -132,7 +132,7 @@ public class ShopApiClient {
         Gson gson = new GsonBuilder()
                 .enableComplexMapKeySerialization()
                 .setDateFormat(DATE_FORMAT)
-                .registerTypeAdapter(FacetGroup.class, new FacetGroupTypeAdapter())
+                .registerTypeAdapter(FacetType.class, new FacetTypeTypeAdapter())
                 .registerTypeAdapter(AutocompleteType.class, new AutocompleteTypeAdapter())
                 .registerTypeAdapter(Sortby.class, new SortbyTypeAdapter())
                 .registerTypeAdapter(Direction.class, new DirectionTypeAdapter())
@@ -221,11 +221,11 @@ public class ShopApiClient {
     }
 
     /**
-     * Requests the list of available {@link de.aboutyou.enums.FacetGroup FacetGroups}
+     * Requests the list of available {@link de.aboutyou.enums.FacetType FacetTypes}
      *
-     * @return The list of available {@link de.aboutyou.enums.FacetGroup FacetGroups}
+     * @return The list of available {@link de.aboutyou.enums.FacetType FacetTypes}
      */
-    public List<FacetGroup> requestFacetTypes() {
+    public List<FacetType> requestFacetTypes() {
         RequestEnvelope<FacetTypesRequest> wrappedRequest = RequestEnvelope.wrap(new FacetTypesRequest());
 
         try {

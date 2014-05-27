@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import de.aboutyou.enums.FacetGroup;
+import de.aboutyou.enums.FacetType;
 
 public class FacetsRequest extends CollinsRequest {
 
@@ -12,19 +12,19 @@ public class FacetsRequest extends CollinsRequest {
 
     private static class Facet {
         @SerializedName("group_ids")
-        private List<FacetGroup> facetGroups;
+        private List<FacetType> facetTypes;
         private Integer limit;
         private Integer offset;
     }
 
     public static class Builder extends CollinsRequest.Builder {
 
-        private List<FacetGroup> facetGroups;
+        private List<FacetType> facetTypes;
         private Integer limit;
         private Integer offset;
 
-        public Builder filterByFacetGroup(List<FacetGroup> facetGroups) {
-            this.facetGroups = facetGroups;
+        public Builder filterByFacetGroup(List<FacetType> facetTypes) {
+            this.facetTypes = facetTypes;
             return this;
         }
 
@@ -42,7 +42,7 @@ public class FacetsRequest extends CollinsRequest {
             FacetsRequest facetRequest = new FacetsRequest();
 
             Facet facet = new Facet();
-            facet.facetGroups = facetGroups;
+            facet.facetTypes = facetTypes;
             facet.limit = limit;
             facet.offset = offset;
             facetRequest.facets = facet;
