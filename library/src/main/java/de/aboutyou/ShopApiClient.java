@@ -25,8 +25,10 @@ import de.aboutyou.enums.Sortby;
 import de.aboutyou.exceptions.CollinsException;
 import de.aboutyou.exceptions.HttpException;
 import de.aboutyou.exceptions.NetworkException;
-import de.aboutyou.internal.communication.AuthenticationRequestInterceptor;
-import de.aboutyou.internal.communication.RestInterface;
+import de.aboutyou.internal.communication.MeInterface;
+import de.aboutyou.internal.communication.SSLHack;
+import de.aboutyou.internal.communication.ShopAuthenticationRequestInterceptor;
+import de.aboutyou.internal.communication.ShopInterface;
 import de.aboutyou.internal.typeadapter.AttributesTypeAdapter;
 import de.aboutyou.internal.typeadapter.AutocompleteTypeAdapter;
 import de.aboutyou.internal.typeadapter.DirectionTypeAdapter;
@@ -47,6 +49,7 @@ import de.aboutyou.models.InitiateOrder;
 import de.aboutyou.models.LiveVariant;
 import de.aboutyou.models.Product;
 import de.aboutyou.models.ProductSearch;
+import de.aboutyou.models.ShopUser;
 import de.aboutyou.models.Suggest;
 import de.aboutyou.request.AutocompleteRequest;
 import de.aboutyou.request.BasketGetRequest;
@@ -83,7 +86,8 @@ public class ShopApiClient {
 
     private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm:ss";
 
-    private final RestInterface mAPI;
+    private final ShopInterface mShopAPI;
+    private final MeInterface mMeAPI;
     private final Logger mLogger;
 
     private final String mAppId;
@@ -104,21 +108,27 @@ public class ShopApiClient {
     }
 
     protected ShopApiClient(String appId, String appSecret, Endpoint endpoint, Logger logger, Client client) {
-        RequestInterceptor authRequestInterceptor = new AuthenticationRequestInterceptor(appId, appSecret);
+        RequestInterceptor ShopAuthRequestInterceptor = new ShopAuthenticationRequestInterceptor(appId, appSecret);
 
-        RestAdapter restAdapter = new RestAdapter.Builder()
+        RestAdapter shopAdapter = new RestAdapter.Builder()
                 .setEndpoint(endpoint.getUrl())
                 .setClient(client)
-                .setRequestInterceptor(authRequestInterceptor)
+                .setRequestInterceptor(ShopAuthRequestInterceptor)
                 .setConverter(buildGsonConverter())
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
+        mShopAPI = shopAdapter.create(ShopInterface.class);
 
-        mAPI = restAdapter.create(RestInterface.class);
-        mLogger = logger;
+        RestAdapter meAdapter = new RestAdapter.Builder()
+                .setEndpoint(endpoint.getMeUrl())
+                .setClient(SSLHack.buildClient())
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+        mMeAPI = meAdapter.create(MeInterface.class);
 
         mAppId = appId;
         mEndpoint = endpoint;
+        mLogger = logger;
     }
 
     private static Client buildClient() {
@@ -169,6 +179,21 @@ public class ShopApiClient {
     }
 
     /**
+     * Requests a user
+     *
+     * @param accessToken The access token obtained using {@link de.aboutyou.ShopApiClient#requestAuthentication(android.content.Context, java.util.List, de.aboutyou.enums.AuthenticationRequestMode, String, de.aboutyou.ShopApiClient.AuthenticationCallback)}
+     * @return A {@link de.aboutyou.models.ShopUser}
+     */
+    public ShopUser requestShopUser(String accessToken) {
+        try {
+            return mMeAPI.requestUser(getBearerAuth(accessToken));
+        } catch (RetrofitError e) {
+            // TODO
+            return null;
+        }
+    }
+
+    /**
      * Requests a list of {@link de.aboutyou.models.Category Categories}
      *
      * @param categoriesRequest A {@link de.aboutyou.request.CategoriesRequest}
@@ -179,7 +204,7 @@ public class ShopApiClient {
         RequestEnvelope<CategoriesRequest> wrappedRequest = RequestEnvelope.wrap(categoriesRequest);
 
         try {
-            return mAPI.requestCategories(wrappedRequest).unwrap().get();
+            return mShopAPI.requestCategories(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -195,7 +220,7 @@ public class ShopApiClient {
         RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(new CategoryTreeRequest());
 
         try {
-            return mAPI.requestCategoryTree(wrappedRequest).unwrap().get();
+            return mShopAPI.requestCategoryTree(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -213,7 +238,7 @@ public class ShopApiClient {
         RequestEnvelope<FacetsRequest> wrappedRequest = RequestEnvelope.wrap(facetsRequest);
 
         try {
-            return mAPI.requestFacets(wrappedRequest).unwrap().get();
+            return mShopAPI.requestFacets(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -229,7 +254,7 @@ public class ShopApiClient {
         RequestEnvelope<FacetTypesRequest> wrappedRequest = RequestEnvelope.wrap(new FacetTypesRequest());
 
         try {
-            return mAPI.requestFacetTypes(wrappedRequest).unwrap().get();
+            return mShopAPI.requestFacetTypes(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -247,7 +272,7 @@ public class ShopApiClient {
         RequestEnvelope<AutocompleteRequest> wrappedRequest = RequestEnvelope.wrap(autocompleteRequest);
 
         try {
-            return mAPI.requestAutocomplete(wrappedRequest).unwrap().get();
+            return mShopAPI.requestAutocomplete(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -265,7 +290,7 @@ public class ShopApiClient {
         RequestEnvelope<SuggestRequest> wrappedRequest = RequestEnvelope.wrap(suggestRequest);
 
         try {
-            return mAPI.requestSuggest(wrappedRequest).unwrap().get();
+            return mShopAPI.requestSuggest(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -283,7 +308,7 @@ public class ShopApiClient {
         RequestEnvelope<ProductSearchRequest> wrappedRequest = RequestEnvelope.wrap(productSearchRequest);
 
         try {
-            return mAPI.requestProductSearch(wrappedRequest).unwrap().get();
+            return mShopAPI.requestProductSearch(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -301,7 +326,7 @@ public class ShopApiClient {
         RequestEnvelope<LiveVariantRequest> wrappedRequest = RequestEnvelope.wrap(liveVariantRequest);
 
         try {
-            return mAPI.requestLiveVariants(wrappedRequest).unwrap().get();
+            return mShopAPI.requestLiveVariants(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -319,7 +344,7 @@ public class ShopApiClient {
         RequestEnvelope<ProductsRequest> wrappedRequest = RequestEnvelope.wrap(productsRequest);
 
         try {
-            return mAPI.requestProducts(wrappedRequest).unwrap().get();
+            return mShopAPI.requestProducts(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -337,7 +362,7 @@ public class ShopApiClient {
         RequestEnvelope<BasketModifyRequest> wrappedRequest = RequestEnvelope.wrap(basketModifyRequest);
 
         try {
-            return mAPI.requestModifyBasket(wrappedRequest).unwrap().get();
+            return mShopAPI.requestModifyBasket(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -355,7 +380,7 @@ public class ShopApiClient {
         RequestEnvelope<BasketGetRequest> wrappedRequest = RequestEnvelope.wrap(basketGetRequest);
 
         try {
-            return mAPI.requestGetBasket(wrappedRequest).unwrap().get();
+            return mShopAPI.requestGetBasket(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -373,7 +398,7 @@ public class ShopApiClient {
         RequestEnvelope<InitiateOrderRequest> wrappedRequest = RequestEnvelope.wrap(initiateOrderRequest);
 
         try {
-            return mAPI.requestInitiateOrder(wrappedRequest).unwrap().get();
+            return mShopAPI.requestInitiateOrder(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
@@ -384,6 +409,10 @@ public class ShopApiClient {
         if (request == null) {
             throw new IllegalArgumentException("Request must not be null");
         }
+    }
+
+    private String getBearerAuth(String token) {
+        return String.format("%s %s", "Bearer", token);
     }
 
     private void handleRetrofitError(RetrofitError e) {

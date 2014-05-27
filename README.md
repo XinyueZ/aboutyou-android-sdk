@@ -42,7 +42,7 @@ new AsyncTask<Void, Void, Void>(){
 
 You can access user details from the aboutyou.de shop backend using OAuth2. To start the OAuth2 flow just call `shopApiClient.requestAuthentication()` providing the request details (no builder pattern here) and an `AuthenticationCallback`. The user will be prompted with a web-dialog to login / register and authorize your app. If all goes well, `onSuccess()` on the `AuthenticationCallback` is called with an accessToken - in case of an error `onError()` is called instead.
 
-With the newly obtained accessToken you can now request a user object: tbd.
+With the newly obtained accessToken you can now request a user object using `requestShopUser()`.
 
 ## Download
 Grab the latest release via Maven:

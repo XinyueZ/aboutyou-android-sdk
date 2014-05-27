@@ -28,7 +28,7 @@ import de.aboutyou.request.SuggestRequest;
 import retrofit.http.Body;
 import retrofit.http.POST;
 
-public interface RestInterface {
+public interface ShopInterface {
 
     static final String BASEPATH = "/api";
 

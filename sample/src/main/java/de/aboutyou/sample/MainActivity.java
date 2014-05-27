@@ -59,8 +59,16 @@ public class MainActivity extends Activity {
         mShopApiClient.requestAuthentication(this, Arrays.asList(AuthScope.FIRSTNAME, AuthScope.LASTNAME, AuthScope.ID, AuthScope.EMAIL), AuthenticationRequestMode.DEFAULT, "http://mp.sdk/oauth",
                 new ShopApiClient.AuthenticationCallback() {
                     @Override
-                    public void onSuccess(String accessToken) {
+                    public void onSuccess(final String accessToken) {
                         Toast.makeText(MainActivity.this, accessToken, Toast.LENGTH_SHORT).show();
+                        new AsyncTask<Void, Void, Void>() {
+
+                            @Override
+                            protected Void doInBackground(Void... params) {
+                                mShopApiClient.requestShopUser(accessToken);
+                                return null;
+                            }
+                        }.execute();
                     }
 
                     @Override

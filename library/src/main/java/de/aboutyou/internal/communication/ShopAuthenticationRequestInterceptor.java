@@ -4,14 +4,14 @@ import com.squareup.okhttp.OkAuthenticator;
 
 import retrofit.RequestInterceptor;
 
-public class AuthenticationRequestInterceptor implements RequestInterceptor {
+public class ShopAuthenticationRequestInterceptor implements RequestInterceptor {
 
     private static final String HEADER_AUTHORIZATION = "Authorization";
 
     private final String mAppId;
     private final String mAppPassword;
 
-    public AuthenticationRequestInterceptor(String appId, String appPassword) {
+    public ShopAuthenticationRequestInterceptor(String appId, String appPassword) {
         mAppId = appId;
         mAppPassword = appPassword;
     }
