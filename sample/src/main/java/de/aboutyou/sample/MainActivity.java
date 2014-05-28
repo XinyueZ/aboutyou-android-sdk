@@ -1,281 +1,117 @@
 package de.aboutyou.sample;
 
+import android.app.ActionBar;
 import android.app.Activity;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.View;
+import android.view.ViewGroup;
+import android.support.v4.widget.DrawerLayout;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.aboutyou.ShopApiClient;
-import de.aboutyou.enums.AuthScope;
-import de.aboutyou.enums.AuthenticationRequestMode;
-import de.aboutyou.enums.AutocompleteType;
-import de.aboutyou.enums.Direction;
 import de.aboutyou.enums.Endpoint;
-import de.aboutyou.enums.FacetType;
-import de.aboutyou.enums.ProductFields;
-import de.aboutyou.enums.ProductFilter;
-import de.aboutyou.enums.Sortby;
-import de.aboutyou.exceptions.CollinsException;
-import de.aboutyou.models.AddOrderLine;
-import de.aboutyou.models.OrderLine;
-import de.aboutyou.models.ShopUser;
-import de.aboutyou.request.AutocompleteRequest;
-import de.aboutyou.request.BasketGetRequest;
-import de.aboutyou.request.BasketModifyRequest;
-import de.aboutyou.request.CategoriesRequest;
-import de.aboutyou.request.FacetsRequest;
-import de.aboutyou.request.LiveVariantRequest;
-import de.aboutyou.request.ProductsRequest;
-import de.aboutyou.request.ProductSearchRequest;
-import de.aboutyou.request.SuggestRequest;
+import de.aboutyou.models.CategoryTree;
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private static final String APP_ID = "110";
     private static final String APP_PASSWORD = "ed8272cc4d993378f595d112915920bb";
 
+    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private CharSequence mTitle;
     private ShopApiClient mShopApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.inject(this);
 
         mShopApiClient = new ShopApiClient(APP_ID, APP_PASSWORD, Endpoint.STAGE, new Logger());
+
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mTitle = getTitle();
+
+        mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-    @OnClick(R.id.auth)
-    public void auth() {
-        ShopApiClient.AuthenticationCallback callback = new ShopApiClient.AuthenticationCallback() {
-            @Override
-            public void onSuccess(final String accessToken) {
-                getUser(accessToken);
-            }
+    @Override
+    public void onNavigationDrawerItemSelected(int position) {
+        Fragment fragment;
+        switch (position) {
+            case 0:
+                fragment = ProductSearchFragment.newInstance();
+                break;
+            case 1:
+                fragment = CategoryTreeFragment.newInstance();
+                break;
+            case 2:
+                fragment = OAuthFragment.newInstance();
+                break;
+            default:
+                return;
+        }
 
-            @Override
-            public void onCancel() {
-                Toast.makeText(MainActivity.this, "OAuth canceled", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onFailure() {
-                Toast.makeText(MainActivity.this, "OAuth failed", Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        mShopApiClient.requestAuthentication(this, Arrays.asList(AuthScope.FIRSTNAME, AuthScope.LASTNAME, AuthScope.ID, AuthScope.EMAIL), AuthenticationRequestMode.DEFAULT, "http://mp.sdk/oauth", callback);
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .commit();
     }
 
-    private void getUser(final String accessToken) {
-        new AsyncTask<Void, Void, ShopUser>(){
-            @Override
-            protected ShopUser doInBackground(Void... params) {
-                return mShopApiClient.requestShopUser(accessToken);
-            }
-
-            @Override
-            protected void onPostExecute(ShopUser shopUser) {
-                Toast.makeText(MainActivity.this, String.format("Hello %s", shopUser.getFirstname()), Toast.LENGTH_SHORT).show();
-            }
-        }.execute();
+    public void onFragmentAttached(String title) {
+        mTitle = title;
     }
 
-    @OnClick(R.id.category_tree)
-    public void categoryTree() {
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestCategoryTree();
-            }
-        })).execute();
+    public void restoreActionBar() {
+        ActionBar actionBar = getActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
     }
 
-    @OnClick(R.id.categories)
-    public void categories() {
-        final CategoriesRequest categoriesRequest = new CategoriesRequest.Builder()
-                .filterByCategoryIds(Arrays.asList(19534l))
-                .build();
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestCategories(categoriesRequest);
-            }
-        })).execute();
+    public ShopApiClient getShopApiClient() {
+        return mShopApiClient;
     }
 
-    @OnClick(R.id.facets)
-    public void facets() {
-        final FacetsRequest facetRequest = new FacetsRequest.Builder()
-                .filterByFacetTypes(Arrays.asList(FacetType.SIZE))
-                .build();
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestFacets(facetRequest);
-            }
-        })).execute();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
     }
 
-    @OnClick(R.id.facettypes)
-    public void facettypes() {
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestFacetTypes();
-            }
-        })).execute();
-    }
+    public static class PlaceholderFragment extends Fragment {
 
-    @OnClick(R.id.livevariant)
-    public void livevariant() {
-        final LiveVariantRequest liveVariantRequest = new LiveVariantRequest.Builder()
-                .filterByVariantIds(Arrays.asList(5621829l))
-                .build();
+        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestLiveVariants(liveVariantRequest);
-            }
-        })).execute();
-    }
+        public static PlaceholderFragment newInstance(int sectionNumber) {
+            PlaceholderFragment fragment = new PlaceholderFragment();
+            Bundle args = new Bundle();
+            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+            fragment.setArguments(args);
+            return fragment;
+        }
 
-    @OnClick(R.id.autocomplete)
-    public void autocomplete() {
-        final AutocompleteRequest autocompleteRequest = new AutocompleteRequest.Builder("Sho")
-                .filterByTypes( Arrays.asList(AutocompleteType.PRODUCTS))
-                .limit(10)
-                .build();
-
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestAutocompletion(autocompleteRequest);
-            }
-        })).execute();
-    }
-
-    @OnClick(R.id.suggest)
-    public void suggest() {
-        final SuggestRequest suggestRequest = new SuggestRequest.Builder("Sho")
-                .limit(10)
-                .build();
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestSuggest(suggestRequest);
-            }
-        })).execute();
-    }
-
-    @OnClick(R.id.productsearch)
-    public void productsearch() {
-        Map<FacetType, List<Long>> facetFilter = new HashMap<>();
-        facetFilter.put(FacetType.CUPSIZE, Arrays.asList(93l, 94l, 95l, 96l));
-
-        final ProductSearchRequest request = new ProductSearchRequest.Builder("session4711")
-                .filterByMinPrice(500)
-                .filterByMaxPrice(5000)
-                .filterByStatus(ProductFilter.NONSALEONLY)
-                .filterByFacets(facetFilter)
-                .sortBy(Sortby.RELEVANCE, Direction.DESC)
-                .limit(10)
-                .build();
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestProductSearch(request);
-            }
-        })).execute();
-    }
-
-    @OnClick(R.id.products)
-    public void products() {
-        final ProductsRequest productRequest = new ProductsRequest.Builder()
-                .filterByProductIds(Arrays.asList(329777l, 325136l))
-                .listFields(Arrays.asList(ProductFields.VARIANTS))
-                .build();
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestProducts(productRequest);
-            }
-        })).execute();
-    }
-
-    @OnClick(R.id.basketadd)
-    public void basketadd() {
-        List<OrderLine> orderLines = new ArrayList<>();
-        orderLines.add(new AddOrderLine(UUID.randomUUID().toString(), 5615651l));
-
-        final BasketModifyRequest basketModifyRequest = new BasketModifyRequest.Builder("session4711")
-                .setOrderLines(orderLines)
-                .build();
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestModifyBasket(basketModifyRequest);
-            }
-        })).execute();
-    }
-
-    @OnClick(R.id.getbasket)
-    public void basketget() {
-        final BasketGetRequest basketGetRequest = new BasketGetRequest.Builder("session4711")
-                .build();
-
-        (new RequestTask(new Runnable() {
-            @Override
-            public void run() {
-                mShopApiClient.requestGetBasket(basketGetRequest);
-            }
-        })).execute();
-    }
-
-    public class RequestTask extends AsyncTask<Void, Void, String> {
-
-        private Runnable mRunnable;
-
-        public RequestTask(Runnable runnable) {
-            mRunnable = runnable;
+        public PlaceholderFragment() {
         }
 
         @Override
-        protected String doInBackground(Void... params) {
-            try {
-                mRunnable.run();
-            } catch (CollinsException e) {
-                return e.getMessage();
-            }
-            return null;
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            return rootView;
         }
 
         @Override
-        protected void onPostExecute(String message) {
-            if (message == null) {
-                Toast.makeText(MainActivity.this, "success", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-            }
-
+        public void onAttach(Activity activity) {
+            super.onAttach(activity);
+            ((MainActivity) activity).onFragmentAttached("");
         }
     }
 

@@ -3,4 +3,11 @@
 
     <string name="app_name">aboutyou.de Shop SDK Sample</string>
 
+    <string name="title_productsearch">Product search</string>
+    <string name="title_categorytree">Category Tree</string>
+    <string name="title_oauth">OAuth</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
 </resources>
