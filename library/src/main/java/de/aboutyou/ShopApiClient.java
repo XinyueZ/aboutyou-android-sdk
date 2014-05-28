@@ -306,6 +306,8 @@ public class ShopApiClient {
 
     /**
      * Request a product search
+     * <p>
+     * Beware: the products return as part of the `ProductSearch` instance are very basic: they do only contain the id and name of the products.
      *
      * @param productSearchRequest A {@link de.aboutyou.request.ProductSearchRequest}
      * @return A {@link de.aboutyou.models.ProductSearch} instance with {@link de.aboutyou.models.Product Products} matching the {@link de.aboutyou.request.ProductSearchRequest} request parameter
