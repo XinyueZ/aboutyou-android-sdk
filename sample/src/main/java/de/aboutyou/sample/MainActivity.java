@@ -28,6 +28,7 @@ import de.aboutyou.enums.Sortby;
 import de.aboutyou.exceptions.CollinsException;
 import de.aboutyou.models.AddOrderLine;
 import de.aboutyou.models.OrderLine;
+import de.aboutyou.models.ShopUser;
 import de.aboutyou.request.AutocompleteRequest;
 import de.aboutyou.request.BasketGetRequest;
 import de.aboutyou.request.BasketModifyRequest;
@@ -56,26 +57,38 @@ public class MainActivity extends Activity {
 
     @OnClick(R.id.auth)
     public void auth() {
-        mShopApiClient.requestAuthentication(this, Arrays.asList(AuthScope.FIRSTNAME, AuthScope.LASTNAME, AuthScope.ID, AuthScope.EMAIL), AuthenticationRequestMode.DEFAULT, "http://mp.sdk/oauth",
-                new ShopApiClient.AuthenticationCallback() {
-                    @Override
-                    public void onSuccess(final String accessToken) {
-                        Toast.makeText(MainActivity.this, accessToken, Toast.LENGTH_SHORT).show();
-                        new AsyncTask<Void, Void, Void>() {
+        ShopApiClient.AuthenticationCallback callback = new ShopApiClient.AuthenticationCallback() {
+            @Override
+            public void onSuccess(final String accessToken) {
+                getUser(accessToken);
+            }
 
-                            @Override
-                            protected Void doInBackground(Void... params) {
-                                mShopApiClient.requestShopUser(accessToken);
-                                return null;
-                            }
-                        }.execute();
-                    }
+            @Override
+            public void onCancel() {
+                Toast.makeText(MainActivity.this, "OAuth canceled", Toast.LENGTH_SHORT).show();
+            }
 
-                    @Override
-                    public void onFailure() {
-                        Toast.makeText(MainActivity.this, "error", Toast.LENGTH_SHORT).show();
-                    }
-                });
+            @Override
+            public void onFailure() {
+                Toast.makeText(MainActivity.this, "OAuth failed", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        mShopApiClient.requestAuthentication(this, Arrays.asList(AuthScope.FIRSTNAME, AuthScope.LASTNAME, AuthScope.ID, AuthScope.EMAIL), AuthenticationRequestMode.DEFAULT, "http://mp.sdk/oauth", callback);
+    }
+
+    private void getUser(final String accessToken) {
+        new AsyncTask<Void, Void, ShopUser>(){
+            @Override
+            protected ShopUser doInBackground(Void... params) {
+                return mShopApiClient.requestShopUser(accessToken);
+            }
+
+            @Override
+            protected void onPostExecute(ShopUser shopUser) {
+                Toast.makeText(MainActivity.this, String.format("Hello %s", shopUser.getFirstname()), Toast.LENGTH_SHORT).show();
+            }
+        }.execute();
     }
 
     @OnClick(R.id.category_tree)
