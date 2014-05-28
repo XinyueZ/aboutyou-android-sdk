@@ -77,6 +77,7 @@ public class ShopApiClient {
 
     public interface AuthenticationCallback {
         public void onSuccess(String accessToken);
+        public void onCancel();
         public void onFailure();
     }
 
@@ -166,11 +167,17 @@ public class ShopApiClient {
         AuthWebDialog.OnCompleteListener listener = new AuthWebDialog.OnCompleteListener() {
             @Override
             public void onComplete(String accessToken) {
-                if (accessToken != null) {
-                    callback.onSuccess(accessToken);
-                } else {
-                    callback.onFailure();
-                }
+                callback.onSuccess(accessToken);
+            }
+
+            @Override
+            public void onAbort() {
+                callback.onCancel();
+            }
+
+            @Override
+            public void onError() {
+                callback.onFailure();
             }
         };
 

@@ -75,6 +75,10 @@ public class AuthWebDialog extends Dialog {
     public interface OnCompleteListener {
 
         public void onComplete(String accessToken);
+
+        public void onAbort();
+
+        public void onError();
     }
 
     public AuthWebDialog(Context context, String clientId, Endpoint endpoint, List<AuthScope> scopes, AuthenticationRequestMode mode, String redirectUrl, OnCompleteListener listener) {
@@ -225,12 +229,15 @@ public class AuthWebDialog extends Dialog {
     private void sendErrorToListener() {
         if (mOnCompleteListener != null && !mListenerCalled) {
             mListenerCalled = true;
-            mOnCompleteListener.onComplete(null);
+            mOnCompleteListener.onError();
         }
     }
 
     private void sendCancelToListener() {
-        sendErrorToListener();
+        if (mOnCompleteListener != null && !mListenerCalled) {
+            mListenerCalled = true;
+            mOnCompleteListener.onAbort();
+        }
     }
 
     private void createCrossImage() {
