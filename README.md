@@ -32,17 +32,59 @@ final ProductSearchRequest request = new ProductSearchRequest.Builder("foobar")
 new AsyncTask<Void, Void, Void>(){
     @Override
     protected Void doInBackground(Void... params) {
-        ProductSearch productSearch = mShopApiClient.requestProductSearch(request);
+        ProductSearch productSearch = shopApiClient.requestProductSearch(request);
         return null;
     }
 }.execute();
 ```
 
+All requests may throw a `CollinsException`, which is either a low-level `NetworkException` or a `HttpException` containing a `HttpError` instance with some more information about what went wrong.
+
 ### OAuth2
 
-You can access user details from the aboutyou.de shop backend using OAuth2. To start the OAuth2 flow just call `shopApiClient.requestAuthentication()` providing the request details (no builder pattern here) and an `AuthenticationCallback`. The user will be prompted with a web-dialog to login / register and authorize your app. If all goes well, `onSuccess()` on the `AuthenticationCallback` is called with an accessToken - in case of an error `onError()` is called instead.
+You can access user details from the aboutyou.de shop backend using OAuth2. To start the OAuth2 flow just call `shopApiClient.requestAuthentication()` providing the request details (no builder pattern here) and an `AuthenticationCallback`. The user will be prompted with a web-dialog to login / register and authorize your app. If all goes well, `onSuccess()` on the `AuthenticationCallback` is called with an accessToken - in case of an error `onError()` is called instead. If the user cancel the OAuth flow, `onCancel()` will be called.
 
-With the newly obtained accessToken you can now request a user object using `requestShopUser()`.
+With the newly obtained accessToken you can now request a user object using `requestShopUser()`. The `ShopUser` instance that is returned contains only the fields, you requested access to using the `List<AuthScope>` parameter of `shopApiClient.requestAuthentication()`.
+
+A simplified example:
+```java
+private void doAuth() {
+    List<AuthScope> scopes = Arrays.asList(AuthScope.FIRSTNAME, AuthScope.LASTNAME, AuthScope.ID, AuthScope.EMAIL);
+    String redirectUrl = "http://mp.sdk/oauth";
+    ShopApiClient.AuthenticationCallback callback = new ShopApiClient.AuthenticationCallback() {
+        @Override
+        public void onSuccess(String accessToken) {
+            getUser(accessToken);
+        }
+    
+        @Override
+        public void onCancel() {
+            // User canceled
+        }
+    
+        @Override
+        public void onFailure() {
+            // Something went wrong
+        }
+    };
+    
+    shopApiClient.requestAuthentication(getContext(), scopes, AuthenticationRequestMode.DEFAULT, redirectUrl, callback);
+}
+
+private void getUser(final String accessToken) {
+    new AsyncTask<Void, Void, ShopUser>(){
+        @Override
+        protected ShopUser doInBackground(Void... params) {
+            return shopApiClient.requestShopUser(accessToken);
+        }
+        
+        @Override
+        protected void onPostExecute(ShopUser shopUser) {
+            Toast.makeText(getContext(), String.format("Hello %s", shopUser.getFirstname()), Toast.LENGTH_SHORT).show();
+        }        
+    }.execute();
+}
+```
 
 ## Download
 Grab the latest release via Maven:
