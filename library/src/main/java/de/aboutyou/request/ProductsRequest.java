@@ -28,6 +28,7 @@ public class ProductsRequest extends CollinsRequest {
 
         /** Request additional fields in the response */
         public Builder listFields(List<ProductFields> fields) {
+            validateNotEmpty(fields, "fields");
             this.fields = fields;
             return this;
         }
