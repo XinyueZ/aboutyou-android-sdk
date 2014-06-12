@@ -23,6 +23,8 @@ import de.aboutyou.ShopApiClient;
 import de.aboutyou.exceptions.CollinsException;
 import de.aboutyou.models.Category;
 import de.aboutyou.models.CategoryTree;
+import de.aboutyou.request.CategoriesRequest;
+import de.aboutyou.request.CategoryTreeRequest;
 
 public class CategoryTreeFragment extends Fragment {
 
@@ -68,7 +70,9 @@ public class CategoryTreeFragment extends Fragment {
         @Override
         protected CategoryTree doInBackground(Void... params) {
             try {
-                return mShopApiClient.requestCategoryTree();
+                CategoryTreeRequest categoryTreeRequest = new CategoryTreeRequest.Builder().build();
+
+                return mShopApiClient.requestCategoryTree(categoryTreeRequest);
             } catch (CollinsException e) {
                 return null;
             }

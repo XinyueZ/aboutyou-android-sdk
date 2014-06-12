@@ -224,10 +224,11 @@ public class ShopApiClient {
     /**
      * Requests the tree of categories configured for your app in our <a href="http://developer.aboutyou.de">Developer Center</a>
      *
+     * @param categoryTreeRequest A {@link de.aboutyou.request.CategoryTreeRequest}
      * @return The {@link de.aboutyou.models.CategoryTree} for your app
      */
-    public CategoryTree requestCategoryTree() {
-        RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(new CategoryTreeRequest());
+    public CategoryTree requestCategoryTree(CategoryTreeRequest categoryTreeRequest) {
+        RequestEnvelope<CategoryTreeRequest> wrappedRequest = RequestEnvelope.wrap(categoryTreeRequest);
 
         try {
             return mShopAPI.requestCategoryTree(wrappedRequest).unwrap().get();

@@ -3,6 +3,7 @@ package de.aboutyou;
 import org.junit.Test;
 
 import de.aboutyou.models.CategoryTree;
+import de.aboutyou.request.CategoryTreeRequest;
 import de.aboutyou.util.MockClient;
 
 import static org.junit.Assert.*;
@@ -13,7 +14,8 @@ public class CategoryTreeTest extends TestBase {
     public void testValidRequest() {
         ShopApiClient shopApiClient = getNewApiClient(new ValidRequestMockClient());
 
-        shopApiClient.requestCategoryTree();
+        CategoryTreeRequest categoryTreeRequest = new CategoryTreeRequest.Builder().build();
+        shopApiClient.requestCategoryTree(categoryTreeRequest);
     }
 
     private class ValidRequestMockClient extends MockClient {
@@ -30,11 +32,17 @@ public class CategoryTreeTest extends TestBase {
 
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testInvalidMaxDepth() {
+        new CategoryTreeRequest.Builder().setMaxDepth(11).build();
+    }
+
     @Test
     public void testValidResponse() {
         ShopApiClient shopApiClient = getNewApiClient(new ValidResponseMockClient());
 
-        CategoryTree categoryTree = shopApiClient.requestCategoryTree();
+        CategoryTreeRequest categoryTreeRequest = new CategoryTreeRequest.Builder().build();
+        CategoryTree categoryTree = shopApiClient.requestCategoryTree(categoryTreeRequest);
 
         assertNotNull(categoryTree);
         assertTrue(categoryTree.getAllCategories().size() == 2);
