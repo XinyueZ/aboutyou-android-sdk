@@ -1,9 +1,9 @@
 apply plugin: 'android-library'
-apply plugin: 'android-test'
+apply plugin: 'robolectric'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.3"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
         minSdkVersion 10
@@ -25,13 +25,13 @@ android {
     }
 
     sourceSets {
-        androidTest {
+        robolectric {
             setRoot('src/test')
         }
     }
 }
 
-androidTest {
+robolectric {
     include '**/*Test.class'
 }
 
