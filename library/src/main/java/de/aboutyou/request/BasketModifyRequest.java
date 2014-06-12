@@ -8,13 +8,13 @@ import de.aboutyou.models.OrderLine;
 
 public class BasketModifyRequest extends CollinsRequest {
 
-    private Basket basket;
+    protected Basket basket;
 
-    private static class Basket {
+    protected static class Basket {
         @SerializedName("session_id")
-        private String sessionId;
+        protected String sessionId;
         @SerializedName("order_lines")
-        private List<OrderLine> orderLines;
+        protected List<OrderLine> orderLines;
     }
 
     public static class Builder extends CollinsRequest.Builder<BasketModifyRequest> {
@@ -33,6 +33,7 @@ public class BasketModifyRequest extends CollinsRequest {
 
         /** Set the order lines to modify the basket */
         public Builder setOrderLines(List<OrderLine> orderLines) {
+            validateNotEmpty(orderLines, "orderLines");
             this.orderLines = orderLines;
             return this;
         }

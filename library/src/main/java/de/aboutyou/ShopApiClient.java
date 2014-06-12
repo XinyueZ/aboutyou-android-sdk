@@ -11,6 +11,7 @@ import android.content.Context;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import de.aboutyou.enums.AuthScope;
@@ -52,8 +53,10 @@ import de.aboutyou.models.ProductSearch;
 import de.aboutyou.models.ShopUser;
 import de.aboutyou.models.Suggest;
 import de.aboutyou.request.AutocompleteRequest;
+import de.aboutyou.request.BasketAddItemsRequest;
 import de.aboutyou.request.BasketGetRequest;
 import de.aboutyou.request.BasketModifyRequest;
+import de.aboutyou.request.BasketRemoveItemsRequest;
 import de.aboutyou.request.CategoriesRequest;
 import de.aboutyou.request.CategoryTreeRequest;
 import de.aboutyou.request.CollinsRequest;
@@ -361,6 +364,42 @@ public class ShopApiClient {
     }
 
     /**
+     * Requests to add items to a basket
+     *
+     * @param basketAddItemsRequest A {@link de.aboutyou.request.BasketAddItemsRequest}
+     * @return The modified {@link de.aboutyou.models.Basket}
+     */
+    public Basket requestAddItemsToBasket(BasketAddItemsRequest basketAddItemsRequest) {
+        validateRequest(basketAddItemsRequest);
+        RequestEnvelope<BasketModifyRequest> wrappedRequest = RequestEnvelope.wrap((BasketModifyRequest) basketAddItemsRequest);
+
+        try {
+            return mShopAPI.requestModifyBasket(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
+    }
+
+    /**
+     * Requests to remove items from a basket
+     *
+     * @param basketRemoveItemsRequest A {@link de.aboutyou.request.BasketRemoveItemsRequest}
+     * @return The modified {@link de.aboutyou.models.Basket}
+     */
+    public Basket requestRemoveItemsFromBasket(BasketRemoveItemsRequest basketRemoveItemsRequest) {
+        validateRequest(basketRemoveItemsRequest);
+        RequestEnvelope<BasketModifyRequest> wrappedRequest = RequestEnvelope.wrap((BasketModifyRequest) basketRemoveItemsRequest);
+
+        try {
+            return mShopAPI.requestModifyBasket(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
+    }
+
+    /**
      * Requests to modify a basket
      *
      * @param basketModifyRequest A {@link de.aboutyou.request.BasketModifyRequest}
@@ -435,15 +474,24 @@ public class ShopApiClient {
         }
     }
 
-    public class Helper {
+    public static class Helper {
 
         /**
          * Returns a list of {@link de.aboutyou.enums.SimpleColor SimpleColors} which is a subset of all available colors
          *
          * @return A list of {@link de.aboutyou.enums.SimpleColor SimpleColors}
          */
-        public List<SimpleColor> getSimpleColorFacets() {
+        public static List<SimpleColor> getSimpleColorFacets() {
             return Arrays.asList(SimpleColor.values());
+        }
+
+        /**
+         * Returns an ID-String you can use for {@link de.aboutyou.models.Basket} items
+         *
+         * @return An ID-String
+         */
+        public static String generateBasketId() {
+            return UUID.randomUUID().toString();
         }
     }
 }
