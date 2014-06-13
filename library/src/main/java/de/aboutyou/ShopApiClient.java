@@ -60,6 +60,7 @@ import de.aboutyou.request.BasketRemoveItemsRequest;
 import de.aboutyou.request.CategoriesRequest;
 import de.aboutyou.request.CategoryTreeRequest;
 import de.aboutyou.request.CollinsRequest;
+import de.aboutyou.request.FacetRequest;
 import de.aboutyou.request.FacetTypesRequest;
 import de.aboutyou.request.FacetsRequest;
 import de.aboutyou.request.InitiateOrderRequest;
@@ -250,6 +251,24 @@ public class ShopApiClient {
 
         try {
             return mShopAPI.requestFacets(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
+    }
+
+    /**
+     * Requests a list of {@link de.aboutyou.models.Facet Facets}
+     *
+     * @param facetRequest  A {@link de.aboutyou.request.FacetRequest}
+     * @return The list of {@link de.aboutyou.models.Facet Facets} matching the {@link de.aboutyou.request.FacetRequest} request parameter
+     */
+    public List<Facet> requestFacet(FacetRequest facetRequest) {
+        validateRequest(facetRequest);
+        RequestEnvelope<FacetRequest> wrappedRequest = RequestEnvelope.wrap(facetRequest);
+
+        try {
+            return mShopAPI.requestFacet(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;

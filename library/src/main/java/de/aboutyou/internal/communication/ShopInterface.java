@@ -4,6 +4,7 @@ import de.aboutyou.internal.response.AutocompleteResponse;
 import de.aboutyou.internal.response.BasketResponse;
 import de.aboutyou.internal.response.CategoriesResponse;
 import de.aboutyou.internal.response.CategoryTreeResponse;
+import de.aboutyou.internal.response.FacetResponse;
 import de.aboutyou.internal.response.FacetTypesResponse;
 import de.aboutyou.internal.response.FacetsResponse;
 import de.aboutyou.internal.response.InitiateOrderResponse;
@@ -18,6 +19,7 @@ import de.aboutyou.request.BasketGetRequest;
 import de.aboutyou.request.BasketModifyRequest;
 import de.aboutyou.request.CategoriesRequest;
 import de.aboutyou.request.CategoryTreeRequest;
+import de.aboutyou.request.FacetRequest;
 import de.aboutyou.request.FacetTypesRequest;
 import de.aboutyou.request.FacetsRequest;
 import de.aboutyou.request.InitiateOrderRequest;
@@ -40,6 +42,9 @@ public interface ShopInterface {
 
     @POST(BASEPATH)
     ResponseEnvelope<FacetsResponse> requestFacets(@Body RequestEnvelope<FacetsRequest> request);
+
+    @POST(BASEPATH)
+    ResponseEnvelope<FacetResponse> requestFacet(@Body RequestEnvelope<FacetRequest> request);
 
     @POST(BASEPATH)
     ResponseEnvelope<FacetTypesResponse> requestFacetTypes(@Body RequestEnvelope<FacetTypesRequest> request);

@@ -1,6 +1,7 @@
 package de.aboutyou.request;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class CollinsRequest {
 
@@ -17,6 +18,12 @@ public abstract class CollinsRequest {
 
         protected void validateNotEmpty(List list, String argDesc) {
             if (list == null || list.isEmpty()) {
+                throw new IllegalArgumentException(String.format("%s must not be NULL or empty", argDesc));
+            }
+        }
+
+        protected void validateNotEmpty(Map map, String argDesc) {
+            if (map == null || map.isEmpty()) {
                 throw new IllegalArgumentException(String.format("%s must not be NULL or empty", argDesc));
             }
         }
