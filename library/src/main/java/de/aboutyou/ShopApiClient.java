@@ -69,6 +69,7 @@ import de.aboutyou.request.FacetTypesRequest;
 import de.aboutyou.request.FacetsRequest;
 import de.aboutyou.request.InitiateOrderRequest;
 import de.aboutyou.request.LiveVariantRequest;
+import de.aboutyou.request.ProductEansRequest;
 import de.aboutyou.request.ProductSearchRequest;
 import de.aboutyou.request.ProductsRequest;
 import de.aboutyou.request.SuggestRequest;
@@ -381,6 +382,24 @@ public class ShopApiClient {
 
         try {
             return mShopAPI.requestProducts(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
+    }
+
+    /**
+     * Requests a list of products
+     *
+     * @param productEansRequest A {@link de.aboutyou.request.ProductEansRequest}
+     * @return A list of {@link de.aboutyou.models.Product Products} mathing the {@link de.aboutyou.request.ProductsRequest} request parameter
+     */
+    public List<Product> requestProducts(ProductEansRequest productEansRequest) {
+        validateRequest(productEansRequest);
+        RequestEnvelope<ProductEansRequest> wrappedRequest = RequestEnvelope.wrap(productEansRequest);
+
+        try {
+            return mShopAPI.requestProductsByEans(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;

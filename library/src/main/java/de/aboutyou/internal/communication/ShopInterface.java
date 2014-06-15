@@ -10,6 +10,7 @@ import de.aboutyou.internal.response.FacetTypesResponse;
 import de.aboutyou.internal.response.FacetsResponse;
 import de.aboutyou.internal.response.InitiateOrderResponse;
 import de.aboutyou.internal.response.LiveVariantResponse;
+import de.aboutyou.internal.response.ProductEansResponse;
 import de.aboutyou.internal.response.ProductSearchResponse;
 import de.aboutyou.internal.response.ProductsResponse;
 import de.aboutyou.internal.response.SuggestResponse;
@@ -26,6 +27,7 @@ import de.aboutyou.request.FacetTypesRequest;
 import de.aboutyou.request.FacetsRequest;
 import de.aboutyou.request.InitiateOrderRequest;
 import de.aboutyou.request.LiveVariantRequest;
+import de.aboutyou.request.ProductEansRequest;
 import de.aboutyou.request.ProductSearchRequest;
 import de.aboutyou.request.ProductsRequest;
 import de.aboutyou.request.SuggestRequest;
@@ -62,6 +64,9 @@ public interface ShopInterface {
 
     @POST(BASEPATH)
     ResponseEnvelope<ProductsResponse> requestProducts(@Body RequestEnvelope<ProductsRequest> request);
+
+    @POST(BASEPATH)
+    ResponseEnvelope<ProductEansResponse> requestProductsByEans(@Body RequestEnvelope<ProductEansRequest> request);
 
     @POST(BASEPATH)
     ResponseEnvelope<BasketResponse> requestModifyBasket(@Body RequestEnvelope<BasketModifyRequest> request);
