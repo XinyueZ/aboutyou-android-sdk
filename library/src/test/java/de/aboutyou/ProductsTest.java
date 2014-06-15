@@ -58,11 +58,6 @@ public class ProductsTest extends TestBase {
     private class ValidResponseMockClient extends MockClient {
 
         @Override
-        protected void validateRequestBody(String requestBody) {
-            assertEquals("[{\"products\":{\"ids\":[1]}}]", requestBody);
-        }
-
-        @Override
         protected String getResponse() {
             return "[{\"products\":{\"ids\":{\"1\":{\"name\":\"Product 1\",\"active\":true,\"id\":1}}}}]";
         }
