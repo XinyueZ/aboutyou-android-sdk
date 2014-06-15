@@ -9,6 +9,8 @@ import org.apache.http.HttpStatus;
 
 import android.content.Context;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -509,6 +511,10 @@ public class ShopApiClient {
             HttpError httpError = (HttpError) e.getBodyAs(HttpError.class);
             throw new HttpException(httpError, null);
         } else {
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter printWriter = new PrintWriter(stringWriter);
+            e.printStackTrace(printWriter);
+            mLogger.log(stringWriter.toString());
             throw new CollinsException("Unknown exception");
         }
     }
