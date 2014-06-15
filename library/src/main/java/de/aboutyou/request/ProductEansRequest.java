@@ -22,6 +22,7 @@ public class ProductEansRequest extends CollinsRequest {
 
         /** Filter result by product ids */
         public Builder filterByEans(List<Long> eans) {
+            validateNotEmpty(eans, "eans");
             this.eans = eans;
             return this;
         }

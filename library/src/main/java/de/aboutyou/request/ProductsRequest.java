@@ -22,6 +22,7 @@ public class ProductsRequest extends CollinsRequest {
 
         /** Filter result by product ids */
         public Builder filterByProductIds(List<Long> productIds) {
+            validateNotEmpty(productIds, "productIds");
             this.ids = productIds;
             return this;
         }
