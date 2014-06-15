@@ -44,6 +44,7 @@ import de.aboutyou.models.Autocomplete;
 import de.aboutyou.models.Basket;
 import de.aboutyou.models.Category;
 import de.aboutyou.models.CategoryTree;
+import de.aboutyou.models.ChildApp;
 import de.aboutyou.models.Facet;
 import de.aboutyou.models.HttpError;
 import de.aboutyou.models.InitiateOrder;
@@ -59,6 +60,7 @@ import de.aboutyou.request.BasketModifyRequest;
 import de.aboutyou.request.BasketRemoveItemsRequest;
 import de.aboutyou.request.CategoriesRequest;
 import de.aboutyou.request.CategoryTreeRequest;
+import de.aboutyou.request.ChildAppsRequest;
 import de.aboutyou.request.CollinsRequest;
 import de.aboutyou.request.FacetRequest;
 import de.aboutyou.request.FacetTypesRequest;
@@ -467,6 +469,23 @@ public class ShopApiClient {
 
         try {
             return mShopAPI.requestInitiateOrder(wrappedRequest).unwrap().get();
+        } catch (RetrofitError e) {
+            handleRetrofitError(e);
+            return null;
+        }
+    }
+
+    /**
+     * Requests the child apps of your app
+     *
+     * @return A list of {@link de.aboutyou.models.ChildApp ChildApps}
+     */
+    public List<ChildApp> requestChildApps() {
+        ChildAppsRequest childAppsRequest = new ChildAppsRequest();
+        RequestEnvelope<ChildAppsRequest> wrappedRequest = RequestEnvelope.wrap(childAppsRequest);
+
+        try {
+            return mShopAPI.requestChildApps(wrappedRequest).unwrap().get();
         } catch (RetrofitError e) {
             handleRetrofitError(e);
             return null;
