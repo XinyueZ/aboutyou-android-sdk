@@ -116,14 +116,14 @@ public class ShopApiClient {
                 .setClient(client)
                 .setRequestInterceptor(ShopAuthRequestInterceptor)
                 .setConverter(buildGsonConverter())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .build();
         mShopAPI = shopAdapter.create(ShopInterface.class);
 
         RestAdapter meAdapter = new RestAdapter.Builder()
                 .setEndpoint(endpoint.getMeUrl())
                 .setClient(SSLHack.buildClient())
-                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .build();
         mMeAPI = meAdapter.create(MeInterface.class);
 
